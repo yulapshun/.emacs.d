@@ -90,6 +90,8 @@
 ;; ido-mode
 (ido-mode)
 
+;; column-number-mode
+(column-number-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
