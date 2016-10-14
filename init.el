@@ -81,7 +81,6 @@
 
 ;; highlight current line
 (global-hl-line-mode 1)
-(set-face-background hl-line-face "#222222")
 
 ;; hightlight white space
 (setq whitespace-style (quote (face trailing)))
