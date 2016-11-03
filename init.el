@@ -54,6 +54,9 @@
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
+(setq-default web-mode-comment-formats
+              '(("javascript" . "//")
+                ("php"        . "//")))
 
 ;; neotree
 (global-set-key [f8] 'neotree-toggle)
