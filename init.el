@@ -95,6 +95,10 @@
 ;; column-number-mode
 (column-number-mode)
 
+;; hook hs-minor-mode to add programming mode
+(add-hook 'prog-mode-hook #'hs-minor-mode)
+(global-set-key (kbd "C-c C-c") (kbd "C-c @ C-c"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
