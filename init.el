@@ -102,6 +102,14 @@
 ;; flx-ido
 (flx-ido-mode)
 
+;; eval and replace
+(defun eval-and-replace (value)
+  "Evaluate the sexp at point and replace it with its value"
+  (interactive (list (eval-last-sexp nil)))
+  (kill-sexp -1)
+  (insert (format "%S" value)))
+(global-set-key (kbd "C-c C-e") 'eval-and-replace)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
