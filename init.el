@@ -91,17 +91,17 @@
 (global-whitespace-mode 1)
 
 ;; ido-mode
-(ido-mode)
+(ido-mode 1)
 
 ;; column-number-mode
-(column-number-mode)
+(column-number-mode 1)
 
 ;; hook hs-minor-mode to add programming mode
 (add-hook 'prog-mode-hook #'hs-minor-mode)
 (global-set-key (kbd "C-c C-c") (kbd "C-c @ C-c"))
 
 ;; flx-ido
-(flx-ido-mode)
+(flx-ido-mode 1)
 
 ;; eval and replace
 (defun eval-and-replace (value)
