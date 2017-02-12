@@ -87,7 +87,7 @@
 
 ;; hightlight white space
 (setq whitespace-style (quote (face trailing lines-tail)))
-(setq whitespace-line-column 80)
+(setq whitespace-line-column 79)
 (global-whitespace-mode 1)
 
 ;; ido-mode
