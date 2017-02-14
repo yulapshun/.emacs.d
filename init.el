@@ -8,7 +8,7 @@
   (package-initialize))
 
 ;; show line number
-(global-linum-mode 1)
+(add-hook 'prog-mode-hook #'linum-mode)
 
 ;; show mathching parenthesis
 (show-paren-mode 1)
@@ -98,7 +98,6 @@
 
 ;; hook hs-minor-mode to add programming mode
 (add-hook 'prog-mode-hook #'hs-minor-mode)
-(global-set-key (kbd "C-c C-c") (kbd "C-c @ C-c"))
 
 ;; flx-ido
 (flx-ido-mode 1)
@@ -109,7 +108,6 @@
   (interactive (list (eval-last-sexp nil)))
   (kill-sexp -1)
   (insert (format "%S" value)))
-(global-set-key (kbd "C-c C-e") 'eval-and-replace)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
