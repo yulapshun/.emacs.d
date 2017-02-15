@@ -81,6 +81,10 @@
 (global-set-key (kbd "C-.") 'highlight-symbol-next)
 (global-set-key (kbd "C-,") 'highlight-symbol-prev)
 (global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+(setq highlight-symbol-colors
+      '("#ff0000" "#00ff00" "#0000ff"
+      "#ffff00" "#ff00ff" "#00ffff"
+      "#ff8000" "#ff0080" "#0080ff"))
 
 ;; highlight current line
 (global-hl-line-mode 1)
