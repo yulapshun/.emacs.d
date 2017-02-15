@@ -106,13 +106,11 @@
 ;; flx-ido
 (flx-ido-mode 1)
 
-;; windmove
-(windmove-default-keybindings)
-;; Fix conflict with org-mode
-(add-hook 'org-shiftup-final-hook 'windmove-up)
-(add-hook 'org-shiftleft-final-hook 'windmove-left)
-(add-hook 'org-shiftdown-final-hook 'windmove-down)
-(add-hook 'org-shiftright-final-hook 'windmove-right)
+;; windmove key bindings
+(global-set-key (kbd "C-S-b")  'windmove-left)
+(global-set-key (kbd "C-S-f") 'windmove-right)
+(global-set-key (kbd "C-S-p")    'windmove-up)
+(global-set-key (kbd "C-S-n")  'windmove-down)
 
 ;; eval and replace
 (defun eval-and-replace (value)
