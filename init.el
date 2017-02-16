@@ -112,6 +112,9 @@
 (global-set-key (kbd "C-S-p")    'windmove-up)
 (global-set-key (kbd "C-S-n")  'windmove-down)
 
+;; disable electric indent
+(electric-indent-mode -1)
+
 ;; eval and replace
 (defun eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
