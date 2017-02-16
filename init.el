@@ -7,6 +7,9 @@
    t)
   (package-initialize))
 
+;; add load-path
+(add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
+
 ;; show line number
 (add-hook 'prog-mode-hook #'linum-mode)
 
@@ -88,7 +91,7 @@
 (global-hl-line-mode 1)
 
 ;; hightlight white space
-(setq whitespace-style (quote (face trailing lines-tail)))
+(setq whitespace-style (quote (face trailing)))
 (setq whitespace-line-column 79)
 (global-whitespace-mode 1)
 
@@ -112,6 +115,11 @@
 
 ;; disable electric indent
 (electric-indent-mode -1)
+
+;; show line at column 79
+(require 'fill-column-indicator)
+(setq fci-rule-column 79)
+(add-hook 'prog-mode-hook 'fci-mode)
 
 ;; eval and replace
 (defun eval-and-replace (value)
