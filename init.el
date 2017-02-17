@@ -116,10 +116,6 @@
 ;; disable electric indent
 (electric-indent-mode -1)
 
-;; show line at column 79
-(require 'fill-column-indicator)
-(setq fci-rule-column 79)
-(add-hook 'prog-mode-hook 'fci-mode)
 
 ;; eval and replace
 (defun eval-and-replace (value)
