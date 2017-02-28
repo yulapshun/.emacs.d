@@ -124,6 +124,20 @@
   (kill-sexp -1)
   (insert (format "%S" value)))
 
+;; toggle column marker at column 79
+(require 'column-marker)
+(defun toggle-column-marker ()
+  "Toggle column marker at column 79"
+  (interactive)
+  (if (bound-and-true-p column-marker-on)
+      (progn
+        (column-marker-1 "")
+        (setq column-marker-on nil))
+    (progn
+      (column-marker-1 79)
+      (setq column-marker-on t))))
+(global-set-key (kbd "C-'")  'toggle-column-marker)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
