@@ -126,15 +126,18 @@
 
 ;; toggle column marker at column 79
 (require 'column-marker)
-(defun toggle-column-marker ()
-  "Toggle column marker at column 79"
-  (interactive)
+(defun toggle-column-marker (ARG)
+  "Toggle column marker at column ARG
+ARG defaults to 79"
+  (interactive "P")
   (if (bound-and-true-p column-marker-on)
       (progn
         (column-marker-1 "")
         (setq column-marker-on nil))
     (progn
-      (column-marker-1 79)
+      (or ARG
+          (setq ARG 79))
+      (column-marker-1 ARG)
       (setq column-marker-on t))))
 (global-set-key (kbd "C-'")  'toggle-column-marker)
 
