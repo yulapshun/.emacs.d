@@ -119,6 +119,9 @@
 ;; disable electric indent
 (electric-indent-mode -1)
 
+;; show directory when open file with the same name
+(require 'uniquify)
+  (setq uniquify-buffer-name-style 'forward)
 
 ;; eval and replace
 (defun eval-and-replace (value)
