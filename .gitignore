@@ -1,6 +1,11 @@
 *~
+\#*\#
 
 ac-comphist.dat
 auto-save-list
+bookmarks
+eshell
 ido.last
 tramp
+
+session.*
