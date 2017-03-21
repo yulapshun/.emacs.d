@@ -58,6 +58,7 @@
 (setq-default web-mode-comment-formats
               '(("javascript" . "//")
                 ("php"        . "//")))
+(setq web-mode-enable-auto-indentation nil)
 
 ;; neotree
 (global-set-key [f8] 'neotree-toggle)
