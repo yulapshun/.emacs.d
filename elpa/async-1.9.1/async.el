@@ -4,7 +4,7 @@
 
 ;; Author: John Wiegley <jwiegley@gmail.com>
 ;; Created: 18 Jun 2012
-;; Version: 1.6
+;; Version: 1.9
 
 ;; Keywords: async
 ;; X-URL: https://github.com/jwiegley/emacs-async
@@ -169,24 +169,32 @@ as follows:
 	 (prin1 (list 'async-signal err)))))))
 
 (defun async-ready (future)
-  "Query a FUTURE to see if the ready is ready -- i.e., if no blocking
+  "Query a FUTURE to see if it is ready.
+
+I.e., if no blocking
 would result from a call to `async-get' on that FUTURE."
   (and (memq (process-status future) '(exit signal))
-       (with-current-buffer (process-buffer future)
-         async-callback-value-set)))
+       (let ((buf (process-buffer future)))
+         (if (buffer-live-p buf)
+             (with-current-buffer buf
+               async-callback-value-set)
+             t))))
 
 (defun async-wait (future)
   "Wait for FUTURE to become ready."
   (while (not (async-ready future))
-    (sit-for 0.05)))
+    (sleep-for 0.05)))
 
 (defun async-get (future)
-  "Get the value from an asynchronously function when it is ready.
+  "Get the value from process FUTURE when it is ready.
 FUTURE is returned by `async-start' or `async-start-process' when
 its FINISH-FUNC is nil."
-  (async-wait future)
-  (with-current-buffer (process-buffer future)
-    (async-handle-result #'identity async-callback-value (current-buffer))))
+  (and future (async-wait future))
+  (let ((buf (process-buffer future)))
+    (when (buffer-live-p buf)
+      (with-current-buffer buf
+        (async-handle-result
+         #'identity async-callback-value (current-buffer))))))
 
 (defun async-message-p (value)
   "Return true of VALUE is an async.el message packet."
@@ -297,6 +305,42 @@ returns nil.  It can still be useful, however, as an argument to
 (defmacro async-sandbox(func)
   "Evaluate FUNC in a separate Emacs process, synchronously."
   `(async-get (async-start ,func)))
+
+(defun async--fold-left (fn forms bindings)
+  (let ((res forms))
+    (dolist (binding bindings)
+      (setq res (funcall fn res
+                         (if (listp binding)
+                             binding
+                             (list binding)))))
+    res))
+
+(defmacro async-let (bindings &rest forms)
+  "Implements `let', but each binding is established asynchronously.
+For example:
+
+  (async-let ((x (foo))
+              (y (bar)))
+     (message \"%s %s\" x y))
+
+    expands to ==>
+
+  (async-start (foo)
+   (lambda (x)
+     (async-start (bar)
+      (lambda (y)
+        (message \"%s %s\" x y)))))"
+  (declare (indent 1))
+  (async--fold-left
+   (lambda (acc binding)
+     (let ((fun (pcase (cadr binding)
+                  ((and (pred functionp) f) f)
+                  (f `(lambda () ,f)))))
+       `(async-start ,fun
+                     (lambda (,(car binding))
+                       ,acc))))
+   `(progn ,@forms)
+   (reverse bindings)))
 
 (provide 'async)
 

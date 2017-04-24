@@ -3,8 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "go-mode" "go-mode.el" (22733 60646 542863
-;;;;;;  797000))
+;;;### (autoloads nil "go-mode" "go-mode.el" (22782 6688 465772 668000))
 ;;; Generated autoloads from go-mode.el
 
 (autoload 'go-mode "go-mode" "\
@@ -76,15 +75,15 @@ with goflymake (see URL `https://github.com/dougm/goflymake'), gocode
 
 (autoload 'gofmt-before-save "go-mode" "\
 Add this to .emacs to run gofmt on the current buffer when saving:
- (add-hook 'before-save-hook 'gofmt-before-save).
+\(add-hook 'before-save-hook 'gofmt-before-save).
 
-Note that this will cause go-mode to get loaded the first time
+Note that this will cause ‘go-mode’ to get loaded the first time
 you save any file, kind of defeating the point of autoloading.
 
 \(fn)" t nil)
 
 (autoload 'godoc "go-mode" "\
-Show Go documentation for QUERY, much like M-x man.
+Show Go documentation for QUERY, much like \\<go-mode-map>\\[man].
 
 \(fn QUERY)" t nil)
 
