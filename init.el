@@ -42,7 +42,7 @@
 (setq web-mode-enable-current-element-highlight t)
 (setq-default indent-tabs-mode nil)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-; (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
@@ -50,14 +50,16 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+;; (add-to-list 'auto-mode-alist '("\\.js\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;; (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode))
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
-(setq-default web-mode-comment-formats
-              '(("javascript" . "//")
-                ("php"        . "//")))
+;; (setq-default web-mode-comment-formats
+;;               '(("javascript" . "//")
+;;                 ("php"        . "//")))
 (setq web-mode-enable-auto-indentation nil)
 
 ;; neotree
@@ -138,9 +140,6 @@
 ;; projectile-mode
 (projectile-global-mode +1)
 
-;; ggtas-mode
-; (ggtags-mode t)
-
 ;; eval and replace
 (defun eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
@@ -175,7 +174,7 @@ ARG defaults to 79"
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(package-selected-packages
    (quote
-    (php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil auto-complete))))
+    (js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil auto-complete))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
