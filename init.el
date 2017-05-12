@@ -97,7 +97,8 @@
 (global-hl-line-mode 1)
 
 ;; hightlight white space
-(setq whitespace-style (quote (face trailing)))
+(setq whitespace-style '(face trailing tabs))
+(set-face-attribute 'whitespace-tab nil :background "DeepSkyBlue")
 (setq whitespace-line-column 79)
 (global-whitespace-mode 1)
 
