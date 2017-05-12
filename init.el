@@ -82,8 +82,8 @@
 ;; highlight-symbol
 (require 'highlight-symbol)
 (global-set-key (kbd "C-;") 'highlight-symbol)
-(global-set-key (kbd "C-.") 'highlight-symbol-next)
-(global-set-key (kbd "C-,") 'highlight-symbol-prev)
+(global-set-key (kbd "C->") 'highlight-symbol-next)
+(global-set-key (kbd "C-<") 'highlight-symbol-prev)
 (global-set-key [(meta f3)] 'highlight-symbol-query-replace)
 (add-hook 'window-setup-hook
           '(lambda()
