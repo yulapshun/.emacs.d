@@ -97,10 +97,10 @@
 (global-hl-line-mode 1)
 
 ;; hightlight white space
+(global-whitespace-mode 1)
 (setq whitespace-style '(face trailing tabs))
 (set-face-attribute 'whitespace-tab nil :background "DeepSkyBlue")
 (setq whitespace-line-column 79)
-(global-whitespace-mode 1)
 
 ;; ido-mode
 (ido-mode 1)
