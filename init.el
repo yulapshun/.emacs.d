@@ -104,6 +104,7 @@
 
 ;; ido-mode
 (ido-mode 1)
+(setq ido-auto-merge-work-directories-length -1)
 
 ;; column-number-mode
 (column-number-mode 1)
