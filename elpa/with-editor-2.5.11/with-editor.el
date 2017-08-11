@@ -1,6 +1,6 @@
 ;;; with-editor.el --- Use the Emacsclient as $EDITOR -*- lexical-binding: t -*-
 
-;; Copyright (C) 2014-2016  The Magit Project Contributors
+;; Copyright (C) 2014-2017  The Magit Project Contributors
 ;;
 ;; You should have received a copy of the AUTHORS.md file.  If not,
 ;; see https://github.com/magit/with-editor/blob/master/AUTHORS.md.
@@ -711,7 +711,7 @@ else like the former."
 
 (defun with-editor-debug ()
   "Debug configuration issues.
-See `with-editor.info' for instructions."
+See info node `(with-editor)Debugging' for instructions."
   (interactive)
   (with-current-buffer (get-buffer-create "*with-editor-debug*")
     (pop-to-buffer (current-buffer))
@@ -748,7 +748,7 @@ See `with-editor.info' for instructions."
           (fun (let ((warning-minimum-level :error)
                      (warning-minimum-log-level :error))
                  (with-editor-locate-emacsclient))))
-      (insert "magit-emacsclient-executable:\n"
+      (insert "with-editor-emacsclient-executable:\n"
               (format " value:   %s (%s)\n" val
                       (and val (with-editor-emacsclient-version val)))
               (format " default: %s (%s)\n" def
@@ -762,7 +762,8 @@ See `with-editor.info' for instructions."
     (--each (with-editor-emacsclient-path)
       (insert (format "    %s (%s)\n" it (car (file-attributes it))))
       (when (file-directory-p it)
-        (dolist (exec (directory-files it t "emacsclient"))
+        ;; Don't match emacsclientw.exe, it makes popup windows.
+        (dolist (exec (directory-files it t "emacsclient\\(?:[^w]\\|\\'\\)"))
           (insert (format "      %s (%s)\n" exec
                           (with-editor-emacsclient-version exec))))))))
 
