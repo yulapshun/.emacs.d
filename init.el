@@ -144,6 +144,9 @@
 ;; avy
 (global-set-key (kbd "C-:") 'avy-goto-char)
 
+;; auto revert
+(global-auto-revert-mode 1)
+
 ;; eval and replace
 (defun eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
