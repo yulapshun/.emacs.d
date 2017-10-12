@@ -213,6 +213,7 @@ times ARG at the beginning of line"
 
 (global-set-key (kbd "<C-tab>")  'force-indent)
 (global-set-key (kbd "<C-S-tab>")  'force-unindent)
+(global-set-key (kbd "<C-iso-lefttab>")  'force-unindent)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
