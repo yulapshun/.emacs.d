@@ -175,6 +175,45 @@ ARG defaults to 79"
       (setq column-marker-on t))))
 (global-set-key (kbd "C-'")  'toggle-column-marker)
 
+(defun force-indent (ARG)
+  "Force indent.
+If `indent-tabs-mode' is enabled, insert ARG tab at the begining of line,
+else insert a number of spaces specified by `tab-width' times ARG at the
+beginning of line"
+  (interactive "P")
+  (or ARG (setq ARG 1))
+  (save-excursion
+    (move-beginning-of-line 1)
+    (if indent-tabs-mode
+        (insert (make-string ARG ?\t))
+      (insert (make-string (* ARG tab-width) ?\s)))))
+
+(defun force-unindent (ARG)
+  "Force unindent.
+If `indent-tabs-mode' is enabled, delete ARG tab character at the begining of
+line, else delete at most a number of spaces specified by `tab-width'
+times ARG at the beginning of line"
+  (interactive "P")
+  (or ARG (setq ARG 1))
+  (save-excursion
+    (move-beginning-of-line 1)
+    (setq start (point))
+    (if indent-tabs-mode
+        (progn
+          (skip-chars-forward "\t")
+          (if (< (- (point) start) ARG)
+              (delete-horizontal-space)
+            (delete-backward-char ARG)))
+      (progn
+          (skip-chars-forward " ")
+          (if (< (- (point) start) (* ARG tab-width))
+              (delete-horizontal-space)
+            (delete-backward-char (* ARG tab-width)))))))
+
+
+(global-set-key (kbd "<C-tab>")  'force-indent)
+(global-set-key (kbd "<C-S-tab>")  'force-unindent)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
