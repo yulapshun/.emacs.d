@@ -277,6 +277,30 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
 (global-set-key (kbd "<C-S-tab>")  'force-unindent)
 (global-set-key (kbd "<C-iso-lefttab>")  'force-unindent)
 
+(defun delete-line (ARG)
+"Delete line without saving to `kill-ring'."
+  (interactive "P")
+  (progn (kill-line ARG)
+         (pop kill-ring)
+         (pop kill-ring-yank-pointer)))
+(defun delete-word (ARG)
+"Delete word forward without saving to `kill-ring'."
+  (interactive "P")
+  (progn (kill-word ARG)
+         (pop kill-ring)
+         (pop kill-ring-yank-pointer)))
+(defun backward-delete-word (ARG)
+"Delete word backward without saving to `kill-ring'."
+  (interactive "P")
+  (or ARG (setq ARG 1))
+  (progn (backward-kill-word ARG)
+         (pop kill-ring)
+         (pop kill-ring-yank-pointer)))
+(global-set-key (kbd "C-S-k")  'delete-line)
+(global-set-key (kbd "C-S-w")  'delete-region)
+(global-set-key (kbd "M-D")  'delete-word)
+(global-set-key (kbd "<M-S-backspace>")  'backward-delete-word)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
