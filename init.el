@@ -1,3 +1,6 @@
+(setq custom-file (concat (expand-file-name user-emacs-directory) "emacs-custom.el"))
+(load custom-file)
+
 ;; melpa
 (when (>= emacs-major-version 24)
   (require 'package)
@@ -301,23 +304,5 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
 (global-set-key (kbd "M-D")  'delete-word)
 (global-set-key (kbd "<M-S-backspace>")  'backward-delete-word)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(package-selected-packages
-   (quote
-    (eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil auto-complete))))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
