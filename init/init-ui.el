@@ -3,6 +3,6 @@
             (if (display-graphic-p)
                 (load-theme 'solarized-dark)
               (load-theme 'tsdh-dark))
-1))
+            (set-face-attribute 'whitespace-tab nil :background "DeepSkyBlue")))
 
 (provide 'init-ui)
