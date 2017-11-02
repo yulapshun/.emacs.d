@@ -19,4 +19,9 @@ ARG defaults to 79"
   (kill-sexp -1)
   (insert (format "%S" value)))
 
+(defun control-meta (key)
+  "Simulate the behavior of C-M-key."
+  (interactive "cC-M-")
+  (call-interactively (global-key-binding (kbd (concat "C-M-" (byte-to-string key))))))
+
 (provide 'defun-misc)
