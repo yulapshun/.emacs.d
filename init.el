@@ -24,7 +24,7 @@
                  (load-theme 'solarized-dark)
                )
              (unless (display-graphic-p)
-               (load-theme 'tango-dark)
+               (load-theme 'tsdh-dark)
                )
           ))
 
