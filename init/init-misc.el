@@ -37,5 +37,7 @@
                      "#ffff00" "#ff00ff" "#00ffff"
                      "#ff8000" "#ff0080" "#0080ff"))
 ))
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (provide 'init-misc)

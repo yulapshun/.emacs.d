@@ -19,5 +19,6 @@
 (require 'init-keys)
 (require 'init-ui)
 (require 'init-web-mode)
+(require 'init-paredit)
 
 (load custom-file)
