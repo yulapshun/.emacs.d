@@ -8,6 +8,14 @@
  'package-archives
  '("melpa-stable" . "http://stable.melpa.org/packages/")
  t)
+(add-to-list
+ 'package-archives
+ '("melpa" . "http://melpa.org/packages/")
+ t)
+(setq package-archive-priorities
+      '(("gnu"          . 1)
+        ("melpa-stable" . 0)
+        ("melpa"        . -1000)))
 (package-initialize)
 
 (require 'defun-misc)
