@@ -1,3 +1,6 @@
+;; built-in
+(global-set-key (kbd "C-x _") 'fit-window-to-buffer)
+
 ;; neotree
 (global-set-key [f8] 'neotree-toggle)
 
