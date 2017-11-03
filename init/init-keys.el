@@ -22,8 +22,12 @@
 ;; avy
 (global-set-key (kbd "C-:") 'avy-goto-char)
 
+;; magit
+(global-set-key (kbd "C-x g") 'magit-status)
+
 ;; defun-misc
 (global-set-key (kbd "C-\"")  'toggle-column-marker)
+(global-set-key (kbd "C-'") 'control-meta)
 
 ;; defun-indent
 (global-set-key (kbd "<C-tab>")  'force-indent)
@@ -35,7 +39,5 @@
 (global-set-key (kbd "C-S-w")  'delete-region)
 (global-set-key (kbd "M-D")  'delete-word)
 (global-set-key (kbd "<M-S-backspace>")  'backward-delete-word)
-
-(global-set-key (kbd "C-'") 'control-meta)
 
 (provide 'init-keys)
