@@ -28,5 +28,6 @@
 (require 'init-ui)
 (require 'init-web-mode)
 (require 'init-paredit)
+(require 'init-magit)
 
 (load custom-file)
