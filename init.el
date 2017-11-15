@@ -21,6 +21,7 @@
 (require 'defun-misc)
 (require 'defun-indent)
 (require 'defun-delete)
+(require 'defun-modifier)
 
 (require 'init-misc)
 (require 'init-major-mode)

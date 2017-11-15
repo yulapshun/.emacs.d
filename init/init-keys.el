@@ -30,7 +30,6 @@
 
 ;; defun-misc
 (global-set-key (kbd "C-\"")  'toggle-column-marker)
-(global-set-key (kbd "C-'") 'control-meta)
 
 ;; defun-indent
 (global-set-key (kbd "<C-tab>")  'force-indent)
@@ -42,5 +41,15 @@
 (global-set-key (kbd "C-S-w")  'delete-region)
 (global-set-key (kbd "M-D")  'delete-word)
 (global-set-key (kbd "<M-S-backspace>")  'backward-delete-word)
+
+;; defun-modifier
+(global-set-key (kbd "C-c g c") 'hihi-control)
+(global-set-key (kbd "C-c g m") 'hihi-meta)
+(global-set-key (kbd "C-c g d") 'hihi-control-shift)
+(global-set-key (kbd "C-c g S") 'hihi-control-shift)
+(global-set-key (kbd "C-c g j") 'hihi-meta-shift)
+(global-set-key (kbd "C-c g M") 'hihi-meta-shift)
+(global-set-key (kbd "C-c g x") 'hihi-control-meta)
+(global-set-key (kbd "C-'") 'hihi-control-meta)
 
 (provide 'init-keys)
