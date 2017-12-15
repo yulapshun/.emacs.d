@@ -3,8 +3,8 @@
 ;; Copyright (C) 2013 Wilfred Hughes
 
 ;; Author: Wilfred Hughes <me@wilfred.me.uk>
-;; Version: 2.1
-;; Package-Version: 2.1
+;; Version: 2.2
+;; Package-Version: 2.2
 ;; Keywords: hash table, hash map, hash
 ;; Package-Requires: ((dash "2.12.0"))
 
@@ -23,9 +23,9 @@
 
 ;;; Commentary:
 
-;; The missing hash table utility library for Emacs.
+;; The missing hash table library for Emacs.
 ;;
-;; See documentation on https://github.com/Wilfred/ht.el
+;; See documentation at https://github.com/Wilfred/ht.el
 
 ;;; Code:
 
@@ -45,7 +45,7 @@ Keys are compared with `equal'.
        ,@assignments
        ,table-symbol)))
 
-(defun ht-create (&optional test)
+(defsubst ht-create (&optional test)
   "Create an empty hash table.
 
 TEST indicates the function used to compare the hash
@@ -69,30 +69,6 @@ user-supplied test created via `define-hash-table-test'."
 
 (defalias 'ht-from-alist 'ht<-alist)
 
-;; based on the excellent -partition from dash.el, but we aim to be self-contained
-(defun ht/group-pairs (list)
-  "Return a new list with the items in LIST grouped into pairs.
-Errors if LIST doesn't contain an even number of elements."
-  (let ((result)
-        (sublist)
-        (len 0))
-
-    (while list
-      ;; take the head of LIST and push onto SUBLIST
-      (setq sublist (cons (car list) sublist))
-      (setq list (cdr list))
-      
-      (setq len (1+ len))
-
-      (when (= len 2)
-        ;; push this two-item list onto RESULT
-        (setq result (cons (nreverse sublist) result))
-        (setq sublist nil)
-        (setq len 0)))
-    
-    (when sublist (error "Expected an even number of elements"))
-    (nreverse result)))
-
 (defun ht<-plist (plist &optional test)
   "Create a hash table with initial values according to PLIST.
 
@@ -100,19 +76,27 @@ TEST indicates the function used to compare the hash
 keys.  Default is `equal'.  It can be `eq', `eql', `equal' or a
 user-supplied test created via `define-hash-table-test'."
   (let ((h (ht-create test)))
-    (dolist (pair (ht/group-pairs plist) h)
+    (dolist (pair (-partition 2 plist) h)
       (let ((key (car pair))
             (value (cadr pair)))
         (ht-set! h key value)))))
 
 (defalias 'ht-from-plist 'ht<-plist)
 
-(defun ht-get (table key &optional default)
+(defsubst ht-get (table key &optional default)
   "Look up KEY in TABLE, and return the matching value.
 If KEY isn't present, return DEFAULT (nil if not specified)."
   (gethash key table default))
 
-(defun ht-set! (table key value)
+(defun ht-get* (table &rest keys)
+  "Look up KEYS in nested hash tables, starting with TABLE.
+The lookup for each key should return another hash table, except
+for the final key, which may return any value."
+  (if (cdr keys)
+      (apply #'ht-get* (ht-get table (car keys)) (cdr keys))
+    (ht-get table (car keys))))
+
+(defsubst ht-set! (table key value)
   "Associate KEY in TABLE with VALUE."
   (puthash key value table)
   nil)
@@ -136,13 +120,13 @@ table is used."
     (mapc (lambda (table) (ht-update! merged table)) tables)
     merged))
 
-(defun ht-remove! (table key)
+(defsubst ht-remove! (table key)
   "Remove KEY from TABLE."
   (remhash key table))
 
 (defalias 'ht-remove 'ht-remove!)
 
-(defun ht-clear! (table)
+(defsubst ht-clear! (table)
   "Remove all keys from TABLE."
   (clrhash table)
   nil)
@@ -187,6 +171,14 @@ For every key-value pair in TABLE, evaluate FORM with the
 variables key and value bound."
   `(ht-each (lambda (key value) ,form) ,table))
 
+(defun ht-select-keys (table keys)
+  "Return a copy of TABLE with only the specified KEYS."
+  (let (result)
+    (setq result (make-hash-table :test (hash-table-test table)))
+    (dolist (key keys result)
+      (if (not (equal (gethash key table 'key-not-found) 'key-not-found))
+          (puthash key (gethash key table) result)))))
+
 (defun ht->plist (table)
   "Return a flat list '(key1 value1 key2 value2...) from TABLE.
 
@@ -200,7 +192,7 @@ inverse of `ht<-plist'.  The following is not guaranteed:
 
 (defalias 'ht-to-plist 'ht->plist)
 
-(defun ht-copy (table)
+(defsubst ht-copy (table)
   "Return a shallow copy of TABLE (keys and values are shared)."
   (copy-hash-table table))
 
@@ -227,11 +219,11 @@ inverse of `ht<-alist'.  The following is not guaranteed:
 
 (defalias 'ht-contains-p 'ht-contains?)
 
-(defun ht-size (table)
+(defsubst ht-size (table)
   "Return the actual number of entries in TABLE."
   (hash-table-count table))
 
-(defun ht-empty? (table)
+(defsubst ht-empty? (table)
   "Return true if the actual number of entries in TABLE is zero."
   (zerop (ht-size table)))
 

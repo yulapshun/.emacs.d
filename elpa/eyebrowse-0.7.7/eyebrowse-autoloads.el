@@ -3,7 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "eyebrowse" "eyebrowse.el" (22938 44235 0 0))
+;;;### (autoloads nil "eyebrowse" "eyebrowse.el" (23091 21723 143516
+;;;;;;  757000))
 ;;; Generated autoloads from eyebrowse.el
 
 (autoload 'eyebrowse-setup-evil-keys "eyebrowse" "\

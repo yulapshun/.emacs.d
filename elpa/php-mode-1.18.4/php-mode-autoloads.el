@@ -3,24 +3,8 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "php-current" "php-current.el" (22803 4308
-;;;;;;  791765 306000))
-;;; Generated autoloads from php-current.el
-
-(autoload 'php-current-class "php-current" "\
-Insert current class name if cursor in class context.
-
-\(fn &optional STR ARG)" t nil)
-
-(autoload 'php-current-namespace "php-current" "\
-Insert current namespace if cursor in in namespace context.
-
-\(fn &optional STR ARG)" t nil)
-
-;;;***
-
-;;;### (autoloads nil "php-mode" "php-mode.el" (22803 4309 178424
-;;;;;;  434000))
+;;;### (autoloads nil "php-mode" "php-mode.el" (23091 21678 357827
+;;;;;;  60000))
 ;;; Generated autoloads from php-mode.el
 
 (let ((loads (get 'php 'custom-loads))) (if (member '"php-mode" loads) nil (put 'php 'custom-loads (cons '"php-mode" loads))))
@@ -30,12 +14,24 @@ A list of additional strings to treat as PHP constants.")
 
 (custom-autoload 'php-extra-constants "php-mode" nil)
 
-(add-to-list 'interpreter-mode-alist (cons "php" 'php-mode))
+(if (version< emacs-version "24.4") (dolist (i '("php" "php5" "php7")) (add-to-list 'interpreter-mode-alist (cons i 'php-mode))) (add-to-list 'interpreter-mode-alist (cons "php\\(?:-?[3457]\\(?:\\.[0-9]+\\)*\\)?" 'php-mode)))
+
+(let ((loads (get 'php-faces 'custom-loads))) (if (member '"php-mode" loads) nil (put 'php-faces 'custom-loads (cons '"php-mode" loads))))
 
 (autoload 'php-mode "php-mode" "\
 Major mode for editing PHP code.
 
 \\{php-mode-map}
+
+\(fn)" t nil)
+
+(autoload 'php-current-class "php-mode" "\
+Insert current class name if cursor in class context.
+
+\(fn)" t nil)
+
+(autoload 'php-current-namespace "php-mode" "\
+Insert current namespace if cursor in namespace context.
 
 \(fn)" t nil)
 
@@ -48,7 +44,7 @@ Major mode for editing PHP code.
 ;;;;;;  "php-exif.el" "php-ext.el" "php-filesystem.el" "php-gd.el"
 ;;;;;;  "php-math.el" "php-mode-pkg.el" "php-pcre.el" "php-regex.el"
 ;;;;;;  "php-simplexml.el" "php-strings.el" "php-var.el" "php-xmlparser.el"
-;;;;;;  "php-xmlreader.el") (22803 4309 501751 464000))
+;;;;;;  "php-xmlreader.el") (23091 21678 381045 223000))
 
 ;;;***
 
