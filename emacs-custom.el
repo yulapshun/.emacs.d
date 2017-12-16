@@ -9,7 +9,7 @@
  '(default-input-method "chinese-b5-tsangchi")
  '(package-selected-packages
    (quote
-    (exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil auto-complete))))
+    (dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil auto-complete))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
