@@ -4,12 +4,6 @@
 ;; neotree
 (global-set-key [f8] 'neotree-toggle)
 
-;; highlight
-(global-set-key (kbd "C-x y") 'hlt-highlight-symbol)
-(global-set-key (kbd "C-x t") 'hlt-unhighlight-symbol)
-(global-set-key (kbd "M-p") 'hlt-previous-highlight)
-(global-set-key (kbd "M-n") 'hlt-next-highlight)
-
 ;; symbol-overlay
 (global-set-key (kbd "C-;") 'symbol-overlay-put)
 (global-set-key (kbd "C->") 'symbol-overlay-next)
