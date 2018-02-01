@@ -10,11 +10,11 @@
 (global-set-key (kbd "M-p") 'hlt-previous-highlight)
 (global-set-key (kbd "M-n") 'hlt-next-highlight)
 
-;; highlight-symbol
-(global-set-key (kbd "C-;") 'highlight-symbol)
-(global-set-key (kbd "C->") 'highlight-symbol-next)
-(global-set-key (kbd "C-<") 'highlight-symbol-prev)
-(global-set-key [(meta f3)] 'highlight-symbol-query-replace)
+;; symbol-overlay
+(global-set-key (kbd "C-;") 'symbol-overlay-put)
+(global-set-key (kbd "C->") 'symbol-overlay-next)
+(global-set-key (kbd "C-<") 'symbol-overlay-prev)
+(global-set-key [(meta f3)] 'symbol-overlay-query-replace)
 
 ;; windmove key bindings
 (global-set-key (kbd "C-S-b")  'windmove-left)

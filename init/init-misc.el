@@ -20,8 +20,6 @@
 (add-hook 'after-init-hook 'global-emojify-mode)
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
-(eval-after-load "company"
- '(add-to-list 'company-backends 'company-anaconda))
 
 ;; Customize modes
 (setq custom-file (concat (expand-file-name user-emacs-directory) "emacs-custom.el"))
@@ -38,12 +36,14 @@
 (put 'downcase-region 'disabled nil)
 (add-hook 'window-setup-hook
           '(lambda()
-             (setq highlight-symbol-colors
+             (setq symbol-overlay-colors
                    '("#ff0000" "#00ff00" "#0000ff"
                      "#ffff00" "#ff00ff" "#00ffff"
                      "#ff8000" "#ff0080" "#0080ff"))
 ))
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+(eval-after-load "company"
+ '(add-to-list 'company-backends 'company-anaconda))
 
 (provide 'init-misc)
