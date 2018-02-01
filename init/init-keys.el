@@ -6,8 +6,8 @@
 
 ;; symbol-overlay
 (global-set-key (kbd "C-;") 'symbol-overlay-put)
-(global-set-key (kbd "C->") 'symbol-overlay-next)
-(global-set-key (kbd "C-<") 'symbol-overlay-prev)
+(global-set-key (kbd "C->") 'symbol-overlay-jump-next)
+(global-set-key (kbd "C-<") 'symbol-overlay-jump-prev)
 (global-set-key [(meta f3)] 'symbol-overlay-query-replace)
 
 ;; windmove key bindings
