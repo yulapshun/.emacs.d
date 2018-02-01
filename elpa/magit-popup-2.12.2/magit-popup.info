@@ -1,7 +1,7 @@
 This is magit-popup.info, produced by makeinfo version 5.2 from
 magit-popup.texi.
 
-     Copyright (C) 2015-2017 Jonas Bernoulli <jonas@bernoul.li>
+     Copyright (C) 2015-2018 Jonas Bernoulli <jonas@bernoul.li>
 
      You can redistribute this document and/or modify it under the terms
      of the GNU General Public License as published by the Free Software
@@ -28,9 +28,9 @@ this library implements a similar abstraction; a new kind of prefix
 command that is associated with a specific set of infix arguments and
 suffix commands.
 
-     This manual is for Magit-Popup version 2.12.0.
+This manual is for Magit-Popup version 2.12.2.
 
-     Copyright (C) 2015-2017 Jonas Bernoulli <jonas@bernoul.li>
+     Copyright (C) 2015-2018 Jonas Bernoulli <jonas@bernoul.li>
 
      You can redistribute this document and/or modify it under the terms
      of the GNU General Public License as published by the Free Software
@@ -692,13 +692,13 @@ directly.
 
 Tag Table:
 Node: Top768
-Node: Introduction1995
-Node: Usage4694
-Node: Customizing Existing Popups9391
-Node: Other Options15137
-Node: Defining Prefix and Suffix Commands16680
-Node: Defining Prefix Commands18832
-Node: Defining Suffix Commands25807
+Node: Introduction1990
+Node: Usage4689
+Node: Customizing Existing Popups9386
+Node: Other Options15132
+Node: Defining Prefix and Suffix Commands16675
+Node: Defining Prefix Commands18827
+Node: Defining Suffix Commands25802
 
 End Tag Table
 
