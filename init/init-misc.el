@@ -19,8 +19,6 @@
 (add-hook 'after-init-hook 'global-emojify-mode)
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
-(with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-tern))
 
 ;; Customize modes
 (setq custom-file (concat (expand-file-name user-emacs-directory) "emacs-custom.el"))
