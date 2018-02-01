@@ -13,7 +13,10 @@
 (eyebrowse-mode 1)
 (projectile-global-mode 1)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'prog-mode-hook 'linum-mode)
+(add-hook 'prog-mode-hook
+          (if (>= emacs-major-version 26)
+              'display-line-numbers-mode
+            'linum-mode))
 (add-hook 'after-init-hook 'global-emojify-mode)
 (add-hook 'after-init-hook 'global-flycheck-mode)
 
