@@ -26,6 +26,7 @@
 (require 'init-misc)
 (require 'init-major-mode)
 (require 'init-keys)
+(require 'init-backup)
 (require 'init-ui)
 (require 'init-web-mode)
 (require 'init-paredit)
