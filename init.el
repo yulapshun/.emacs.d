@@ -31,5 +31,6 @@
 (require 'init-web-mode)
 (require 'init-paredit)
 (require 'init-magit)
+(require 'init-projectile)
 
 (load custom-file)
