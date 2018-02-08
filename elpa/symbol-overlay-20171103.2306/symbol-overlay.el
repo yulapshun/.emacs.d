@@ -211,7 +211,8 @@ depending on SCOPE and WINDOW."
 (defun symbol-overlay-maybe-put-temp ()
   "Highlight symbol at point when there are more than 2 occurrences.
 This only effects symbols in the current displayed window."
-  (when symbol-overlay-mode
+  ;; TODO: Add a flag to enable/disable put-temp
+  (when nil ;; symbol-overlay-mode
     (let ((case-fold-search nil)
 	  (symbol (symbol-overlay-get-symbol nil t))
 	  p)
