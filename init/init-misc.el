@@ -21,6 +21,9 @@
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; Set variables
+(setq create-lockfiles nil)
+
 ;; Customize modes
 (setq custom-file (concat (expand-file-name user-emacs-directory) "emacs-custom.el"))
 (setq-default indent-tabs-mode nil)
