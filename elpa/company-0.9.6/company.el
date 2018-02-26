@@ -1,11 +1,11 @@
 ;;; company.el --- Modular text completion framework  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2009-2017  Free Software Foundation, Inc.
+;; Copyright (C) 2009-2018  Free Software Foundation, Inc.
 
 ;; Author: Nikolaj Schumacher
 ;; Maintainer: Dmitry Gutov <dgutov@yandex.ru>
 ;; URL: http://company-mode.github.io/
-;; Version: 0.9.4
+;; Version: 0.9.6
 ;; Keywords: abbrev, convenience, matching
 ;; Package-Requires: ((emacs "24.3"))
 
@@ -260,6 +260,12 @@ If this many lines are not available, prefer to display the tooltip above."
 This doesn't include the margins and the scroll bar."
   :type 'integer
   :package-version '(company . "0.8.0"))
+
+(defcustom company-tooltip-maximum-width most-positive-fixnum
+  "The maximum width of the tooltip's inner area.
+This doesn't include the margins and the scroll bar."
+  :type 'integer
+  :package-version '(company . "0.9.5"))
 
 (defcustom company-tooltip-margin 1
   "Width of margin columns to show around the toolip."
@@ -809,6 +815,11 @@ means that `company-mode' is always turned on except in `message-mode' buffers."
 (defun company-uninstall-map ()
   (setf (cdar company-emulation-alist) nil))
 
+(defun company--company-command-p (keys)
+  "Checks if the keys are part of company's overriding keymap"
+  (or (equal [company-dummy-event] keys)
+      (lookup-key company-my-keymap keys)))
+
 ;; Hack:
 ;; Emacs calculates the active keymaps before reading the event.  That means we
 ;; cannot change the keymap from a timer.  So we send a bogus command.
@@ -822,6 +833,9 @@ means that `company-mode' is always turned on except in `message-mode' buffers."
 (defun company-input-noop ()
   (push 'company-dummy-event unread-command-events))
 
+;; To avoid warnings in Emacs < 26.
+(declare-function line-number-display-width "indent.c")
+
 (defun company--posn-col-row (posn)
   (let ((col (car (posn-col-row posn)))
         ;; `posn-col-row' doesn't work well with lines of different height.
@@ -832,11 +846,12 @@ means that `company-mode' is always turned on except in `message-mode' buffers."
     (when (and header-line-format (version< emacs-version "24.3.93.3"))
       ;; http://debbugs.gnu.org/18384
       (cl-decf row))
+    (when (bound-and-true-p display-line-numbers)
+      (cl-decf col (+ 2 (line-number-display-width))))
     (cons (+ col (window-hscroll)) row)))
 
 (defun company--col-row (&optional pos)
-  (let (display-line-numbers)
-    (company--posn-col-row (posn-at-point pos))))
+  (company--posn-col-row (posn-at-point pos)))
 
 (defun company--row (&optional pos)
   (cdr (company--col-row pos)))
@@ -911,6 +926,12 @@ matches IDLE-BEGIN-AFTER-RE, return it wrapped in a cons."
           (if (> (- (time-to-seconds) start) company-async-timeout)
               (error "Company: backend %s async timeout with args %s"
                      backend args)
+            ;; XXX: Reusing the trick from company--fetch-candidates here
+            ;; doesn't work well: sit-for isn't a good fit when we want to
+            ;; ignore pending input (results in too many calls).
+            ;; FIXME: We should deal with this by standardizing on a kind of
+            ;; Future object that knows how to sync itself. In most cases (but
+            ;; not all), by calling accept-process-output, probably.
             (sleep-for company-async-wait)))
         res))))
 
@@ -958,7 +979,8 @@ matches IDLE-BEGIN-AFTER-RE, return it wrapped in a cons."
 (defun company--multi-backend-adapter-candidates (backends prefix separate)
   (let ((pairs (cl-loop for backend in backends
                         when (equal (company--prefix-str
-                                     (funcall backend 'prefix))
+                                     (let ((company-backend backend))
+                                       (company-call-backend 'prefix)))
                                     prefix)
                         collect (cons (funcall backend 'candidates prefix)
                                       (company--multi-candidates-mapper
@@ -1202,38 +1224,39 @@ can retrieve meta-data for them."
 
 (defun company--fetch-candidates (prefix)
   (let* ((non-essential (not (company-explicit-action-p)))
-         (c (if company--manual-action
+         (c (if (or company-selection-changed
+                    ;; FIXME: This is not ideal, but we have not managed to deal
+                    ;; with these situations in a better way yet.
+                    (company-require-match-p))
                 (company-call-backend 'candidates prefix)
-              (company-call-backend-raw 'candidates prefix)))
-         res)
+              (company-call-backend-raw 'candidates prefix))))
     (if (not (eq (car c) :async))
         c
-      (let ((buf (current-buffer))
-            (win (selected-window))
-            (tick (buffer-chars-modified-tick))
-            (pt (point))
-            (backend company-backend))
+      (let ((res 'none)
+            (inhibit-redisplay t))
         (funcall
          (cdr c)
          (lambda (candidates)
-           (if (not (and candidates (eq res 'done)))
-               ;; There's no completions to display,
-               ;; or the fetcher called us back right away.
-               (setq res candidates)
-             (setq company-backend backend
-                   company-candidates-cache
-                   (list (cons prefix
-                               (company--preprocess-candidates candidates))))
-             (unwind-protect
-                 (company-idle-begin buf win tick pt)
-               (unless company-candidates
-                 (setq company-backend nil
-                       company-candidates-cache nil)))))))
-      ;; FIXME: Relying on the fact that the callers
-      ;; will interpret nil as "do nothing" is shaky.
-      ;; A throw-catch would be one possible improvement.
-      (or res
-          (progn (setq res 'done) nil)))))
+           (when (eq res 'none)
+             (push 'company-foo unread-command-events))
+           (setq res candidates)))
+        (if (company--flyspell-workaround-p)
+            (while (and (eq res 'none)
+                        (not (input-pending-p)))
+              (sleep-for company-async-wait))
+          (while (and (eq res 'none)
+                      (sit-for 0.5 t))))
+        (while (member (car unread-command-events)
+                       '(company-foo (t . company-foo)))
+          (pop unread-command-events))
+        (prog1
+            (and (consp res) res)
+          (setq res 'exited))))))
+
+(defun company--flyspell-workaround-p ()
+  ;; https://debbugs.gnu.org/23980
+  (and (bound-and-true-p flyspell-mode)
+       (version< emacs-version "27")))
 
 (defun company--preprocess-candidates (candidates)
   (cl-assert (cl-every #'stringp candidates))
@@ -1533,7 +1556,8 @@ prefix match (same case) will be prioritized."
             (if (or (symbolp backend)
                     (functionp backend))
                 (when (company--maybe-init-backend backend)
-                  (funcall backend 'prefix))
+                  (let ((company-backend backend))
+                    (company-call-backend 'prefix)))
               (company--multi-backend-adapter backend 'prefix)))
       (when prefix
         (when (company--good-prefix-p prefix)
@@ -1831,7 +1855,7 @@ each one wraps a part of the input string."
   (interactive)
   (company--search-assert-enabled)
   (company-search-mode 0)
-  (company--unread-last-input))
+  (company--unread-this-command-keys))
 
 (defun company-search-delete-char ()
   (interactive)
@@ -1975,7 +1999,7 @@ With ARG, move by that many elements."
   (if (> company-candidates-length 1)
       (company-select-next arg)
     (company-abort)
-    (company--unread-last-input)))
+    (company--unread-this-command-keys)))
 
 (defun company-select-previous-or-abort (&optional arg)
   "Select the previous candidate if more than one, else abort
@@ -1986,7 +2010,7 @@ With ARG, move by that many elements."
   (if (> company-candidates-length 1)
       (company-select-previous arg)
     (company-abort)
-    (company--unread-last-input)))
+    (company--unread-this-command-keys)))
 
 (defun company-next-page ()
   "Select the candidate one page further."
@@ -2054,7 +2078,7 @@ With ARG, move by that many elements."
                                       0)))
           t)
       (company-abort)
-      (company--unread-last-input)
+      (company--unread-this-command-keys)
       nil)))
 
 (defun company-complete-mouse (event)
@@ -2170,20 +2194,22 @@ character, stripping the modifiers.  That character must be a digit."
     (make-string len ?\ )))
 
 (defun company-safe-substring (str from &optional to)
-  (if (> from (string-width str))
-      ""
-    (with-temp-buffer
-      (insert str)
-      (move-to-column from)
-      (let ((beg (point)))
-        (if to
-            (progn
-              (move-to-column to)
-              (concat (buffer-substring beg (point))
-                      (let ((padding (- to (current-column))))
-                        (when (> padding 0)
-                          (company-space-string padding)))))
-          (buffer-substring beg (point-max)))))))
+  (let ((bis buffer-invisibility-spec))
+    (if (> from (string-width str))
+        ""
+      (with-temp-buffer
+        (setq buffer-invisibility-spec bis)
+        (insert str)
+        (move-to-column from)
+        (let ((beg (point)))
+          (if to
+              (progn
+                (move-to-column to)
+                (concat (buffer-substring beg (point))
+                        (let ((padding (- to (current-column))))
+                          (when (> padding 0)
+                            (company-space-string padding)))))
+            (buffer-substring beg (point-max))))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -2229,10 +2255,12 @@ character, stripping the modifiers.  That character must be a digit."
             (< (- (window-height) row 2) company-tooltip-limit)
             (recenter (- (window-height) row 2))))))
 
-(defun company--unread-last-input ()
-  (when last-input-event
-    (clear-this-command-keys t)
-    (setq unread-command-events (list last-input-event))))
+(defun company--unread-this-command-keys ()
+  (when (> (length (this-command-keys)) 0)
+    (setq unread-command-events (nconc
+                                 (listify-key-sequence (this-command-keys))
+                                 unread-command-events))
+    (clear-this-command-keys t)))
 
 (defun company-show-doc-buffer ()
   "Temporarily show the documentation buffer for the selection."
@@ -2583,6 +2611,8 @@ If SHOW-VERSION is non-nil, show the version in the echo area."
     ;; Account for the line continuation column.
     (when (zerop (cadr (window-fringes)))
       (cl-decf ww))
+    (when (bound-and-true-p display-line-numbers)
+      (cl-decf ww (+ 2 (line-number-display-width))))
     (unless (or (display-graphic-p)
                 (version< "24.3.1" emacs-version))
       ;; Emacs 24.3 and earlier included margins
@@ -2690,10 +2720,10 @@ If SHOW-VERSION is non-nil, show the version in the echo area."
              (annotation (company-call-backend 'annotation value)))
         (setq value (company--clean-string (company-reformat value)))
         (when annotation
+          (setq annotation (company--clean-string annotation))
           (when company-tooltip-align-annotations
             ;; `lisp-completion-at-point' adds a space.
-            (setq annotation (comment-string-strip annotation t nil)))
-          (setq annotation (company--clean-string annotation)))
+            (setq annotation (comment-string-strip annotation t nil))))
         (push (cons value annotation) items)
         (setq width (max (+ (length value)
                             (if (and annotation company-tooltip-align-annotations)
@@ -2702,6 +2732,7 @@ If SHOW-VERSION is non-nil, show the version in the echo area."
                          width))))
 
     (setq width (min window-width
+                     company-tooltip-maximum-width
                      (max company-tooltip-minimum-width
                           (if company-show-numbers
                               (+ 2 width)
