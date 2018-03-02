@@ -23,6 +23,8 @@
 
 ;; Set variables
 (setq create-lockfiles nil)
+;; This improve performance when navigating long lines
+(setq-default bidi-display-reordering nil)
 
 ;; Customize modes
 (setq custom-file (concat (expand-file-name user-emacs-directory) "emacs-custom.el"))
