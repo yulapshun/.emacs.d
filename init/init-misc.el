@@ -46,6 +46,7 @@
                      "#ffff00" "#ff00ff" "#00ffff"
                      "#ff8000" "#ff0080" "#0080ff"))
 ))
+(setq symbol-overlay-map nil)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 (eval-after-load "company"
