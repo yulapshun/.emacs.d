@@ -16,7 +16,8 @@
       '(("gnu"          . 1)
         ("melpa-stable" . 0)
         ("melpa"        . -1000)))
-(package-initialize)
+(if (<= emacs-major-version 26)
+              (package-initialize))
 
 (require 'defun-misc)
 (require 'defun-indent)
