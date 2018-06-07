@@ -11,6 +11,7 @@
 (global-auto-revert-mode 1)
 (eyebrowse-mode 1)
 (projectile-global-mode 1)
+(desktop-save-mode 1)
 (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook

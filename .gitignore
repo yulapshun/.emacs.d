@@ -15,3 +15,6 @@ url
 anaconda-mode/**/*.pyc
 
 session.*
+
+.emacs.desktop
+.emacs.desktop.lock
