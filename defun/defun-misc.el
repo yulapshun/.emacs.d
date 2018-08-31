@@ -1,7 +1,7 @@
 (require 'column-marker)
 (defun toggle-column-marker (ARG)
   "Toggle column marker at column ARG
-ARG defaults to 79"
+ARG defaults to 80"
   (interactive "P")
   (if (bound-and-true-p column-marker-on)
       (progn
@@ -9,7 +9,7 @@ ARG defaults to 79"
         (setq column-marker-on nil))
     (progn
       (or ARG
-          (setq ARG 79))
+          (setq ARG 80))
       (column-marker-1 ARG)
       (setq column-marker-on t))))
 
