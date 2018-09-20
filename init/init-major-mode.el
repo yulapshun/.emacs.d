@@ -21,4 +21,9 @@
           (lambda ()
             (setq js2-basic-offset 2)))
 
+(add-hook 'css-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2)))
+
+
 (provide 'init-major-mode)
