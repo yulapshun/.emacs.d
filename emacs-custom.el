@@ -9,7 +9,7 @@
  '(default-input-method "chinese-b5-tsangchi")
  '(package-selected-packages
    (quote
-    (company-web tern pug-mode solidity-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil)))
+    (company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil)))
  '(safe-local-variable-values (quote ((js2-basic-offset . 4)))))
 
 (custom-set-faces
