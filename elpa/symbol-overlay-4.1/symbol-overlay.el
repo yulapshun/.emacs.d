@@ -3,8 +3,8 @@
 ;; Copyright (C) 2017 wolray
 
 ;; Author: wolray <wolray@foxmail.com>
-;; Version: 3.6
-;; Package-Version: 20171103.2306
+;; Version: 4.1
+;; Package-Version: 4.1
 ;; URL: https://github.com/wolray/symbol-overlay/
 ;; Keywords: faces, matching
 ;; Package-Requires: ((emacs "24.3"))
@@ -78,12 +78,80 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'thingatpt)
 (require 'seq)
 
 (defgroup symbol-overlay nil
   "Highlight symbols with keymap-enabled overlays."
   :group 'convenience)
+
+(defface symbol-overlay-default-face
+  '((t (:inherit 'highlight)))
+  "Symbol Overlay default face")
+
+(defface symbol-overlay-face-1
+  '((t (:background "dodger blue" :foreground "black")))
+  "Symbol Overlay default candidate 1")
+
+(defface symbol-overlay-face-2
+  '((t (:background "hot pink" :foreground "black")))
+  "Symbol Overlay default candidate 2")
+
+(defface symbol-overlay-face-3
+  '((t (:background "yellow" :foreground "black")))
+  "Symbol Overlay default candidate 3")
+
+(defface symbol-overlay-face-4
+  '((t (:background "orchid" :foreground "black")))
+  "Symbol Overlay default candidate 4")
+
+(defface symbol-overlay-face-5
+  '((t (:background "red" :foreground "black")))
+  "Symbol Overlay default candidate 5")
+
+(defface symbol-overlay-face-6
+  '((t (:background "salmon" :foreground "black")))
+  "Symbol Overlay default candidate 6")
+
+(defface symbol-overlay-face-7
+  '((t (:background "spring green" :foreground "black")))
+  "Symbol Overlay default candidate 7")
+
+(defface symbol-overlay-face-8
+  '((t (:background "turquoise" :foreground "black")))
+  "Symbol Overlay default candidate 8")
+
+(defcustom symbol-overlay-faces '(symbol-overlay-face-1
+                                  symbol-overlay-face-2
+                                  symbol-overlay-face-3
+                                  symbol-overlay-face-4
+                                  symbol-overlay-face-5
+                                  symbol-overlay-face-6
+                                  symbol-overlay-face-7
+                                  symbol-overlay-face-8)
+  "Faces used for overlays."
+  :type '(repeat face)
+  :group 'symbol-overlay)
+
+(defcustom symbol-overlay-idle-time 0.5
+  "Idle time after every command and before the temporary highlighting."
+  :group 'symbol-overlay
+  :type 'float)
+
+(defcustom symbol-overlay-ignore-functions
+  '((c-mode . symbol-overlay-ignore-function-c)
+    (c++-mode . symbol-overlay-ignore-function-c++)
+    (python-mode . symbol-overlay-ignore-function-python)
+    (go-mode . symbol-overlay-ignore-function-go))
+  "Functions to determine whether a symbol should be ignored.
+
+This is an association list that maps a MAJOR-MODE symbol to a
+function that determines whether a symbol should be ignored. For
+instance, such a function could use a major mode's font-lock
+definitions to prevent a language's keywords from getting highlighted."
+  :group 'symbol-overlay
+  :type '(repeat (cons (function :tag "Mode") function)))
 
 (defvar symbol-overlay-map
   (let ((map (make-sparse-keymap)))
@@ -102,21 +170,6 @@
 You can re-bind the commands to any keys you prefer.")
 
 (defvar-local symbol-overlay-keywords-alist nil)
-
-(defcustom symbol-overlay-colors '("dodger blue"
-                                   "hot pink"
-                                   "orange"
-                                   "orchid"
-                                   "red"
-                                   "salmon"
-                                   "spring green"
-                                   "turquoise")
-  "Colors used for overlays' background.
-You can add more colors whatever you like.")
-
-(defcustom symbol-overlay-idle-time 0.5
-  "Idle time after every command and before the temporary highlighting."
-  :type 'float)
 
 ;;;###autoload
 (define-minor-mode symbol-overlay-mode
@@ -199,10 +252,6 @@ depending on SCOPE and WINDOW."
 	  (forward-line lines)
 	  (narrow-to-region beg (point)))))))
 
-(defface symbol-overlay-temp-face
-  '((t (:inherit 'highlight)))
-  "Face for temporary highlighting.")
-
 (defun symbol-overlay-remove-temp ()
   "Delete all temporary overlays."
   (mapc 'delete-overlay (symbol-overlay-get-list ""))
@@ -211,25 +260,32 @@ depending on SCOPE and WINDOW."
 (defun symbol-overlay-maybe-put-temp ()
   "Highlight symbol at point when there are more than 2 occurrences.
 This only effects symbols in the current displayed window."
-  ;; TODO: Add a flag to enable/disable put-temp
-  (when nil ;; symbol-overlay-mode
-    (let ((case-fold-search nil)
-	  (symbol (symbol-overlay-get-symbol nil t))
-	  p)
-      (when (and symbol (not (symbol-overlay-assoc symbol)))
-	(symbol-overlay-remove-temp)
-	(save-excursion
-	  (save-restriction
-	    (symbol-overlay-narrow symbol-overlay-scope t)
-	    (goto-char (point-min))
-	    (re-search-forward symbol nil t)
-	    (save-match-data
-	      (while (re-search-forward symbol nil t)
-		(symbol-overlay-put-one symbol)
-		(or p (setq p t))))
-	    (when p
-	      (symbol-overlay-put-one symbol)
-	      (setq symbol-overlay-temp-symbol symbol))))))))
+  (when symbol-overlay-mode
+    (let* ((case-fold-search nil)
+           (symbol (symbol-overlay-get-symbol nil t))
+           p)
+      (when (and symbol
+                 (not (symbol-overlay-assoc symbol))
+                 (not (symbol-overlay-ignored-p symbol)))
+        (symbol-overlay-remove-temp)
+        (save-excursion
+          (save-restriction
+            (symbol-overlay-narrow symbol-overlay-scope t)
+            (goto-char (point-min))
+            (re-search-forward symbol nil t)
+            (save-match-data
+              (while (re-search-forward symbol nil t)
+                (symbol-overlay-put-one symbol)
+                (or p (setq p t))))
+            (when p
+              (symbol-overlay-put-one symbol)
+              (setq symbol-overlay-temp-symbol symbol))))))))
+
+(defun symbol-overlay-ignored-p (symbol)
+  "Determine whether SYMBOL should be temporarily highlighted."
+  (let ((f (cdr (assoc major-mode symbol-overlay-ignore-functions))))
+    (when f
+      (funcall f symbol))))
 
 (defvar symbol-overlay-timer nil
   "Timer for temporary highlighting.")
@@ -246,42 +302,42 @@ This only effects symbols in the current displayed window."
   (unless (string= (symbol-overlay-get-symbol nil t) symbol-overlay-temp-symbol)
     (symbol-overlay-remove-temp)))
 
-(defun symbol-overlay-put-one (symbol &optional color)
+(defun symbol-overlay-put-one (symbol &optional face)
   "Put overlay on current occurrence of SYMBOL after a match.
-If COLOR is non-nil, use it as the overlay face's background color.
-Otherwise use `symbol-overlay-temp-face' as the face."
+If FACE is non-nil, use it as the overlay’s face.
+Otherwise apply `symbol-overlay-default-face'."
   (let ((ov (make-overlay (match-beginning 0) (match-end 0))))
-    (if color (progn (overlay-put ov 'face `(:background ,color :foreground "black"))
-		     (overlay-put ov 'keymap symbol-overlay-map)
-		     (overlay-put ov 'evaporate t)
-		     (overlay-put ov 'symbol symbol))
-      (overlay-put ov 'face 'symbol-overlay-temp-face)
+    (if face (progn (overlay-put ov 'face face)
+		    (overlay-put ov 'keymap symbol-overlay-map)
+		    (overlay-put ov 'evaporate t)
+		    (overlay-put ov 'symbol symbol))
+      (overlay-put ov 'face 'symbol-overlay-default-face)
       (overlay-put ov 'symbol ""))))
 
 (defun symbol-overlay-put-all (symbol scope &optional keyword)
   "Put overlays on all occurrences of SYMBOL in the buffer.
-The background color is randomly picked from `symbol-overlay-colors'.
+The face is randomly picked from `symbol-overlay-faces'.
 If SCOPE is non-nil, put overlays only on occurrences in scope.
 If KEYWORD is non-nil, remove it then use its color on new overlays."
   (let* ((case-fold-search nil)
-	 (limit (length symbol-overlay-colors))
-	 (color (or (symbol-overlay-maybe-remove keyword)
-		    (elt symbol-overlay-colors (random limit))))
+	 (limit (length symbol-overlay-faces))
+	 (face (or (symbol-overlay-maybe-remove keyword)
+	           (elt symbol-overlay-faces (random limit))))
 	 (alist symbol-overlay-keywords-alist)
-	 (colors (mapcar 'cddr alist))
+	 (faces (mapcar 'cddr alist))
 	 (pt (point)))
     (if (< (length alist) limit)
-	(while (seq-position colors color)
-	  (setq color (elt symbol-overlay-colors (random limit))))
-      (setq color (symbol-overlay-maybe-remove (car (last alist)))))
+	(while (seq-position faces face)
+	  (setq face (elt symbol-overlay-faces (random limit))))
+      (setq face (symbol-overlay-maybe-remove (car (last alist)))))
     (and symbol-overlay-temp-symbol (symbol-overlay-remove-temp))
     (save-excursion
       (save-restriction
 	(symbol-overlay-narrow scope)
 	(goto-char (point-min))
 	(while (re-search-forward symbol nil t)
-	  (symbol-overlay-put-one symbol color))))
-    (setq keyword `(,symbol ,scope . ,color))
+	  (symbol-overlay-put-one symbol face))))
+    (setq keyword `(,symbol ,scope . ,face))
     (push keyword symbol-overlay-keywords-alist)
     keyword))
 
@@ -299,6 +355,67 @@ If SHOW-COLOR is non-nil, display the color used by current overlay."
 		       (and show-color (format " (%s)" (cddr keyword))))
 	       (+ count 1)
 	       (+ count (length after))))))
+
+(defun symbol-overlay-match-keyword-list (symbol keywords)
+  "Return non-nil is SYMBOL is among KEYWORDS.
+KEYWORDS is a list of strings.  SYMBOL is expected to include
+leading \\< and trailing \\>, as per the return value of
+`symbol-overlay-get-symbol'."
+  (cl-find (substring symbol 3 -3) keywords :test #'string=))
+
+(defvar c-font-lock-extra-types)
+(defun symbol-overlay-ignore-function-c (symbol)
+  "Determine whether SYMBOL should be ignored (C Language)."
+  (symbol-overlay-match-keyword-list
+   symbol
+   (append c-font-lock-extra-types
+           '("auto" "break" "case" "char" "const" "continue"
+             "default" "do" "double" "else" "enum" "extern"
+             "float" "for" "goto" "if" "inline" "int" "long"
+             "register" "restrict" "return" "short" "signed"
+             "sizeof" "static" "struct" "switch" "typedef"
+             "union" "unsigned" "void" "volatile" "while"))))
+
+(defvar c++-font-lock-extra-types)
+(defun symbol-overlay-ignore-function-c++ (symbol)
+  "Determine whether SYMBOL should be ignored (C++)."
+  (symbol-overlay-match-keyword-list
+   symbol
+   (append c++-font-lock-extra-types
+           '("alignas" "alignof" "asm" "auto" "bool" "break"
+             "case" "catch" "char" "char16_t" "char32_t" "class"
+             "const" "const_cast" "constexpr" "continue"
+             "decltype" "default" "delete" "do" "double"
+             "dynamic_cast" "else" "enum" "explicit" "export"
+             "extern" "false" "final" "float" "for" "friend"
+             "goto" "if" "inline" "int" "long" "mutable"
+             "namespace" "new" "noexcept" "nullptr" "operator"
+             "override" "private" "protected" "public" "register"
+             "reinterpret_cast" "return" "short" "signed"
+             "sizeof" "static" "static_assert" "static_cast"
+             "struct" "switch" "template" "this" "thread_local"
+             "throw" "true" "try" "typedef" "typeid" "typename"
+             "union" "unsigned" "using" "virtual" "void"
+             "volatile" "wchar_t" "while"))))
+
+(defvar python-font-lock-keywords)
+(defun symbol-overlay-ignore-function-python (symbol)
+  "Determine whether SYMBOL should be ignored (Python)."
+  (let* ((keyword-symbol (car python-font-lock-keywords))
+         (keyword (if (stringp keyword-symbol)
+                      keyword-symbol
+                    (symbol-name keyword-symbol))))
+    (string-match-p keyword symbol)))
+
+(defvar go-builtins)
+(defvar go-constants)
+(defvar go-mode-keywords)
+(defun symbol-overlay-ignore-function-go (symbol)
+  "Determine whether SYMBOL should be ignored (Go)."
+  ;; Remove \_< and \_> so we can string compare with keywords
+  (or (symbol-overlay-match-keyword-list symbol go-builtins)
+      (symbol-overlay-match-keyword-list symbol go-constants)
+      (symbol-overlay-match-keyword-list symbol go-mode-keywords)))
 
 ;;;###autoload
 (defun symbol-overlay-put ()
