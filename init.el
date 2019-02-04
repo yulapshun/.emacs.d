@@ -33,5 +33,6 @@
 (require 'init-paredit)
 (require 'init-magit)
 (require 'init-projectile)
+(require 'init-lsp-mode)
 
 (load custom-file)

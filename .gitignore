@@ -18,3 +18,5 @@ session.*
 
 .emacs.desktop
 .emacs.desktop.lock
+
+.lsp-session-*
