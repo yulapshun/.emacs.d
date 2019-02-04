@@ -9,6 +9,7 @@
 (add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
 (add-hook 'web-mode-hook
           (lambda ()
             (setq web-mode-markup-indent-offset 2)
