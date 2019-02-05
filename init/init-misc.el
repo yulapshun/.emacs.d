@@ -10,7 +10,6 @@
 (electric-indent-mode 0)
 (global-auto-revert-mode 1)
 (eyebrowse-mode 1)
-(projectile-global-mode 1)
 (desktop-save-mode 1)
 (global-git-gutter-mode 1)
 (add-hook 'python-mode-hook 'anaconda-mode)
