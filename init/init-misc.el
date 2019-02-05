@@ -52,6 +52,7 @@
 (setq symbol-overlay-map nil)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
+(setq neo-smart-open t)
 ;; (eval-after-load "company"
 ;;  '(add-to-list 'company-backends 'company-anaconda))
 
