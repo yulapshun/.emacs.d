@@ -21,6 +21,8 @@
 (add-hook 'after-init-hook 'global-emojify-mode)
 (add-hook 'after-init-hook 'global-flycheck-mode)
 (add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (company-flx-mode +1))
 
 ;; Set variables
 (setq create-lockfiles nil)
