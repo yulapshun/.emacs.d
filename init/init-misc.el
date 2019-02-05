@@ -12,7 +12,7 @@
 (eyebrowse-mode 1)
 (desktop-save-mode 1)
 (global-git-gutter-mode 1)
-(add-hook 'python-mode-hook 'anaconda-mode)
+;; (add-hook 'python-mode-hook 'anaconda-mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'prog-mode-hook
           (if (>= emacs-major-version 26)
@@ -50,7 +50,7 @@
 (setq symbol-overlay-map nil)
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-(eval-after-load "company"
- '(add-to-list 'company-backends 'company-anaconda))
+;; (eval-after-load "company"
+;;  '(add-to-list 'company-backends 'company-anaconda))
 
 (provide 'init-misc)
