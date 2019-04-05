@@ -13,7 +13,14 @@
  '(package-selected-packages
    (quote
     (ido-completing-read+ company-flx company-lsp lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil)))
- '(safe-local-variable-values (quote ((js2-basic-offset . 4)))))
+ '(safe-local-variable-values
+   (quote
+    ((web-mode-engines-alist
+      ("django" . "\\.html\\'"))
+     (web-mode-block-padding . 0)
+     (web-mode-script-padding . 0)
+     (web-mode-style-padding . 0)
+     (js2-basic-offset . 4)))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
