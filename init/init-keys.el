@@ -1,6 +1,9 @@
 ;; built-in
 (global-set-key (kbd "C-x _") 'fit-window-to-buffer)
 
+;; EasyPG Assistant
+(global-set-key (kbd "C-x x") 'epa-decrypt-region)
+
 ;; neotree
 (global-set-key [f8] 'neotree-toggle)
 
