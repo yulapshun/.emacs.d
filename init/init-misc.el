@@ -26,6 +26,7 @@
 
 ;; Set variables
 (setq create-lockfiles nil)
+(setq confirm-kill-emacs 'yes-or-no-p)
 ;; This improve performance when navigating long lines
 (setq-default bidi-display-reordering nil)
 
