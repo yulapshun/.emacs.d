@@ -23,6 +23,7 @@
 (require 'defun-indent)
 (require 'defun-delete)
 (require 'defun-modifier)
+;; (require 'defun-input)
 
 (require 'init-misc)
 (require 'init-major-mode)
