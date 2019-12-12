@@ -12,7 +12,7 @@
  '(lsp-ui-sideline-enable nil)
  '(package-selected-packages
    (quote
-    (ido-completing-read+ company-flx company-lsp lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil)))
+    (yasnippet ido-completing-read+ company-flx company-lsp lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode projectile flycheck emojify go-mode yaml-mode flx-ido magit web-mode solarized-theme neotree highlight-symbol evil)))
  '(safe-local-variable-values
    (quote
     ((web-mode-engines-alist
