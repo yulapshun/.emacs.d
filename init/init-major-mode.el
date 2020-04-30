@@ -15,12 +15,15 @@
             (setq web-mode-markup-indent-offset 2)
             (setq web-mode-css-indent-offset 2)
             (setq web-mode-code-indent-offset 2)))
-
-(add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-(add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
-(add-hook 'js2-mode-hook
+(add-hook 'js-mode
           (lambda ()
-            (setq js2-basic-offset 2)))
+            (setq js-indent-level 2)))
+(if (< emacs-major-version 27)
+    (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
+  (add-hook 'js2-mode-hook
+            (lambda ()
+              (setq js2-basic-offset 2))))
 
 (add-hook 'css-mode-hook
           (lambda ()
