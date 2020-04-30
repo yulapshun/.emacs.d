@@ -6,8 +6,6 @@
 (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.css\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.scss\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
 (add-hook 'web-mode-hook
@@ -15,16 +13,15 @@
             (setq web-mode-markup-indent-offset 2)
             (setq web-mode-css-indent-offset 2)
             (setq web-mode-code-indent-offset 2)))
-(add-hook 'js-mode
-          (lambda ()
-            (setq js-indent-level 2)))
-(if (< emacs-major-version 27)
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+(when (< emacs-major-version 27)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
   (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))
   (add-hook 'js2-mode-hook
             (lambda ()
               (setq js2-basic-offset 2))))
-
+(add-hook 'js-mode
+          (lambda ()
+            (setq js-indent-level 2)))
 (add-hook 'css-mode-hook
           (lambda ()
             (setq css-indent-offset 2)))
