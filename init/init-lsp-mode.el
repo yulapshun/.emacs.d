@@ -26,7 +26,10 @@
 ;; Define key bindings
 (let ((map (make-sparse-keymap)))
   (define-key map (kbd "C-c l .") #'lsp-find-definition)
-  (define-key map (kbd "C-c l /") #'lsp-find-references)
+  (define-key map (kbd "C-c l ?") #'lsp-find-references)
+  (define-key map (kbd "C-c l d") #'lsp-ui-doc-glance)
+  (define-key map (kbd "C-c l i") #'lsp-ui-peek-find-implementation)
+  (define-key map (kbd "C-c l I") #'lsp-find-implementation)
   (push
    `(lsp-mode . ,map)
    minor-mode-map-alist))
