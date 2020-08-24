@@ -12,7 +12,7 @@
  '(lsp-ui-peek-always-show t)
  '(lsp-ui-sideline-enable nil)
  '(package-selected-packages
-   '(yasnippet ido-completing-read+ company-flx company-lsp lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode flycheck emojify go-mode yaml-mode flx-ido web-mode solarized-theme neotree highlight-symbol evil))
+   '(yasnippet ido-completing-read+ company-flx lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode flycheck emojify go-mode yaml-mode flx-ido web-mode solarized-theme neotree highlight-symbol evil))
  '(safe-local-variable-values
    '((web-mode-engines-alist
       ("django" . "\\.html\\'"))
