@@ -2,6 +2,10 @@
 (require 'lsp-mode)
 (require 'lsp-ui)
 
+;; Tuning
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max 1048576) 
+
 (custom-set-variables
  '(lsp-auto-guess-root nil)
  '(lsp-ui-sideline-enable nil)
