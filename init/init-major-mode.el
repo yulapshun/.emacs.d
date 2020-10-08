@@ -26,5 +26,6 @@
           (lambda ()
             (setq css-indent-offset 2)))
 
+(setq pug-tab-width 2)
 
 (provide 'init-major-mode)
