@@ -14,7 +14,7 @@
  '(lsp-ui-doc-enable nil))
 
 ;; npm i -g typescript-language-server
-;; pip install python-language-server
+;; pip install python-lsp-server
 ;; npm i -g vscode-css-languageserver-bin
 ;; npm i -g vscode-html-languageserver-bin
 
