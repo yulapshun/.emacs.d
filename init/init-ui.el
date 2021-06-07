@@ -18,5 +18,6 @@
 (add-hook 'after-make-frame-functions 'init-theme)
 
 (tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (provide 'init-ui)
