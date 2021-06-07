@@ -24,6 +24,12 @@
 (with-eval-after-load 'company
   (company-flx-mode +1))
 
+(add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+
+(add-hook 'prog-mode-hook
+          '(lambda ()
+             (setq display-fill-column-indicator-column 79)))
+
 ;; Set variables
 (setq create-lockfiles nil)
 (setq confirm-kill-emacs 'yes-or-no-p)
