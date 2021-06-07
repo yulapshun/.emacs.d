@@ -20,3 +20,6 @@ session.*
 .emacs.desktop.lock
 
 .lsp-session-*
+.cache
+.dap-breakpoints
+workspace/

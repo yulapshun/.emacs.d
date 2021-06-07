@@ -1,6 +1,7 @@
 (require 'lsp)
 (require 'lsp-mode)
 (require 'lsp-ui)
+(require 'lsp-java)
 
 ;; Tuning
 (setq gc-cons-threshold 100000000)
@@ -24,6 +25,7 @@
 (add-hook 'python-mode-hook #'lsp)
 (add-hook 'web-mode-hook #'lsp)
 (add-hook 'css-mode-hook #'lsp)
+(add-hook 'java-mode-hook #'lsp)
 
 
 ;; Define key bindings
