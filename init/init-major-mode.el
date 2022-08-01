@@ -8,6 +8,7 @@
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
+
 (add-hook 'web-mode-hook
           (lambda ()
             (setq web-mode-markup-indent-offset 2)
@@ -25,7 +26,12 @@
 (add-hook 'css-mode-hook
           (lambda ()
             (setq css-indent-offset 2)))
-
-(setq pug-tab-width 2)
+(add-hook 'scss-mode-hook
+          (lambda ()
+            (setq css-indent-offset 2)))
+(add-hook 'pug-mode-hook
+          (lambda ()
+            (setq pug-tab-width 2)
+            (setq indent-tabs-mode t)))
 
 (provide 'init-major-mode)
