@@ -1,5 +1,5 @@
 (defun init-theme (frame)
-  (mapcar #'disable-theme custom-enabled-themes)
+  (mapc #'disable-theme custom-enabled-themes)
   (if (display-graphic-p frame)
       (progn
         (load-theme 'gruvbox-dark-medium)
