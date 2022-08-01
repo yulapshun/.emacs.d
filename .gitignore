@@ -21,5 +21,6 @@ session.*
 
 .lsp-session-*
 .cache
+eln-cache/
 .dap-breakpoints
 workspace/
