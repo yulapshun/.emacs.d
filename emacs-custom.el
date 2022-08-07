@@ -13,14 +13,15 @@
  '(lsp-ui-sideline-enable nil)
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(package-selected-packages
-   '(use-package auto-compile lsp-java yasnippet ido-completing-read+ company-flx lsp-mode git-gutter company-web tern pug-mode symbol-overlay anaconda-mode company-anaconda company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse qml-mode avy js2-mode php-mode flycheck emojify go-mode yaml-mode flx-ido web-mode solarized-theme neotree highlight-symbol evil))
+   '(magit use-package auto-compile lsp-java yasnippet ido-completing-read+ company-flx lsp-mode git-gutter company-web tern pug-mode symbol-overlay company rjsx-mode jsx-mode dockerfile-mode exec-path-from-shell geiser paredit eyebrowse avy js2-mode php-mode flycheck emojify go-mode yaml-mode flx-ido web-mode solarized-theme neotree highlight-symbol))
  '(safe-local-variable-values
    '((web-mode-engines-alist
       ("django" . "\\.html\\'"))
      (web-mode-block-padding . 0)
      (web-mode-script-padding . 0)
      (web-mode-style-padding . 0)
-     (js2-basic-offset . 4))))
+     (js2-basic-offset . 4)))
+ '(warning-suppress-types '((comp))))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
