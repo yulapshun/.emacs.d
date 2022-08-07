@@ -1,34 +1,21 @@
-;; Add load-path
+;;; init.el --- My Emacs configuration -*- lexical-binding: t -*-
+
+;;; Commentary:
+;; My Emacs configuration
+
+;;; Code:
+
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "defun" user-emacs-directory))
-(add-to-list 'load-path (expand-file-name "init" user-emacs-directory))
 
-(require 'package)
-(add-to-list
- 'package-archives
- '("melpa" . "http://melpa.org/packages/")
- t)
-(setq package-archive-priorities
-      '(("gnu"          . 1)
-        ("melpa"        . 0)))
 (if (<= emacs-major-version 26)
-              (package-initialize))
+    (package-initialize))
+(require 'package)
 
-(require 'defun-misc)
-(require 'defun-indent)
-(require 'defun-delete)
-(require 'defun-modifier)
-;; (require 'defun-input)
-
-(require 'init-misc)
-(require 'init-major-mode)
-(require 'init-keys)
-(require 'init-backup)
-(require 'init-ui)
-(require 'init-web-mode)
-(require 'init-paredit)
-(require 'init-magit)
-(require 'init-projectile)
-(require 'init-lsp-mode)
+(org-babel-load-file (expand-file-name "~/.emacs.d/defun.org" user-emacs-directory))
+(org-babel-load-file (expand-file-name "~/.emacs.d/config.org" user-emacs-directory))
 
 (load custom-file)
+
+(provide 'init)
+
+;;; init.el ends here

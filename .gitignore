@@ -15,13 +15,15 @@ url
 anaconda-mode/**/*.pyc
 
 session.*
-
-.emacs.desktop
-.emacs.desktop.lock
-
 .lsp-session-*
 .cache
 *.elc
 eln-cache/
+
+.emacs.desktop
+.emacs.desktop.lock
+config.el
+defun.el
+
 .dap-breakpoints
 workspace/
