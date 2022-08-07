@@ -2,6 +2,8 @@
 #+BEGIN_SRC emacs-lisp
   (when (memq window-system '(mac ns x))
     (exec-path-from-shell-initialize))
+  (setq gc-cons-threshold 100000000)
+  (setq read-process-output-max 1048576)
 #+END_SRC
 
 * Package
@@ -15,25 +17,7 @@
           ("melpa"        . 0)))
 #+END_SRC
 
-* Major Mode
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.xml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.jinja2\\'" . web-mode))
-
-  (when (< emacs-major-version 27)
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode)))
-#+END_SRC
-
-* Global Minor Modes
+* Minor Modes
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode 1)
   (global-subword-mode 1)
@@ -41,20 +25,9 @@
   (global-whitespace-mode 1)
   (column-number-mode 1)
   (ido-mode 1)
-  (electric-indent-mode 0)
   (global-auto-revert-mode 1)
   (desktop-save-mode 1)
-  ;; From packages
-  (flx-ido-mode 1)
-  (global-git-gutter-mode 1)
-  (eyebrowse-mode 1)
-  (evil-mode 1)
-  (auto-compile-on-load-mode 1)
-  (auto-compile-on-save-mode 1)
-#+END_SRC
-
-* Minor Mode Hooks
-#+BEGIN_SRC emacs-lisp
+  (electric-indent-mode 0)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (add-hook 'prog-mode-hook
             (if (>= emacs-major-version 26)
@@ -64,18 +37,11 @@
   (add-hook 'prog-mode-hook
             (lambda ()
               (setq display-fill-column-indicator-column 120)))
-
-  ;; From packages
-  (add-hook 'after-init-hook 'global-emojify-mode)
-  (add-hook 'after-init-hook 'global-flycheck-mode)
-  (add-hook 'after-init-hook 'global-company-mode)
-  (with-eval-after-load 'company
-    (company-flx-mode +1))
 #+END_SRC
 
-* Set Variables
+* Variables
 #+BEGIN_SRC emacs-lisp
-  (setq-default custom-file (expand-file-name "emacs-custom.el" user-emacs-directory))
+  (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq-default create-lockfiles nil)
   (setq-default confirm-kill-emacs 'yes-or-no-p)
   (setq-default bidi-display-reordering nil) ;; Improve performance when navigating long lines
@@ -88,68 +54,22 @@
   (setq-default native-comp-deferred-compilation t)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
-
-  ;; From packages
-  (setq-default evil-default-state 'emacs)
-  (setq-default emojify-emoji-styles '(unicode))
-  (setq-default symbol-overlay-map nil)
-  (setq-default neo-smart-open t)
-  (setq-default load-prefer-newer t)
-#+END_SRC
-
-* Variable Hooks
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'web-mode-hook
-            (lambda ()
-              (setq web-mode-markup-indent-offset 2)
-              (setq web-mode-css-indent-offset 2)
-              (setq web-mode-code-indent-offset 2)))
   (add-hook 'js-mode-hook
             (lambda ()
               (setq js-indent-level 2)))
-  (add-hook 'js2-mode-hook
-            (lambda ()
-              (setq js2-basic-offset 2)))
   (add-hook 'css-mode-hook
             (lambda ()
               (setq css-indent-offset 2)))
-  (add-hook 'scss-mode-hook
-            (lambda ()
-              (setq css-indent-offset 2)))
-  (add-hook 'pug-mode-hook
-            (lambda ()
-              (setq pug-tab-width 2)
-              (setq indent-tabs-mode t)))
 #+END_SRC
 
 * Keys
 #+BEGIN_SRC emacs-lisp
-  ;; built-in
   (global-set-key (kbd "C-x _") 'fit-window-to-buffer)
-
-  ;; EasyPG Assistant
   (global-set-key (kbd "C-x x") 'epa-decrypt-region)
-
-  ;; neotree
-  (global-set-key [f8] 'neotree-toggle)
-
-  ;; symbol-overlay
-  (global-set-key (kbd "C-;") 'symbol-overlay-put)
-  (global-set-key (kbd "C->") 'symbol-overlay-jump-next)
-  (global-set-key (kbd "C-<") 'symbol-overlay-jump-prev)
-  (global-set-key [(meta f3)] 'symbol-overlay-query-replace)
-
-  ;; windmove key bindings
   (global-set-key (kbd "C-S-b")  'windmove-left)
   (global-set-key (kbd "C-S-f") 'windmove-right)
   (global-set-key (kbd "C-S-p")    'windmove-up)
   (global-set-key (kbd "C-S-n")  'windmove-down)
-
-  ;; avy
-  (global-set-key (kbd "C-:") 'avy-goto-char)
-
-  ;; magit
-  (global-set-key (kbd "C-x g") 'magit-status)
 
   ;; defun-indent
   (global-set-key (kbd "<C-tab>")  'force-indent)
@@ -225,83 +145,281 @@
                        "#ff8000" "#ff0080" "#0080ff"))))
 #+END_SRC
 
-* web-mode
+* auto-compile
 #+BEGIN_SRC emacs-lisp
-  (setq web-mode-enable-current-element-highlight t)
-  (setq web-mode-enable-auto-indentation nil)
-  (setq web-mode-enable-engine-detection t)
-  (setq web-mode-engines-alist '(("django" . "\\.jinja2\\'")))
-  (setq web-mode-markup-indent-offset 2)
+    (use-package auto-compile
+      :ensure t
+      :config
+      (auto-compile-on-load-mode 1)
+      (auto-compile-on-save-mode 1)
+      (setq-default load-prefer-newer t))
 #+END_SRC
 
-* paredit
+* avy
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
-  (add-hook 'ielm-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-mode-hook 'enable-paredit-mode)
-  (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
-  (add-hook 'scheme-mode-hook 'enable-paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+  (use-package avy
+    :ensure t
+    :bind
+    ("C-:" . 'avy-goto-char))
 #+END_SRC
 
-* magit
+* company
 #+BEGIN_SRC emacs-lisp
-  (require 'magit)
-  (magit-define-popup-switch 'magit-commit-popup ?E
-                             "Allow empty message" "--allow-empty-message")
-  (setq magit-completing-read-function 'magit-ido-completing-read)
+  (use-package company
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
-* projectile
+* company-flx
 #+BEGIN_SRC emacs-lisp
-  (projectile-global-mode 1)
+  (use-package company-flx
+    :ensure t
+    :config
+    (company-flx-mode +1)
+    :after (company))
+#+END_SRC
 
-  (setq projectile-globally-ignored-directories
-        (cons "node_modules" projectile-globally-ignored-directories))
+* company-web
+#+BEGIN_SRC emacs-lisp
+  (use-package company-web
+    :ensure t
+    :after (company))
+#+END_SRC
 
-  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+* dockerfile-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package dockerfile-mode
+    :ensure t)
+#+END_SRC
+
+* emojify
+#+BEGIN_SRC emacs-lisp
+  (use-package emojify
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-emojify-mode)
+    :config
+    (setq-default emojify-emoji-styles '(unicode)))
+#+END_SRC
+
+* exec-path-from-shell
+#+BEGIN_SRC emacs-lisp
+  (use-package exec-path-from-shell
+    :ensure t)
+#+END_SRC
+
+* eyebrowse
+#+BEGIN_SRC emacs-lisp
+  (use-package eyebrowse
+    :ensure t
+    :config
+    (eyebrowse-mode 1))
+#+END_SRC
+
+* flx-ido
+#+BEGIN_SRC emacs-lisp
+  (use-package flx-ido
+    :ensure t
+    :config
+    (flx-ido-mode 1))
+#+END_SRC
+
+* flycheck
+#+BEGIN_SRC emacs-lisp
+  (use-package flycheck
+    :ensure t
+    :init
+    (add-hook 'after-init-hook 'global-flycheck-mode))
+#+END_SRC
+
+* geiser
+#+BEGIN_SRC emacs-lisp
+  (use-package geiser
+    :ensure t)
+#+END_SRC
+
+* git-gutter
+#+BEGIN_SRC emacs-lisp
+  (use-package git-gutter
+    :ensure t
+    :config
+    (global-git-gutter-mode 1))
+#+END_SRC
+
+* go-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package go-mode
+    :ensure t)
+#+END_SRC
+
+* ido-completing-read+
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-completing-read+
+    :ensure t)
+#+END_SRC
+
+* js2-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package js2-mode
+    :ensure t
+    :config
+    (setq js2-basic-offset 2))
+#+END_SRC
+
+* lsp-java
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-java
+    :ensure t)
 #+END_SRC
 
 * lsp-mode
 #+BEGIN_SRC emacs-lisp
-  (require 'lsp-ui)
-  ;; Tuning
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max 1048576)
-
-  (custom-set-variables
-   '(lsp-auto-guess-root nil)
-   '(lsp-ui-sideline-enable nil)
-   '(lsp-ui-imenu-enable t)
-   '(lsp-ui-peek-always-show t)
-   '(lsp-ui-doc-enable nil))
-
+  (use-package lsp-mode
+    :ensure t
+    :config
+    (require 'lsp-ui)
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "C-c l .") #'lsp-find-definition)
+      (define-key map (kbd "C-c l /") #'lsp-find-references)
+      (define-key map (kbd "C-c l d") #'lsp-ui-doc-glance)
+      (define-key map (kbd "C-c l i") #'lsp-ui-peek-find-implementation)
+      (define-key map (kbd "C-c l I") #'lsp-find-implementation)
+      (push
+       `(lsp-mode . ,map)
+       minor-mode-map-alist))
+    (define-key lsp-ui-mode-map [remap js-find-symbol] #'lsp-ui-peek-find-definitions)
+    (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+    (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+    :custom
+    (lsp-auto-guess-root nil)
+    (lsp-ui-sideline-enable nil)
+    (lsp-ui-imenu-enable t)
+    (lsp-ui-peek-always-show t)
+    (lsp-ui-doc-enable nil)
+    :hook
+    ((js-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) (python-mode . lsp) (web-mode . lsp) (css-mode .lsp)
+     (java-mode . lsp)))
   ;; npm i -g typescript-language-server
   ;; pip install python-lsp-server
   ;; npm i -g vscode-css-languageserver-bin
   ;; npm i -g vscode-html-languageserver-bin
 
-  (add-hook 'js-mode-hook #'lsp)
-  (add-hook 'js2-mode-hook #'lsp)
-  (add-hook 'rjsx-mode-hook #'lsp)
-  (add-hook 'python-mode-hook #'lsp)
-  (add-hook 'web-mode-hook #'lsp)
-  (add-hook 'css-mode-hook #'lsp)
-  (add-hook 'java-mode-hook #'lsp)
+#+END_SRC
 
+* magit
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :ensure t
+    :config
+    (magit-define-popup-switch 'magit-commit-popup ?E
+      "Allow empty message" "--allow-empty-message")
+    (setq-default magit-completing-read-function 'magit-ido-completing-read)
+    :bind
+    ("C-x g" . 'magit-status))
+#+END_SRC
 
-  ;; Define key bindings
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c l .") #'lsp-find-definition)
-    (define-key map (kbd "C-c l /") #'lsp-find-references)
-    (define-key map (kbd "C-c l d") #'lsp-ui-doc-glance)
-    (define-key map (kbd "C-c l i") #'lsp-ui-peek-find-implementation)
-    (define-key map (kbd "C-c l I") #'lsp-find-implementation)
-    (push
-     `(lsp-mode . ,map)
-     minor-mode-map-alist))
-  (define-key lsp-ui-mode-map [remap js-find-symbol] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+* neotree
+#+BEGIN_SRC emacs-lisp
+  (use-package neotree
+    :ensure t
+    :config
+    (setq-default neo-smart-open t)
+    :bind
+    ([f8] . 'neotree-toggle))
+#+END_SRC
+
+* paredit
+#+BEGIN_SRC emacs-lisp
+  (use-package paredit
+    :ensure t
+    :config
+    (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+    (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
+    (add-hook 'ielm-mode-hook 'enable-paredit-mode)
+    (add-hook 'lisp-mode-hook 'enable-paredit-mode)
+    (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+    (add-hook 'scheme-mode-hook 'enable-paredit-mode)
+    (add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode))
+
+#+END_SRC
+
+* projectile
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :ensure t
+    :config
+    (projectile-global-mode 1)
+    (setq projectile-globally-ignored-directories
+          (cons "node_modules" projectile-globally-ignored-directories))
+    :bind
+    ("C-c p" . 'projectile-command-map))
+#+END_SRC
+
+* php-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package php-mode
+    :ensure t)
+#+END_SRC
+
+* pug-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package pug-mode
+    :ensure t
+    :config
+    (setq pug-tab-width 2)
+    (setq indent-tabs-mode t))
+#+END_SRC
+
+* rjsx-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package rjsx-mode
+    :ensure t
+    :config
+    (when (< emacs-major-version 27)
+      (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
+      (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))))
+#+END_SRC
+
+* symbol-overlay
+#+BEGIN_SRC emacs-lisp
+  (use-package symbol-overlay
+    :ensure t
+    :config
+    (setq-default symbol-overlay-map nil)
+    :bind
+    (("C-;" . 'symbol-overlay-put)
+     ("C->" . 'symbol-overlay-jump-next)
+     ("C-<" . 'symbol-overlay-jump-prev)
+     ([(meta f3)] . 'symbol-overlay-query-replace)))
+#+END_SRC
+
+* web-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :ensure t
+    :config
+    (setq-default web-mode-enable-current-element-highlight t)
+    (setq-default web-mode-enable-auto-indentation nil)
+    (setq-default web-mode-enable-engine-detection t)
+    (setq-default web-mode-markup-indent-offset 2)
+    (setq-default web-mode-markup-indent-offset 2)
+    (setq-default web-mode-css-indent-offset 2)
+    (setq-default web-mode-code-indent-offset 2)
+    (setq-default web-mode-engines-alist '(("django" . "\\.jinja2\\'")))
+    :mode
+    ("\\.phtml\\'" "\\.tpl\\'"  "\\.[agj]sp\\'"  "\\.as[cp]x\\'"  "\\.erb\\'"  "\\.mustache\\'"  "\\.djhtml\\'"
+    "\\.html?\\'"  "\\.xml\\'" "\\.jinja2\\'" ))
+#+END_SRC
+
+* yaml-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package yaml-mode
+    :ensure t)
+#+END_SRC
+
+* yasnippet
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet
+    :ensure t)
 #+END_SRC

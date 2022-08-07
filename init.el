@@ -14,6 +14,10 @@
 (org-babel-load-file (expand-file-name "~/.emacs.d/defun.org" user-emacs-directory))
 (org-babel-load-file (expand-file-name "~/.emacs.d/config.org" user-emacs-directory))
 
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
 (load custom-file)
 
 (provide 'init)
