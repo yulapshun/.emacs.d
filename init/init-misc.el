@@ -28,7 +28,7 @@
 
 (add-hook 'prog-mode-hook
           '(lambda ()
-             (setq display-fill-column-indicator-column 80)))
+             (setq display-fill-column-indicator-column 120)))
 
 ;; Set variables
 (setq create-lockfiles nil)
