@@ -8,13 +8,11 @@
 
 * Package
 #+BEGIN_SRC emacs-lisp
-  (add-to-list
-   'package-archives
-   '("melpa" . "http://melpa.org/packages/")
-   t)
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
   (setq package-archive-priorities
-        '(("gnu"          . 1)
-          ("melpa"        . 0)))
+        '(("gnu" . 0)
+          ("melpa" . 1)))
 #+END_SRC
 
 * Minor Modes
