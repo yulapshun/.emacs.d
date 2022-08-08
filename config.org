@@ -203,7 +203,24 @@
   (use-package company
     :ensure t
     :init
-    (add-hook 'after-init-hook 'global-company-mode))
+    (add-hook 'after-init-hook 'global-company-mode)
+    :bind (("C-." . 'company-complete)
+           (:map company-active-map
+                 ("<tab>" . 'company-complete-common-or-cycle)
+                 ("C-p" . nil)
+                 ("C-n" . nil)
+                 ("M-p" . 'company-select-previous)
+                 ("M-n" . 'company-select-next)
+                 ("C-h" . 'company-show-doc-buffer))
+           (:map company-search-map
+                 ("<tab>" . 'company-complete-common-or-cycle)
+                 ("C-p" . nil)
+                 ("C-n" . nil)
+                 ("M-p" . 'company-select-previous)
+                 ("M-n" . 'company-select-next)
+                 ("C-h" . 'company-show-doc-buffer)))
+    :custom
+    (company-idle-delay 1))
 #+END_SRC
 
 * company-box
@@ -218,7 +235,7 @@
   (use-package company-flx
     :ensure t
     :config
-    (company-flx-mode +1)
+    (company-flx-mode 0)
     :after (company))
 #+END_SRC
 
