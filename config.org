@@ -206,6 +206,13 @@
     (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
+* company-box
+#+BEGIN_SRC emacs-lisp
+  (use-package company-box
+    :hook (company-mode . company-box-mode)
+    :after (company))
+#+END_SRC
+
 * company-flx
 #+BEGIN_SRC emacs-lisp
   (use-package company-flx
