@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("521682d356435276b4bfb60cd134681aeaf4f2e4ee625456c04285da725ebf7c" default))
  '(package-selected-packages
-   '(yasnippet yaml-mode web-mode use-package undo-tree typescript-mode symbol-overlay solarized-theme rjsx-mode qml-mode pythonic pug-mode php-mode paredit neotree magit-popup lsp-ui lsp-java ido-completing-read+ gruvbox-theme graphql goto-chg go-mode git-gutter ghub geiser fringe-helper flycheck flx-ido eyebrowse exec-path-from-shell emojify elisp-benchmarks dockerfile-mode dash-functional company-web company-flx auto-compile async all-the-icons-dired)))
+   '(yasnippet yaml-mode web-mode use-package undo-tree typescript-mode symbol-overlay solarized-theme rjsx-mode qml-mode pythonic pug-mode projectile php-mode paredit org-superstar neotree magit-popup magit lsp-ui lsp-java ido-completing-read+ gruvbox-theme graphql goto-chg go-mode git-gutter ghub geiser fringe-helper flycheck flx-ido eyebrowse exec-path-from-shell emojify elisp-benchmarks dockerfile-mode dash-functional company-web company-flx auto-compile async all-the-icons-dired)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

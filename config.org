@@ -344,6 +344,15 @@
     ([f8] . 'neotree-toggle))
 #+END_SRC
 
+* org-superstar
+#+BEGIN_SRC emacs-lisp
+  (use-package org-superstar
+    :ensure t
+    :custom
+    (org-superstar-remove-leading-stars t)
+    :hook ((org-mode . org-superstar-mode)))
+#+END_SRC
+
 * paredit
 #+BEGIN_SRC emacs-lisp
   (use-package paredit
