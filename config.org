@@ -500,6 +500,7 @@
     :ensure t
     :hook ((emacs-lisp-mode . yas-minor-mode) (js-mode . yas-minor-mode) (python-mode . yas-minor-mode))
     :bind (:map yas-minor-mode-map
+                ("C-i" . nil) ;; Only <tab> should expand, C-i should not
                 ("C-," . 'yas-expand)))
 #+END_SRC
 
