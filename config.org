@@ -440,6 +440,14 @@
      ([(meta f3)] . 'symbol-overlay-query-replace)))
 #+END_SRC
 
+* vundo
+#+BEGIN_SRC emacs-lisp
+  (use-package vundo
+    :bind
+    ("C-_" . 'vundo)
+    :ensure t)
+#+END_SRC
+
 * web-mode
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
