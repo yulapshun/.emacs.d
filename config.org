@@ -480,5 +480,14 @@
 * yasnippet
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet
+    :ensure t
+    :hook ((emacs-lisp-mode . yas-minor-mode) (js-mode . yas-minor-mode) (python-mode . yas-minor-mode))
+    :bind (:map yas-minor-mode-map
+                ("C-," . 'yas-expand)))
+#+END_SRC
+
+* yasnippet-snippets
+#+BEGIN_SRC emacs-lisp
+  (use-package yasnippet-snippets
     :ensure t)
 #+END_SRC
