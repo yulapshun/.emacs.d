@@ -23,6 +23,7 @@
   (global-whitespace-mode 1)
   (column-number-mode 1)
   (ido-mode 1)
+  (ido-everywhere 1)
   (global-auto-revert-mode 1)
   (desktop-save-mode 1)
   (electric-indent-mode 0)
@@ -204,6 +205,8 @@
     :ensure t
     :init
     (add-hook 'after-init-hook 'global-company-mode)
+    :config
+    (setq-default company-dabbrev-downcase nil)
     :bind (("C-." . 'company-complete)
            (:map company-active-map
                  ("<tab>" . 'company-complete-common-or-cycle)
@@ -315,7 +318,18 @@
 * ido-completing-read+
 #+BEGIN_SRC emacs-lisp
   (use-package ido-completing-read+
-    :ensure t)
+    :ensure t
+    :config
+    (ido-ubiquitous-mode 1))
+#+END_SRC
+
+* ido-vertical-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package ido-vertical-mode
+    :ensure t
+    :config
+    (ido-vertical-mode 1)
+    (setq-default ido-vertical-show-count t))
 #+END_SRC
 
 * js2-mode
