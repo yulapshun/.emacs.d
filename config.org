@@ -166,6 +166,17 @@
      `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
 #+END_SRC
 
+* python
+#+begin_src emacs-lisp
+  (use-package pyvenv
+    :ensure t)
+
+  (use-package pyvenv-auto
+    :ensure t
+    :config
+    (pyvenv-auto-mode t))
+#+end_src
+
 * all-the-icons
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons
