@@ -487,11 +487,27 @@
      ([(meta f3)] . 'symbol-overlay-query-replace)))
 #+END_SRC
 
+* undo-tree
+#+begin_src emacs-lisp
+  (use-package undo-tree
+    :if (<= emacs-major-version 28)
+    :bind
+    ((:map undo-tree-map
+           ("C-_" . 'undo-tree-visualize)
+           ("M-_" . 'undo-tree-visualize)
+           ("C-x u" . nil)
+           ("C-x r u" . nil)
+           ("C-x r U" . nil)))
+    :ensure t)
+#+end_src
+
 * vundo
 #+BEGIN_SRC emacs-lisp
   (use-package vundo
+    :if (>= emacs-major-version 28)
     :bind
-    ("C-_" . 'vundo)
+    (("C-_" . 'vundo)
+     ("M-_" . 'vundo))
     :ensure t)
 #+END_SRC
 
