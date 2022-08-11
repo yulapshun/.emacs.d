@@ -4,6 +4,7 @@
       (exec-path-from-shell-initialize))
     (setq gc-cons-threshold 100000000)
     (setq read-process-output-max 1048576)
+  (setq-default flycheck-emacs-lisp-load-path 'inherit)
   (require 'cheatsheet)
 #+END_SRC
 
