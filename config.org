@@ -499,11 +499,11 @@
             "\\*scratch\\*"
             "error\\*$"
             "errors\\*$"
-            "^\\*eshell.*\\*$" eshell-mode
-            "^\\*shell.*\\*$" shell-mode
-            "^\\*term.*\\*$" term-mode
-            "^\\*vterm.*\\*$" vterm-mode
-            "^\\*Python.*\\*$" inferior-python-mode
+            "^\\*eshell.*" eshell-mode
+            "^\\*shell.*" shell-mode
+            "^\\*term.*" term-mode
+            "^\\*vterm.*" vterm-mode
+            "^\\*Python.*" inferior-python-mode
             help-mode
             compilation-mode))
     (setq popper-window-height 20)
@@ -586,6 +586,7 @@
 * vterm
 #+begin_src emacs-lisp
   (use-package vterm
+    :if (string-equal system-type "gnu/linux")
     :ensure t
     :defer t)
 #+end_src
