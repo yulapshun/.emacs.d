@@ -288,6 +288,7 @@
 * emojify
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
+    :disabled t
     :ensure t
     :defer t
     :init
@@ -370,6 +371,7 @@
 * js2-mode
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
+    :disabled t
     :ensure t
     :defer t
     :config
@@ -539,6 +541,7 @@
 * rjsx-mode
 #+BEGIN_SRC emacs-lisp
   (use-package rjsx-mode
+    :disabled t
     :ensure t
     :defer t
     :config
@@ -550,6 +553,7 @@
 * solarized-theme
 #+begin_src emacs-lisp
   (use-package solarized-theme
+    :disabled t
     :ensure t
     :defer t)
 #+end_src
