@@ -26,8 +26,8 @@
   (ido-mode 1)
   (ido-everywhere 1)
   (global-auto-revert-mode 1)
-  (desktop-save-mode 1)
-  (electric-indent-mode 0)
+  (electric-indent-mode 1)
+  (desktop-save-mode 0)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (add-hook 'prog-mode-hook
             (if (>= emacs-major-version 26)
@@ -121,7 +121,7 @@
 #+BEGIN_SRC emacs-lisp
   (defun init-theme ()
     (if (display-graphic-p)
-        (load-theme 'gruvbox-dark-medium)
+        (load-theme 'gruvbox-dark-hard)
       (load-theme 'tsdh-dark)))
   (add-hook 'after-init-hook 'init-theme)
   (add-hook 'after-make-frame-functions 'init-theme) ;; For emacsclient
