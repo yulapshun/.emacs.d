@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("969a67341a68becdccc9101dc87f5071b2767b75c0b199e0ded35bd8359ecd69" "521682d356435276b4bfb60cd134681aeaf4f2e4ee625456c04285da725ebf7c" default))
  '(package-selected-packages
-   '(undo-tree pyvenv pyvenv-auto ido-vertical-mode yasnippet-snippets company-box company vundo yasnippet yaml-mode web-mode use-package typescript-mode symbol-overlay solarized-theme rjsx-mode qml-mode pythonic pug-mode projectile php-mode paredit org-superstar neotree magit-popup magit lsp-ui lsp-java ido-completing-read+ gruvbox-theme graphql goto-chg go-mode git-gutter ghub geiser fringe-helper flycheck flx-ido eyebrowse exec-path-from-shell emojify elisp-benchmarks dockerfile-mode dash-functional company-web company-flx auto-compile async all-the-icons-dired))
+   '(dashboard undo-tree pyvenv pyvenv-auto ido-vertical-mode yasnippet-snippets company-box company vundo yasnippet yaml-mode web-mode use-package typescript-mode symbol-overlay solarized-theme rjsx-mode qml-mode pythonic pug-mode projectile php-mode paredit org-superstar neotree magit-popup magit lsp-ui lsp-java ido-completing-read+ gruvbox-theme graphql goto-chg go-mode git-gutter ghub geiser fringe-helper flycheck flx-ido eyebrowse exec-path-from-shell emojify elisp-benchmarks dockerfile-mode dash-functional company-web company-flx auto-compile async all-the-icons-dired))
  '(warning-suppress-types '((comp))))
 
 (custom-set-faces

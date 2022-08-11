@@ -11,6 +11,7 @@ tramp
 projectile-bookmarks.eld
 projectile.cache
 url
+recentf
 
 anaconda-mode/**/*.pyc
 
