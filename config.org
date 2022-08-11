@@ -553,6 +553,13 @@
     :ensure t)
 #+end_src
 
+* vterm
+#+begin_src emacs-lisp
+  (use-package vterm
+    :ensure t
+    :defer t)
+#+end_src
+
 * vundo
 #+BEGIN_SRC emacs-lisp
   (use-package vundo
