@@ -11,8 +11,8 @@
     (package-initialize))
 (require 'package)
 
-(org-babel-load-file (expand-file-name "~/.emacs.d/defun.org" user-emacs-directory))
-(org-babel-load-file (expand-file-name "~/.emacs.d/config.org" user-emacs-directory))
+(org-babel-load-file (expand-file-name "defun.org" user-emacs-directory))
+(org-babel-load-file (expand-file-name "config.org" user-emacs-directory))
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
