@@ -1,0 +1,36 @@
+* Navigation
+C-c C-n	org-next-visible-heading	Move to the next visible heading
+C-c C-p	org-previous-visible-heading	Move to the previous visible heading
+C-c C-f	org-forward-heading-same-level	Move to the next same level heading
+C-c C-b	org-backward-heading-same-level	Move to the previous same level heading
+C-c C-j	org-goto			Jump to locations
+
+* Structure Editing
+M-<down>	org-metaup				Move subtree or table row down
+M-<up>	org-metadown				Move subtree or table row up
+M-<left>	org-metaleft				Promote heading, list item at point or move table column left
+M-<right>	org-metaright				Promote heading, list item at point or move table column right
+C-<RET>	org-insert-heading-respect-content	Insert new heading after subtree
+M-<RET>	org-meta-regurn				Insert new heading/item at current level
+
+* Table
+C-|		org-table-create-or-convert-from-region	Create table or conver region to table
+C-c C-c	org-ctrl-c-ctrl-c			Align table
+<tab>		org-cycle				Move to the next field
+S-<tab>	org-cycle				Move to the previous field
+
+* Source Block
+C-'		org-edit-special		Edit code block
+C-c C-c	org-ctrl-c-ctrl-c		Execute code block
+C-c C-v n	org-babel-next-src-block	Jump to the next source block
+C-c C-v p	org-babel-previous-src-block	Jump to the previous source block
+
+* Yasnippet
+<src		Source block
+elisp_	Emacs Lisp source block
+py_		Python source block
+emb_		Embedded source block
+<e		Example block
+<im		Image
+<li		Link
+<ta		Table

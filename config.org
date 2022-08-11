@@ -1,9 +1,10 @@
 * General
 #+BEGIN_SRC emacs-lisp
   (when (memq window-system '(mac ns x))
-    (exec-path-from-shell-initialize))
-  (setq gc-cons-threshold 100000000)
-  (setq read-process-output-max 1048576)
+      (exec-path-from-shell-initialize))
+    (setq gc-cons-threshold 100000000)
+    (setq read-process-output-max 1048576)
+  (require 'cheatsheet)
 #+END_SRC
 
 * Package
@@ -90,6 +91,10 @@
   (global-set-key (kbd "C-c g M") 'hihi-meta-shift)
   (global-set-key (kbd "C-c g x") 'hihi-control-meta)
   (global-set-key (kbd "C-'") 'hihi-control-meta)
+
+  ;; cheatsheet
+  ;; (global-set-key (kbd "C-c c") 'on99-cheatsheet-open-global)
+  (global-set-key (kbd "C-c m") 'on99-cheatsheet-open-major-mode)
 #+END_SRC
 
 * Backup
