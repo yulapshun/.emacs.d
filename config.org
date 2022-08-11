@@ -162,10 +162,12 @@
 * python
 #+begin_src emacs-lisp
   (use-package pyvenv
-    :ensure t)
+    :ensure t
+    :defer t)
 
   (use-package pyvenv-auto
     :ensure t
+    :defer t
     :config
     (pyvenv-auto-mode t))
 #+end_src
@@ -174,6 +176,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons
     :ensure t
+    :defer t
     :if (display-graphic-p))
 #+END_SRC
 
@@ -181,6 +184,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons-dired
     :ensure t
+    :defer t
     :after (all-the-icons)
     :hook (dired-mode . all-the-icons-dired-mode))
 #+END_SRC
@@ -189,6 +193,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package auto-compile
     :ensure t
+    :defer 5
     :config
     (auto-compile-on-load-mode 1)
     (auto-compile-on-save-mode 1)
@@ -199,6 +204,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package avy
     :ensure t
+    :defer 5
     :bind
     ("C-:" . 'avy-goto-char))
 #+END_SRC
@@ -207,6 +213,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package company
     :ensure t
+    :defer 5
     :init
     (add-hook 'after-init-hook 'global-company-mode)
     :config
@@ -266,13 +273,15 @@
 * dockerfile-mode
 #+BEGIN_SRC emacs-lisp
   (use-package dockerfile-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 
 * emojify
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
     :ensure t
+    :defer t
     :init
     (add-hook 'after-init-hook 'global-emojify-mode)
     :config
@@ -289,6 +298,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package eyebrowse
     :ensure t
+    :defer t
     :config
     (eyebrowse-mode 1))
 #+END_SRC
@@ -297,6 +307,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package flx-ido
     :ensure t
+    :defer t
     :config
     (flx-ido-mode 1))
 #+END_SRC
@@ -305,6 +316,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
     :ensure t
+    :defer t
     :init
     (add-hook 'after-init-hook 'global-flycheck-mode))
 #+END_SRC
@@ -312,13 +324,15 @@
 * geiser
 #+BEGIN_SRC emacs-lisp
   (use-package geiser
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 
 * git-gutter
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter
     :ensure t
+    :defer t
     :config
     (global-git-gutter-mode 1))
 #+END_SRC
@@ -326,7 +340,8 @@
 * go-mode
 #+BEGIN_SRC emacs-lisp
   (use-package go-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 
 * ido-completing-read+
@@ -350,6 +365,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package js2-mode
     :ensure t
+    :defer t
     :config
     (setq js2-basic-offset 2))
 #+END_SRC
@@ -357,13 +373,15 @@
 * lsp-java
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-java
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 
 * lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
     :ensure t
+    :defer t
     :config
     (require 'lsp-ui)
     (let ((map (make-sparse-keymap)))
@@ -398,6 +416,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
+    :defer t
     :config
     (magit-define-popup-switch 'magit-commit-popup ?E
       "Allow empty message" "--allow-empty-message")
@@ -410,6 +429,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package neotree
     :ensure t
+    :defer t
     :config
     (setq-default neo-smart-open t)
     :bind
@@ -420,6 +440,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package org-superstar
     :ensure t
+    :defer t
     :custom
     (org-superstar-remove-leading-stars t)
     :hook ((org-mode . org-superstar-mode)))
@@ -429,6 +450,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package paredit
     :ensure t
+    :defer t
     :config
     (add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
     (add-hook 'eval-expression-minibuffer-setup-hook 'enable-paredit-mode)
@@ -444,6 +466,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
     :ensure t
+    :defer t
     :config
     (projectile-global-mode 1)
     (setq projectile-globally-ignored-directories
@@ -455,13 +478,15 @@
 * php-mode
 #+BEGIN_SRC emacs-lisp
   (use-package php-mode
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
 
 * pug-mode
 #+BEGIN_SRC emacs-lisp
   (use-package pug-mode
     :ensure t
+    :defer t
     :config
     (setq pug-tab-width 2)
     (setq indent-tabs-mode t))
@@ -471,6 +496,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package rjsx-mode
     :ensure t
+    :defer t
     :config
     (when (< emacs-major-version 27)
       (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
@@ -481,6 +507,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package symbol-overlay
     :ensure t
+    :defer 5
     :config
     (setq-default symbol-overlay-map nil)
     :bind
@@ -494,6 +521,7 @@
 #+begin_src emacs-lisp
   (use-package undo-tree
     :if (<= emacs-major-version 28)
+    :defer 5
     :bind
     ((:map undo-tree-map
            ("C-_" . 'undo-tree-visualize)
@@ -508,6 +536,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package vundo
     :if (>= emacs-major-version 28)
+    :defer 5
     :bind
     (("C-_" . 'vundo)
      ("M-_" . 'vundo))
@@ -518,6 +547,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package web-mode
     :ensure t
+    :defer t
     :config
     (setq-default web-mode-enable-current-element-highlight t)
     (setq-default web-mode-enable-auto-indentation nil)
@@ -535,23 +565,25 @@
 * yaml-mode
 #+BEGIN_SRC emacs-lisp
   (use-package yaml-mode
-    :ensure t)
+    :ensure t
+    :defer 5)
 #+END_SRC
 
 * yasnippet
 #+BEGIN_SRC emacs-lisp
-    (use-package yasnippet
-
-      :ensure t
-      :hook ((emacs-lisp-mode . yas-minor-mode) (js-mode . yas-minor-mode) (python-mode . yas-minor-mode)
-             (org-mode . yas-minor-mode))
-      :bind (:map yas-minor-mode-map
-                  ("C-i" . nil) ;; Only <tab> should expand, C-i should not
-                  ("C-," . 'yas-expand)))
+  (use-package yasnippet
+    :ensure t
+    :defer t
+    :hook ((emacs-lisp-mode . yas-minor-mode) (js-mode . yas-minor-mode) (python-mode . yas-minor-mode)
+           (org-mode . yas-minor-mode))
+    :bind (:map yas-minor-mode-map
+                ("C-i" . nil) ;; Only <tab> should expand, C-i should not
+                ("C-," . 'yas-expand)))
 #+END_SRC
 
 * yasnippet-snippets
 #+BEGIN_SRC emacs-lisp
   (use-package yasnippet-snippets
-    :ensure t)
+    :ensure t
+    :defer t)
 #+END_SRC
