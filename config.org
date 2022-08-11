@@ -278,6 +278,13 @@
     :defer t)
 #+END_SRC
 
+* elisp-benchmarks
+#+begin_src emacs-lisp
+  (use-package elisp-benchmarks
+    :ensure t
+    :defer t)
+#+end_src
+
 * emojify
 #+BEGIN_SRC emacs-lisp
   (use-package emojify
@@ -322,13 +329,6 @@
     (add-hook 'after-init-hook 'global-flycheck-mode))
 #+END_SRC
 
-* geiser
-#+BEGIN_SRC emacs-lisp
-  (use-package geiser
-    :ensure t
-    :defer t)
-#+END_SRC
-
 * git-gutter
 #+BEGIN_SRC emacs-lisp
   (use-package git-gutter
@@ -344,6 +344,13 @@
     :ensure t
     :defer t)
 #+END_SRC
+
+* gruvbox-theme
+#+begin_src emacs-lisp
+  (use-package gruvbox-theme
+    :ensure t
+    :defer t)
+#+end_src
 
 * ido-completing-read+
 #+BEGIN_SRC emacs-lisp
@@ -406,6 +413,13 @@
 
 #+END_SRC
 
+* lsp-ui
+#+BEGIN_SRC emacs-lisp
+  (use-package lsp-ui
+    :ensure t
+    :defer t)
+#+END_SRC
+
 * magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
@@ -418,6 +432,13 @@
     :bind
     ("C-x g" . 'magit-status))
 #+END_SRC
+
+* markdown-mode
+#+begin_src emacs-lisp
+  (use-package markdown-mode
+    :ensure t
+    :defer t)
+#+end_src
 
 * neotree
 #+BEGIN_SRC emacs-lisp
@@ -456,6 +477,13 @@
 
 #+END_SRC
 
+* php-mode
+#+BEGIN_SRC emacs-lisp
+  (use-package php-mode
+    :ensure t
+    :defer t)
+#+END_SRC
+
 * projectile
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
@@ -467,13 +495,6 @@
           (cons "node_modules" projectile-globally-ignored-directories))
     :bind
     ("C-c p" . 'projectile-command-map))
-#+END_SRC
-
-* php-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package php-mode
-    :ensure t
-    :defer t)
 #+END_SRC
 
 * pug-mode
@@ -496,6 +517,13 @@
       (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
       (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))))
 #+END_SRC
+
+* solarized-theme
+#+begin_src emacs-lisp
+  (use-package solarized-theme
+    :ensure t
+    :defer t)
+#+end_src
 
 * symbol-overlay
 #+BEGIN_SRC emacs-lisp
