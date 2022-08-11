@@ -371,13 +371,6 @@
     (setq js2-basic-offset 2))
 #+END_SRC
 
-* lsp-java
-#+BEGIN_SRC emacs-lisp
-  (use-package lsp-java
-    :ensure t
-    :defer t)
-#+END_SRC
-
 * lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
