@@ -640,13 +640,14 @@
 #+begin_src emacs-lisp
   (use-package which-key
     :ensure t
-    :defer 5
+    :defer 1
+    :init
+    (setq which-key-show-early-on-C-h t)
+    (setq which-key-idle-delay 100000)
+    (setq which-key-idle-secondary-delay 0.05)
     :config
     (which-key-mode 1)
-    (which-key-setup-side-window-right-bottom)
-    (setq which-key-show-early-on-C-h t)
-    (setq which-key-idle-delay 999999)
-    (setq which-key-idle-secondary-delay 0.05))
+    (which-key-setup-side-window-right-bottom))
 #+end_src
 
 * yaml-mode
