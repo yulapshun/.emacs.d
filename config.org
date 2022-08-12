@@ -122,21 +122,18 @@
 * User Interface
 #+BEGIN_SRC emacs-lisp
   (defun init-theme ()
-    (if (display-graphic-p)
-        (progn
-          (load-theme 'gruvbox-dark-hard)
-          (custom-theme-set-faces
-           'gruvbox-dark-hard
-           '(whitespace-trailing
-             ;; gruvbox-dark3 and gruvbox-light3
-             ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
-              (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8"))))
-           '(whitespace-tab
-             ;; gruvbox-dark3 and gruvbox-light3
-             ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
-              (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8")))))
-          (enable-theme 'gruvbox-dark-hard))
-      (load-theme 'tsdh-dark)))
+    (load-theme 'gruvbox-dark-hard)
+    (custom-theme-set-faces
+     'gruvbox-dark-hard
+     '(whitespace-trailing
+       ;; gruvbox-dark3 and gruvbox-light3
+       ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
+        (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8"))))
+     '(whitespace-tab
+       ;; gruvbox-dark3 and gruvbox-light3
+       ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
+        (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8")))))
+    (enable-theme 'gruvbox-dark-hard))
   (add-hook 'after-init-hook 'init-theme)
   (add-hook 'after-make-frame-functions 'init-theme) ;; For emacsclient
 
