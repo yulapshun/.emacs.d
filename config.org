@@ -378,6 +378,13 @@
     (setq js2-basic-offset 2))
 #+END_SRC
 
+* json-mode
+#+begin_src emacs-lisp
+  (use-package json-mode
+    :ensure t
+    :defer t)
+#+end_src
+
 * lsp-mode
 #+BEGIN_SRC emacs-lisp
   (use-package lsp-mode
