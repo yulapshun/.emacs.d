@@ -22,13 +22,13 @@
   (show-paren-mode 1)
   (global-subword-mode 1)
   (global-hl-line-mode 1)
-  (global-whitespace-mode 1)
   (column-number-mode 1)
   (ido-mode 1)
   (ido-everywhere 1)
   (global-auto-revert-mode 1)
   (electric-indent-mode 1)
   (desktop-save-mode 0)
+  (add-hook 'prog-mode-hook 'whitespace-mode)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (add-hook 'prog-mode-hook
             (if (>= emacs-major-version 26)
@@ -130,9 +130,9 @@
        ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
         (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8"))))
      '(whitespace-tab
-       ;; gruvbox-dark3 and gruvbox-light3
-       ((((class color) (min-colors 16777215)) (:background "#665c54" :foreground "#bdae93"))
-        (((class color) (min-colors 255)) (:background "#626262" :foregroune "#a8a8a8")))))
+       ;; gruvbox-dark1 and gruvbox-light1
+       ((((class color) (min-colors 16777215)) (:background "#3c3836" :foreground "#ebdbb2"))
+        (((class color) (min-colors 255)) (:background "#3a3a3a" :foregroune "#ffdfaf")))))
     (enable-theme 'gruvbox-dark-hard))
   (add-hook 'after-init-hook 'init-theme)
   (add-hook 'after-make-frame-functions 'init-theme) ;; For emacsclient
