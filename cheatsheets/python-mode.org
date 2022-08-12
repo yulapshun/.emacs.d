@@ -29,8 +29,8 @@ script	Script template
 setup		Package template
 
 * LSP
-C-c l .	lsp-find-definition		Jump to definition
-C-c l /	lsp-find-references		Show all references
+C-c l C-.	lsp-find-definition		Jump to definition
+C-c l C-M-.	lsp-find-references		Show all references
 C-c l d	lsp-ui-doc-glance		Show documentation
 C-c l i	lsp-ui-peek-implementation	Peek implementation
 C-c l I	lsp-find-implementation		Jump to implementation
