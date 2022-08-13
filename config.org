@@ -642,14 +642,14 @@
 * undo-tree
 #+begin_src emacs-lisp
   (use-package undo-tree
+    :ensure t
     :if (<= emacs-major-version 28)
-    :defer 5
+    :config (global-undo-tree-mode)
     :bind
     ((:map undo-tree-map
            ("C-x u" . 'undo-tree-visualize)
            ("C-x r u" . nil)
-           ("C-x r U" . nil)))
-    :ensure t)
+           ("C-x r U" . nil))))
 #+end_src
 
 * vterm
@@ -663,11 +663,11 @@
 * vundo
 #+BEGIN_SRC emacs-lisp
   (use-package vundo
+    :ensure t
     :if (>= emacs-major-version 28)
     :defer 5
     :bind
-    (("C-x u" . 'vundo))
-    :ensure t)
+    (("C-x u" . 'vundo)))
 #+END_SRC
 
 * web-mode

@@ -43,13 +43,11 @@
   (ido-mode 1)
   (global-auto-revert-mode 1)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
-  (if (>= emacs-major-version 27)
-      (progn
-        (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-        (add-hook 'prog-mode-hook
-                  (lambda ()
-                    (setq display-fill-column-indicator-column 120))))
-    (toggle-column-marker 120))
+  (when (>= emacs-major-version 27)
+    (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+    (add-hook 'prog-mode-hook
+              (lambda ()
+                (setq display-fill-column-indicator-column 120))))
   (setq-default ido-everywhere t)
   (setq-default confirm-kill-emacs 'yes-or-no-p)
   (setq-default native-comp-deferred-compilation t)
@@ -494,14 +492,14 @@
   :defer t)
 
 (use-package undo-tree
+  :ensure t
   :if (<= emacs-major-version 28)
-  :defer 5
+  :config (global-undo-tree-mode)
   :bind
   ((:map undo-tree-map
          ("C-x u" . 'undo-tree-visualize)
          ("C-x r u" . nil)
-         ("C-x r U" . nil)))
-  :ensure t)
+         ("C-x r U" . nil))))
 
 (use-package vterm
   :if (and (string-equal system-type "gnu/linux") (not fast-init))
@@ -509,11 +507,11 @@
   :defer t)
 
 (use-package vundo
+  :ensure t
   :if (>= emacs-major-version 28)
   :defer 5
   :bind
-  (("C-x u" . 'vundo))
-  :ensure t)
+  (("C-x u" . 'vundo)))
 
 (use-package web-mode
   :ensure t
