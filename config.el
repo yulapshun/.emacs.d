@@ -434,8 +434,8 @@
   :defer t
   :config
   (projectile-mode 1)
-  (setq projectile-globally-ignored-directories
-        (cons "node_modules" projectile-globally-ignored-directories))
+  (setq-default projectile-indexing-method 'hybrid)
+  (add-to-list 'projectile-globally-ignored-directories "node_modules")
   :bind
   ("C-c p" . 'projectile-command-map))
 
