@@ -5,6 +5,8 @@
 
 ;;; Code:
 
+(defvar fast-init nil)
+
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max 1048576)
 (tool-bar-mode -1)

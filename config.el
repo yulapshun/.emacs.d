@@ -4,6 +4,8 @@
       '(("gnu" . 0)
         ("melpa" . 1)))
 
+(defvar fast-init)
+
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
@@ -32,21 +34,21 @@
 (put 'downcase-region 'disabled nil)
 (add-hook 'js-mode-hook
           (lambda ()
-            (setq js-indent-level 2)))
+            (setq-default js-indent-level 2)))
 (add-hook 'css-mode-hook
           (lambda ()
-            (setq css-indent-offset 2)))
+            (setq-default css-indent-offset 2)))
 
 
 (when (not fast-init)
   (ido-mode 1)
-  (ido-everywhere 1)
   (global-auto-revert-mode 1)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
   (add-hook 'prog-mode-hook
             (lambda ()
               (setq display-fill-column-indicator-column 120)))
+  (setq-default ido-everywhere t)
   (setq-default confirm-kill-emacs 'yes-or-no-p)
   (setq-default native-comp-deferred-compilation t)
   (require 'cheatsheet))
@@ -84,7 +86,7 @@
 ;; (global-set-key (kbd "C-c c") 'on99-cheatsheet-open-global)
 (global-set-key (kbd "C-c m") 'on99-cheatsheet-open-major-mode)
 
-(setq backup-directory (concat user-emacs-directory "backup/"))
+(defvar backup-directory (concat user-emacs-directory "backup/"))
 
 (setq backup-directory-alist
       `((".*" . ,backup-directory)))
@@ -102,6 +104,7 @@
         (delete-file file)))))
 
 (defun init-theme ()
+  "Initialize theme."
   (load-theme 'gruvbox-dark-hard)
   (custom-theme-set-faces
    'gruvbox-dark-hard
@@ -119,10 +122,10 @@
 
 (add-hook 'window-setup-hook
           (lambda()
-            (setq symbol-overlay-colors
-                  '("#ff0000" "#00ff00" "#0000ff"
-                    "#ffff00" "#ff00ff" "#00ffff"
-                    "#ff8000" "#ff0080" "#0080ff"))))
+            (setq-default symbol-overlay-colors
+                          '("#ff0000" "#00ff00" "#0000ff"
+                            "#ffff00" "#ff00ff" "#00ffff"
+                            "#ff8000" "#ff0080" "#0080ff"))))
 
 (setq-default org-startup-indented t)
 (setq-default org-pretty-entities t)
@@ -191,21 +194,22 @@
   (add-hook 'after-init-hook 'global-company-mode)
   :config
   (setq-default company-dabbrev-downcase nil)
-  :bind (("C-." . 'company-complete)
-         (:map company-active-map
-               ("<tab>" . 'company-complete-common-or-cycle)
-               ("C-p" . nil)
-               ("C-n" . nil)
-               ("M-p" . 'company-select-previous)
-               ("M-n" . 'company-select-next)
-               ("C-h" . 'company-show-doc-buffer))
-         (:map company-search-map
-               ("<tab>" . 'company-complete-common-or-cycle)
-               ("C-p" . nil)
-               ("C-n" . nil)
-               ("M-p" . 'company-select-previous)
-               ("M-n" . 'company-select-next)
-               ("C-h" . 'company-show-doc-buffer)))
+  :bind
+  (("C-." . 'company-complete)
+   (:map company-active-map
+         ("<tab>" . 'company-complete-common-or-cycle)
+         ("C-p" . nil)
+         ("C-n" . nil)
+         ("M-p" . 'company-select-previous)
+         ("M-n" . 'company-select-next)
+         ("C-h" . 'company-show-doc-buffer))
+   (:map company-search-map
+         ("<tab>" . 'company-complete-common-or-cycle)
+         ("C-p" . nil)
+         ("C-n" . nil)
+         ("M-p" . 'company-select-previous)
+         ("M-n" . 'company-select-next)
+         ("C-h" . 'company-show-doc-buffer)))
   :custom
   (company-idle-delay 1))
 
@@ -316,7 +320,6 @@
   :ensure t
   :defer t
   :config
-  (require 'lsp-ui)
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "C-c l M-.") #'lsp-find-definition)
     (define-key map (kbd "C-c l C-M-.") #'lsp-find-references)
@@ -326,14 +329,8 @@
     (push
      `(lsp-mode . ,map)
      minor-mode-map-alist))
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   :custom
   (lsp-auto-guess-root nil)
-  (lsp-ui-sideline-enable nil)
-  (lsp-ui-imenu-enable t)
-  (lsp-ui-peek-always-show t)
-  (lsp-ui-doc-enable nil)
   :hook
   ((js-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) (python-mode . lsp) (web-mode . lsp) (css-mode . lsp)
    (java-mode . lsp) (sh-mode . lsp) (html-mode . lsp) (json-mode . lsp)))
@@ -346,7 +343,15 @@
 (use-package lsp-ui
   :unless fast-init
   :ensure t
-  :defer t)
+  :defer t
+  :config
+  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  :custom
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-imenu-enable t)
+  (lsp-ui-peek-always-show t)
+  (lsp-ui-doc-enable nil))
 
 (use-package magit
   :unless fast-init
@@ -428,7 +433,7 @@
   :ensure t
   :defer t
   :config
-  (projectile-global-mode 1)
+  (projectile-mode 1)
   (setq projectile-globally-ignored-directories
         (cons "node_modules" projectile-globally-ignored-directories))
   :bind
