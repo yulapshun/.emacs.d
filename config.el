@@ -26,7 +26,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default show-paren-delay 0)
 (setq-default uniquify-buffer-name-style 'forward)
-(setq-default org-src-fontify-natively t)
 (setq-default whitespace-style '(face trailing tabs))
 (setq-default ido-auto-merge-work-directories-length nil)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
@@ -127,24 +126,37 @@
                             "#ffff00" "#ff00ff" "#00ffff"
                             "#ff8000" "#ff0080" "#0080ff"))))
 
-(setq-default org-startup-indented t)
-(setq-default org-pretty-entities t)
-(setq-default org-hide-emphasis-markers t)
-(setq-default org-startup-with-inline-images t)
-(setq-default org-image-actual-width '(300))
+(use-package org
+  :ensure t
+  :defer t
+  :init
+  (setq-default org-src-fontify-natively t)
+  (setq-default org-startup-indented t)
+  (setq-default org-pretty-entities t)
+  (setq-default org-hide-emphasis-markers t)
+  (setq-default org-startup-with-inline-images t)
+  (setq-default org-image-actual-width '(300))
 
-(let ((headline `(:inherit default :weight bold)))
-  (custom-theme-set-faces
-   'user
-   `(org-level-8 ((t (,@headline))))
-   `(org-level-7 ((t (,@headline))))
-   `(org-level-6 ((t (,@headline))))
-   `(org-level-5 ((t (,@headline))))
-   `(org-level-4 ((t (,@headline))))
-   `(org-level-3 ((t (,@headline :height 1.1))))
-   `(org-level-2 ((t (,@headline :height 1.2))))
-   `(org-level-1 ((t (,@headline :height 1.3))))
-   `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
+  (let ((headline `(:inherit default :weight bold)))
+    (custom-theme-set-faces
+     'user
+     `(org-level-8 ((t (,@headline))))
+     `(org-level-7 ((t (,@headline))))
+     `(org-level-6 ((t (,@headline))))
+     `(org-level-5 ((t (,@headline))))
+     `(org-level-4 ((t (,@headline))))
+     `(org-level-3 ((t (,@headline :height 1.1))))
+     `(org-level-2 ((t (,@headline :height 1.2))))
+     `(org-level-1 ((t (,@headline :height 1.3))))
+     `(org-document-title ((t (,@headline :height 1.5 :underline nil)))))))
+
+(use-package org-superstar
+  :ensure t
+  :defer t
+  :custom
+  (org-superstar-remove-leading-stars t)
+  :hook ((org-mode . org-superstar-mode))
+  :after (org))
 
 (use-package pyvenv
   :unless fast-init
@@ -388,13 +400,6 @@
   (setq-default neo-smart-open t)
   :bind
   ([f8] . 'neotree-toggle))
-
-(use-package org-superstar
-  :ensure t
-  :defer t
-  :custom
-  (org-superstar-remove-leading-stars t)
-  :hook ((org-mode . org-superstar-mode)))
 
 (use-package paredit
   :ensure t
