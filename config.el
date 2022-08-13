@@ -39,15 +39,17 @@
           (lambda ()
             (setq-default css-indent-offset 2)))
 
-
 (when (not fast-init)
   (ido-mode 1)
   (global-auto-revert-mode 1)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
-  (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (setq display-fill-column-indicator-column 120)))
+  (if (>= emacs-major-version 27)
+      (progn
+        (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
+        (add-hook 'prog-mode-hook
+                  (lambda ()
+                    (setq display-fill-column-indicator-column 120))))
+    (toggle-column-marker 120))
   (setq-default ido-everywhere t)
   (setq-default confirm-kill-emacs 'yes-or-no-p)
   (setq-default native-comp-deferred-compilation t)
