@@ -23,8 +23,6 @@ eln-cache/
 
 .emacs.desktop
 .emacs.desktop.lock
-config.el
-defun.el
 
 .dap-breakpoints
 workspace/
