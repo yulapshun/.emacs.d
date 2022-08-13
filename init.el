@@ -2,6 +2,7 @@
 
 ;;; Commentary:
 ;; My Emacs configuration
+;; Supports Emacs version >= 26
 
 ;;; Code:
 
