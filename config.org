@@ -275,6 +275,13 @@
     :after (company))
 #+END_SRC
 
+* compat
+#+begin_src emacs-lisp
+  (use-package compat
+    :unless fast-init
+    :defer t)
+#+end_src
+
 * dashboard
 #+begin_src emacs-lisp
   (use-package dashboard
@@ -346,6 +353,13 @@
     :init
     (add-hook 'after-init-hook 'global-flycheck-mode))
 #+END_SRC
+
+* git-commit
+#+begin_src emacs-lisp
+  (use-package git-commit
+    :unless fast-init
+    :defer t)
+#+end_src
 
 * git-gutter
 #+BEGIN_SRC emacs-lisp
@@ -463,6 +477,13 @@
     :bind
     ("C-x g" . 'magit-status))
 #+END_SRC
+
+* magit-section
+#+begin_src emacs-lisp
+  (use-package magit-section
+    :unless fast-init
+    :defer t)
+#+end_src
 
 * markdown-mode
 #+begin_src emacs-lisp
@@ -590,6 +611,13 @@
     :defer t)
 #+end_src
 
+* spinner
+#+begin_src emacs-lisp
+  (use-package spinner
+    :unless fast-init
+    :defer t)
+#+end_src
+
 * symbol-overlay
 #+BEGIN_SRC emacs-lisp
   (use-package symbol-overlay
@@ -603,6 +631,13 @@
      ("C-<" . 'symbol-overlay-jump-prev)
      ([(meta f3)] . 'symbol-overlay-query-replace)))
 #+END_SRC
+
+* transient
+#+begin_src emacs-lisp
+  (use-package transient
+    :unless fast-init
+    :defer t)
+#+end_src
 
 * undo-tree
 #+begin_src emacs-lisp
@@ -667,6 +702,13 @@
     :config
     (which-key-mode 1)
     (which-key-setup-side-window-right-bottom))
+#+end_src
+
+* with-editor
+#+begin_src emacs-lisp
+  (use-package with-editor
+    :unless fast-init
+    :defer t)
 #+end_src
 
 * yaml-mode

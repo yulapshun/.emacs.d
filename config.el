@@ -230,6 +230,10 @@
   :ensure t
   :after (company))
 
+(use-package compat
+  :unless fast-init
+  :defer t)
+
 (use-package dashboard
   :unless fast-init
   :ensure t
@@ -277,6 +281,10 @@
   :defer t
   :init
   (add-hook 'after-init-hook 'global-flycheck-mode))
+
+(use-package git-commit
+  :unless fast-init
+  :defer t)
 
 (use-package git-gutter
   :ensure t
@@ -363,6 +371,10 @@
   (setq-default magit-completing-read-function 'magit-ido-completing-read)
   :bind
   ("C-x g" . 'magit-status))
+
+(use-package magit-section
+  :unless fast-init
+  :defer t)
 
 (use-package markdown-mode
   :ensure t
@@ -460,6 +472,10 @@
   :ensure t
   :defer t)
 
+(use-package spinner
+  :unless fast-init
+  :defer t)
+
 (use-package symbol-overlay
   :ensure t
   :defer 5
@@ -470,6 +486,10 @@
    ("C->" . 'symbol-overlay-jump-next)
    ("C-<" . 'symbol-overlay-jump-prev)
    ([(meta f3)] . 'symbol-overlay-query-replace)))
+
+(use-package transient
+  :unless fast-init
+  :defer t)
 
 (use-package undo-tree
   :if (<= emacs-major-version 28)
@@ -520,6 +540,10 @@
   :config
   (which-key-mode 1)
   (which-key-setup-side-window-right-bottom))
+
+(use-package with-editor
+  :unless fast-init
+  :defer t)
 
 (use-package yaml-mode
   :ensure t
