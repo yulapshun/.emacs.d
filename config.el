@@ -115,6 +115,10 @@
    '(whitespace-tab
      ;; gruvbox-dark1 and gruvbox-light1
      ((((class color) (min-colors 16777215)) (:background "#3c3836" :foreground "#ebdbb2"))
+      (((class color) (min-colors 255)) (:background "#3a3a3a" :foregroune "#ffdfaf"))))
+   '(vertico-current
+     ;; gruvbox-dark1 and gruvbox-light1
+     ((((class color) (min-colors 16777215)) (:background "#3c3836" :foreground "#ebdbb2"))
       (((class color) (min-colors 255)) (:background "#3a3a3a" :foregroune "#ffdfaf")))))
   (enable-theme 'gruvbox-dark-hard))
 (add-hook 'after-init-hook 'init-theme)
@@ -215,30 +219,65 @@
   :config
   (pyvenv-auto-mode t))
 
-(when (not fast-init)
+(when (and (not fast-init) (< emacs-major-version 27))
   (ido-mode 1)
   (setq-default ido-auto-merge-work-directories-length nil)
   (setq-default ido-everywhere t))
 
 (use-package flx-ido
-  :unless fast-init
+  :disabled
+  :unless (or fast-init (>= emacs-major-version 27))
   :ensure t
   :config
   (flx-ido-mode 1))
 
 (use-package ido-completing-read+
-  :unless fast-init
+  :disabled
+  :unless (or fast-init (>= emacs-major-version 27))
   :ensure t
   :config
   (ido-ubiquitous-mode 1))
 
 (use-package ido-vertical-mode
-  :unless fast-init
+  :disabled
+  :unless (or fast-init (>= emacs-major-version 27))
   :ensure t
   :config
   (ido-vertical-mode 1)
   (setq-default ido-vertical-show-count t)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
+
+(setq minibuffer-prompt-properties
+      '(read-only t cursor-intangible t face minibuffer-prompt))
+(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+(setq enable-recursive-minibuffers t)
+(setq completion-styles '(basic substring partial-completion flex))
+(setq read-file-name-completion-ignore-case t
+      read-buffer-completion-ignore-case t
+      completion-ignore-case t)
+(when (>= emacs-major-version 28)
+  (setq read-extended-command-predicate
+        #'command-completion-default-include-p))
+
+(use-package vertico
+  :unless fast-init
+  :ensure t
+  :init
+  (vertico-mode))
+
+(use-package savehist
+  :unless fast-init
+  :init
+  (savehist-mode))
+
+(use-package marginalia
+  :bind
+  (:map minibuffer-local-map
+        ("M-A" . marginalia-cycle))
+  :init
+  (marginalia-mode))
+
+(use-package consult :disabled)
 
 (use-package all-the-icons
   :unless fast-init

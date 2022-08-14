@@ -10,6 +10,7 @@ anaconda-mode/**/*.pyc
 url
 recentf
 bookmarks
+history
 session.*
 .emacs.desktop
 .emacs.desktop.lock
