@@ -226,7 +226,8 @@
   :ensure t
   :config
   (ido-vertical-mode 1)
-  (setq-default ido-vertical-show-count t))
+  (setq-default ido-vertical-show-count t)
+  (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 
 (use-package all-the-icons
   :unless fast-init
