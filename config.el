@@ -136,7 +136,8 @@
   (setq-default org-hide-emphasis-markers t)
   (setq-default org-startup-with-inline-images t)
   (setq-default org-image-actual-width '(300))
-
+  (setq-default org-use-sub-superscripts "{}")
+  (add-to-list 'org-agenda-files "~/Sync/org/agenda")
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
