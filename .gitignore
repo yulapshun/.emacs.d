@@ -14,7 +14,7 @@ session.*
 .emacs.desktop
 .emacs.desktop.lock
 
-bookmarksn
+bookmarks
 ido.last
 tramp
 projectile-bookmarks.eld

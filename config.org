@@ -151,7 +151,6 @@
     (setq-default org-startup-with-inline-images t)
     (setq-default org-image-actual-width '(300))
     (setq-default org-use-sub-superscripts "{}")
-    (add-to-list 'org-agenda-files "~/Sync/org/agenda")
     (let ((headline `(:inherit default :weight bold)))
       (custom-theme-set-faces
        'user
@@ -163,7 +162,9 @@
        `(org-level-3 ((t (,@headline :height 1.1))))
        `(org-level-2 ((t (,@headline :height 1.2))))
        `(org-level-1 ((t (,@headline :height 1.3))))
-       `(org-document-title ((t (,@headline :height 1.5 :underline nil)))))))
+       `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
+    :custom
+    (org-agenda-files "~/Sync/org/agenda"))
 
   (use-package org-superstar
     :ensure t
