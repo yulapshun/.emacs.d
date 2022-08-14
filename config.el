@@ -174,14 +174,14 @@
   (setq-default
    org-roam-capture-templates
    '(("e" "encrypted" plain "%?"
-      :target (file+head "$%<%Y%m%d%H%M%S>-{slug}.org.gpg" "#+title: ${title} ") :unnarrowed t)
+      :target (file+head "private/%<%Y%m%d%H%M%S>-${slug}.org.gpg" "#+title: ${title} ") :unnarrowed t)
      ("d" "default" plain "%?"
       :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}") :unnarrowed t)))
   (setq-default
    org-roam-dailies-capture-templates
    '(("e" "encrypted" entry
       "* %?"
-      :target (file+head "%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
+      :target (file+head "private/%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
      ("d" "default" entry
       "* %?"
       :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
