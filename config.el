@@ -158,6 +158,42 @@
   :hook ((org-mode . org-superstar-mode))
   :after (org))
 
+(use-package org-roam
+  :unless fast-init
+  :ensure t
+  :custom
+  (org-roam-directory (file-truename "~/Sync/org/roam"))
+  :bind
+  (("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n f" . org-roam-node-find)
+   ("C-c n g" . org-roam-graph)
+   ("C-c n i" . org-roam-node-insert)
+   ("C-c n c" . org-roam-capture)
+   ("C-c n j" . org-roam-dailies-capture-today))
+  :config
+  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
+  (org-roam-db-autosync-mode)
+  (setq-default
+   org-roam-capture-templates
+   '(("e" "encrypted" plain "%?"
+      :target (file+head "$%<%Y%m%d%H%M%S>-{slug}.org.gpg" "#+title: ${title} ") :unnarrowed t)
+     ("d" "default" plain "%?"
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}") :unnarrowed t)))
+  (setq-default
+   org-roam-dailies-capture-templates
+   '(("e" "encrypted" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
+     ("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+
+(use-package org-roam-timestamps
+  :unless fast-init
+  :ensure t
+  :config (org-roam-timestamps-mode)
+  :after (org-roam))
+
 (use-package pyvenv
   :unless fast-init
   :ensure t
@@ -259,6 +295,16 @@
   :defer t)
 
 (use-package elisp-benchmarks
+  :unless fast-init
+  :ensure t
+  :defer t)
+
+(use-package emacsql
+  :unless fast-init
+  :ensure t
+  :defer t)
+
+(use-package emacsql-sqlite
   :unless fast-init
   :ensure t
   :defer t)
@@ -498,7 +544,7 @@
 
 (use-package undo-tree
   :ensure t
-  :if (<= emacs-major-version 28)
+  :if (< emacs-major-version 28)
   :config (global-undo-tree-mode)
   :bind
   ((:map undo-tree-map

@@ -4,21 +4,24 @@
 auto-save-list/
 elpa/archives/
 transient/
+eshell/
 anaconda-mode/**/*.pyc
 
 url
 recentf
+bookmarks
 session.*
 .emacs.desktop
 .emacs.desktop.lock
 
-bookmarks
-eshell
+bookmarksn
 ido.last
 tramp
 projectile-bookmarks.eld
 .lsp-session-*
 .dap-breakpoints
+.org-id-locations
+org-roam.db
 
 .cache/
 eln-cache/
