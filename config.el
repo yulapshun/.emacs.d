@@ -27,7 +27,6 @@
 (setq-default show-paren-delay 0)
 (setq-default uniquify-buffer-name-style 'forward)
 (setq-default whitespace-style '(face trailing tabs))
-(setq-default ido-auto-merge-work-directories-length nil)
 (setq-default flycheck-emacs-lisp-load-path 'inherit)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
@@ -39,7 +38,6 @@
             (setq-default css-indent-offset 2)))
 
 (when (not fast-init)
-  (ido-mode 1)
   (global-auto-revert-mode 1)
   (add-hook 'prog-mode-hook 'hs-minor-mode)
   (when (>= emacs-major-version 27)
@@ -47,7 +45,6 @@
     (add-hook 'prog-mode-hook
               (lambda ()
                 (setq display-fill-column-indicator-column 120))))
-  (setq-default ido-everywhere t)
   (setq-default confirm-kill-emacs 'yes-or-no-p)
   (setq-default native-comp-deferred-compilation t)
   (require 'cheatsheet))
@@ -207,6 +204,30 @@
   :config
   (pyvenv-auto-mode t))
 
+(when (not fast-init)
+  (ido-mode 1)
+  (setq-default ido-auto-merge-work-directories-length nil)
+  (setq-default ido-everywhere t))
+
+(use-package flx-ido
+  :unless fast-init
+  :ensure t
+  :config
+  (flx-ido-mode 1))
+
+(use-package ido-completing-read+
+  :unless fast-init
+  :ensure t
+  :config
+  (ido-ubiquitous-mode 1))
+
+(use-package ido-vertical-mode
+  :unless fast-init
+  :ensure t
+  :config
+  (ido-vertical-mode 1)
+  (setq-default ido-vertical-show-count t))
+
 (use-package all-the-icons
   :unless fast-init
   :ensure t
@@ -328,12 +349,6 @@
   :config
   (eyebrowse-mode 1))
 
-(use-package flx-ido
-  :unless fast-init
-  :ensure t
-  :config
-  (flx-ido-mode 1))
-
 (use-package flycheck
   :unless fast-init
   :ensure t
@@ -357,19 +372,6 @@
 (use-package gruvbox-theme
   :ensure t
   :defer t)
-
-(use-package ido-completing-read+
-  :unless fast-init
-  :ensure t
-  :config
-  (ido-ubiquitous-mode 1))
-
-(use-package ido-vertical-mode
-  :unless fast-init
-  :ensure t
-  :config
-  (ido-vertical-mode 1)
-  (setq-default ido-vertical-show-count t))
 
 (use-package js2-mode
   :disabled

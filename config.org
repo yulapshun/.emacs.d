@@ -32,7 +32,6 @@
   (setq-default show-paren-delay 0)
   (setq-default uniquify-buffer-name-style 'forward)
   (setq-default whitespace-style '(face trailing tabs))
-  (setq-default ido-auto-merge-work-directories-length nil)
   (setq-default flycheck-emacs-lisp-load-path 'inherit)
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -44,7 +43,6 @@
               (setq-default css-indent-offset 2)))
 
   (when (not fast-init)
-    (ido-mode 1)
     (global-auto-revert-mode 1)
     (add-hook 'prog-mode-hook 'hs-minor-mode)
     (when (>= emacs-major-version 27)
@@ -52,7 +50,6 @@
       (add-hook 'prog-mode-hook
                 (lambda ()
                   (setq display-fill-column-indicator-column 120))))
-    (setq-default ido-everywhere t)
     (setq-default confirm-kill-emacs 'yes-or-no-p)
     (setq-default native-comp-deferred-compilation t)
     (require 'cheatsheet))
@@ -228,6 +225,33 @@
     (pyvenv-auto-mode t))
 #+end_src
 
+* ido
+#+begin_src emacs-lisp
+  (when (not fast-init)
+    (ido-mode 1)
+    (setq-default ido-auto-merge-work-directories-length nil)
+    (setq-default ido-everywhere t))
+
+  (use-package flx-ido
+    :unless fast-init
+    :ensure t
+    :config
+    (flx-ido-mode 1))
+
+  (use-package ido-completing-read+
+    :unless fast-init
+    :ensure t
+    :config
+    (ido-ubiquitous-mode 1))
+
+  (use-package ido-vertical-mode
+    :unless fast-init
+    :ensure t
+    :config
+    (ido-vertical-mode 1)
+    (setq-default ido-vertical-show-count t))
+#+end_src
+
 * all-the-icons
 #+BEGIN_SRC emacs-lisp
   (use-package all-the-icons
@@ -400,15 +424,6 @@
     (eyebrowse-mode 1))
 #+END_SRC
 
-* flx-ido
-#+BEGIN_SRC emacs-lisp
-  (use-package flx-ido
-    :unless fast-init
-    :ensure t
-    :config
-    (flx-ido-mode 1))
-#+END_SRC
-
 * flycheck
 #+BEGIN_SRC emacs-lisp
   (use-package flycheck
@@ -447,25 +462,6 @@
     :ensure t
     :defer t)
 #+end_src
-
-* ido-completing-read+
-#+BEGIN_SRC emacs-lisp
-  (use-package ido-completing-read+
-    :unless fast-init
-    :ensure t
-    :config
-    (ido-ubiquitous-mode 1))
-#+END_SRC
-
-* ido-vertical-mode
-#+BEGIN_SRC emacs-lisp
-  (use-package ido-vertical-mode
-    :unless fast-init
-    :ensure t
-    :config
-    (ido-vertical-mode 1)
-    (setq-default ido-vertical-show-count t))
-#+END_SRC
 
 * js2-mode
 #+BEGIN_SRC emacs-lisp
