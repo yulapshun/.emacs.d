@@ -275,6 +275,7 @@
 (use-package vertico
   :unless (not use-vertico)
   :ensure t
+  :defer t
   :init
   (vertico-mode)
   (setq vertico-cycle t)
@@ -314,6 +315,7 @@
 (use-package consult
   :unless (not use-vertico)
   :ensure t
+  :defer t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
          ("C-c r" . consult-recent-file)
@@ -388,6 +390,7 @@
 (use-package embark
   :unless (not use-vertico)
   :ensure t
+  :defer t
   :bind
   (("C-c C-/" . embark-act)         ;; pick some comfortable binding
    ("C-c M-/" . embark-dwim)        ;; good alternative: M-.
