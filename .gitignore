@@ -11,6 +11,7 @@ url
 recentf
 bookmarks
 history
+projects
 session.*
 .emacs.desktop
 .emacs.desktop.lock

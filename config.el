@@ -118,8 +118,8 @@
       (((class color) (min-colors 255)) (:background "#3a3a3a" :foregroune "#ffdfaf"))))
    '(vertico-current
      ;; gruvbox-dark1 and gruvbox-light1
-     ((((class color) (min-colors 16777215)) (:background "#3c3836" :foreground "#ebdbb2"))
-      (((class color) (min-colors 255)) (:background "#3a3a3a" :foregroune "#ffdfaf")))))
+     ((((class color) (min-colors 16777215)) (:background "#504945" :foreground "#d5c4a1"))
+      (((class color) (min-colors 255)) (:background "#4e4e4e" :foregroune "#bcbcbc")))))
   (enable-theme 'gruvbox-dark-hard))
 (add-hook 'after-init-hook 'init-theme)
 (add-hook 'after-make-frame-functions 'init-theme) ;; For emacsclient
@@ -266,7 +266,10 @@
   :unless (or fast-init (< emacs-major-version 28))
   :ensure t
   :init
-  (vertico-mode))
+  (vertico-mode)
+  (setq vertico-cycle t)
+  (setq vertico-count 12)
+  (setq vertico-scroll-margin 4))
 
 (use-package
   vertico-directory
@@ -294,6 +297,7 @@
   :ensure t
   :custom
   (completion-styles '(orderless basic))
+  (orderless-matching-styles '(orderless-flex))
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package consult
@@ -301,36 +305,31 @@
   :ensure t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
-         ("C-c h" . consult-history)
+         ("C-c r" . consult-recent-file)
          ("C-c m" . consult-mode-command)
          ("C-c k" . consult-kmacro)
          ;; C-x bindings (ctl-x-map)
-         ("C-x M-:" . consult-complex-command)     ;; orig. repeat-complex-command
-         ("C-x b" . consult-buffer)                ;; orig. switch-to-buffer
-         ("C-x 4 b" . consult-buffer-other-window) ;; orig. switch-to-buffer-other-window
-         ("C-x 5 b" . consult-buffer-other-frame)  ;; orig. switch-to-buffer-other-frame
-         ("C-x r b" . consult-bookmark)            ;; orig. bookmark-jump
-         ("C-x p b" . consult-project-buffer)      ;; orig. project-switch-to-buffer
+         ("C-x M-:" . consult-complex-command)
+         ("C-x b" . consult-buffer)
+         ("C-x 4 b" . consult-buffer-other-window)
+         ("C-x r b" . consult-bookmark)
+         ("C-x p b" . consult-project-buffer)
          ;; Custom M-# bindings for fast register access
          ("M-#" . consult-register-load)
-         ("M-'" . consult-register-store)          ;; orig. abbrev-prefix-mark (unrelated)
+         ("M-'" . consult-register-store)
          ("C-M-#" . consult-register)
          ;; Other custom bindings
-         ("M-y" . consult-yank-pop)                ;; orig. yank-pop
-         ("<help> a" . consult-apropos)            ;; orig. apropos-command
+         ("M-y" . consult-yank-pop)
          ;; M-g bindings (goto-map)
-         ("M-g e" . consult-compile-error)
-         ("M-g f" . consult-flymake)               ;; Alternative: consult-flycheck
-         ("M-g g" . consult-goto-line)             ;; orig. goto-line
-         ("M-g M-g" . consult-goto-line)           ;; orig. goto-line
-         ("M-g o" . consult-outline)               ;; Alternative: consult-org-heading
-         ("M-g m" . consult-mark)
-         ("M-g k" . consult-global-mark)
+         ("M-g f" . consult-flycheck)
+         ("M-g g" . consult-goto-line)
+         ("M-g M-g" . consult-goto-line)
+         ("M-g h" . consult-org-heading)
+         ("M-g o" . consult-outline)
          ("M-g i" . consult-imenu)
          ("M-g I" . consult-imenu-multi)
          ;; M-s bindings (search-map)
          ("M-s d" . consult-find)
-         ("M-s D" . consult-locate)
          ("M-s g" . consult-grep)
          ("M-s G" . consult-git-grep)
          ("M-s r" . consult-ripgrep)
@@ -342,14 +341,13 @@
          ;; Isearch integration
          ("M-s e" . consult-isearch-history)
          :map isearch-mode-map
-         ("M-e" . consult-isearch-history)         ;; orig. isearch-edit-string
-         ("M-s e" . consult-isearch-history)       ;; orig. isearch-edit-string
-         ("M-s l" . consult-line)                  ;; needed by consult-line to detect isearch
-         ("M-s L" . consult-line-multi)            ;; needed by consult-line to detect isearch
+         ("M-s e" . consult-isearch-history)
+         ("M-s l" . consult-line)
+         ("M-s L" . consult-line-multi)
          ;; Minibuffer history
          :map minibuffer-local-map
-         ("M-s" . consult-history)                 ;; orig. next-matching-history-element
-         ("M-r" . consult-history))                ;; orig. previous-matching-history-element
+         ("M-s" . consult-history)
+         ("M-r" . consult-history))
   :hook (completion-list-mode . consult-preview-at-point-mode)
   :init
   (setq register-preview-delay 0.5
@@ -366,14 +364,22 @@
    consult--source-bookmark consult--source-recent-file
    consult--source-project-recent-file
    :preview-key (kbd "M-."))
-  (setq consult-narrow-key "<"))
+  (setq consult-narrow-key "<")
+  (autoload 'projectile-project-root "projectile")
+  (setq consult-project-function (lambda (_) (projectile-project-root)))
+  (setq completion-in-region-function
+      (lambda (&rest args)
+        (apply (if vertico-mode
+                   #'consult-completion-in-region
+                 #'completion--in-region)
+               args))))
 
 (use-package embark
   :unless (or fast-init (< emacs-major-version 28))
   :ensure t
   :bind
-  (("C-M->" . embark-act)         ;; pick some comfortable binding
-   ("C-M-<" . embark-dwim)        ;; good alternative: M-.
+  (("C-c C-/" . embark-act)         ;; pick some comfortable binding
+   ("C-c M-/" . embark-dwim)        ;; good alternative: M-.
    ("C-h B" . embark-bindings))   ;; alternative for `describe-bindings'
   :init
   (setq prefix-help-command #'embark-prefix-help-command)
@@ -616,6 +622,7 @@
   ([f8] . 'neotree-toggle))
 
 (use-package paredit
+  :disabled
   :ensure t
   :defer t
   :hook
@@ -749,6 +756,7 @@
   "\\.html?\\'"  "\\.xml\\'" "\\.jinja2\\'" ))
 
 (use-package which-key
+  :disabled
   :unless fast-init
   :ensure t
   :defer 1
