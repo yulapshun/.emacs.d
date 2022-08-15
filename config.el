@@ -138,6 +138,10 @@
   (setq-default org-startup-with-inline-images t)
   (setq-default org-image-actual-width '(300))
   (setq-default org-use-sub-superscripts "{}")
+  (setq-default org-todo-keywords
+        '((sequence "TODO" "WORKING" "|" "DONE" "CLOSE")))
+  (setq-default org-enforce-todo-dependencies t)
+  (setq-default org-enforce-todo-checkbox-dependencies t)
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
