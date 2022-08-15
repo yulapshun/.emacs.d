@@ -5,6 +5,7 @@
         ("melpa" . 1)))
 
 (defvar fast-init)
+(defvar completion-system 'vertico) ;; ido, vertico, ivy, helm
 
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
@@ -222,35 +223,44 @@
   :config
   (pyvenv-auto-mode t))
 
-(when (and (not fast-init) (< emacs-major-version 27))
+;; Use ido by default if emacs version is < 28 and completion-system is set to
+;; vertico which does not support version < 28
+(defvar use-ido
+  (and (not fast-init)
+       (or (eq completion-system 'ido)
+           (and (< emacs-major-version 28) (eq completion-system 'vertico)))))
+
+(when use-ido
   (ido-mode 1)
   (setq-default ido-auto-merge-work-directories-length nil)
   (setq-default ido-everywhere t))
 
 (use-package flx-ido
-  :disabled
-  :unless (or fast-init (>= emacs-major-version 27))
+  :unless (not use-ido)
   :ensure t
   :config
   (flx-ido-mode 1))
 
 (use-package ido-completing-read+
-  :disabled
-  :unless (or fast-init (>= emacs-major-version 27))
+  :unless (not use-ido)
   :ensure t
   :config
   (ido-ubiquitous-mode 1))
 
 (use-package ido-vertical-mode
-  :disabled
-  :unless (or fast-init (>= emacs-major-version 27))
+  :unless (not use-ido)
   :ensure t
   :config
   (ido-vertical-mode 1)
   (setq-default ido-vertical-show-count t)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 
-(when (and (not fast-init) (>= emacs-major-version 28))
+(defvar use-vertico
+  (and (not fast-init)
+       (>= emacs-major-version 28)
+       (eq completion-system 'vertico)))
+
+(when use-vertico
   (setq minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
@@ -263,7 +273,7 @@
           #'command-completion-default-include-p)))
 
 (use-package vertico
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :ensure t
   :init
   (vertico-mode)
@@ -273,6 +283,7 @@
 
 (use-package
   vertico-directory
+  :unless (not use-vertico)
   :after vertico
   :bind (:map vertico-map
               ("RET" . vertico-directory-enter)
@@ -281,19 +292,19 @@
   :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
 
 (use-package savehist
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :init
   (savehist-mode))
 
 (use-package marginalia
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :bind
   (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
 
 (use-package orderless
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :ensure t
   :custom
   (completion-styles '(orderless basic))
@@ -301,7 +312,7 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package consult
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :ensure t
   ;; Replace bindings. Lazily loaded due by `use-package'.
   :bind (;; C-c bindings (mode-specific-map)
@@ -368,14 +379,14 @@
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root)))
   (setq completion-in-region-function
-      (lambda (&rest args)
-        (apply (if vertico-mode
-                   #'consult-completion-in-region
-                 #'completion--in-region)
-               args))))
+        (lambda (&rest args)
+          (apply (if vertico-mode
+                     #'consult-completion-in-region
+                   #'completion--in-region)
+                 args))))
 
 (use-package embark
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :ensure t
   :bind
   (("C-c C-/" . embark-act)         ;; pick some comfortable binding
@@ -390,7 +401,7 @@
                  (window-parameters (mode-line-format . none)))))
 
 (use-package embark-consult
-  :unless (or fast-init (< emacs-major-version 28))
+  :unless (not use-vertico)
   :ensure t
   :after (embark consult)
   :hook
