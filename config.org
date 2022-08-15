@@ -159,6 +159,9 @@
           '((sequence "TODO" "WORKING" "|" "DONE" "CLOSE")))
     (setq-default org-enforce-todo-dependencies t)
     (setq-default org-enforce-todo-checkbox-dependencies t)
+    (setq-default org-priority-highest ?A)
+    (setq-default org-priority-lowest ?I)
+    (setq-default org-priority-default ?E)
     (let ((headline `(:inherit default :weight bold)))
       (custom-theme-set-faces
        'user
