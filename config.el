@@ -146,6 +146,9 @@
         '((sequence "TODO" "WORKING" "|" "DONE" "CLOSE")))
   (setq-default org-enforce-todo-dependencies t)
   (setq-default org-enforce-todo-checkbox-dependencies t)
+  (setq-default org-priority-highest ?A)
+  (setq-default org-priority-lowest ?I)
+  (setq-default org-priority-default ?E)
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
@@ -247,37 +250,55 @@
   (setq-default ido-vertical-show-count t)
   (setq ido-vertical-define-keys 'C-n-and-C-p-only))
 
-(setq minibuffer-prompt-properties
-      '(read-only t cursor-intangible t face minibuffer-prompt))
-(add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-(setq enable-recursive-minibuffers t)
-(setq completion-styles '(basic substring partial-completion flex))
-(setq read-file-name-completion-ignore-case t
-      read-buffer-completion-ignore-case t
-      completion-ignore-case t)
-(when (>= emacs-major-version 28)
-  (setq read-extended-command-predicate
-        #'command-completion-default-include-p))
+(when (and (not fast-init) (>= emacs-major-version 28))
+  (setq minibuffer-prompt-properties
+        '(read-only t cursor-intangible t face minibuffer-prompt))
+  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+  (setq enable-recursive-minibuffers t)
+  (setq read-file-name-completion-ignore-case t
+        read-buffer-completion-ignore-case t
+        completion-ignore-case t)
+  (when (>= emacs-major-version 28)
+    (setq read-extended-command-predicate
+          #'command-completion-default-include-p)))
 
 (use-package vertico
-  :unless fast-init
+  :unless (or fast-init (< emacs-major-version 28))
   :ensure t
   :init
   (vertico-mode))
 
+(use-package
+  vertico-directory
+  :after vertico
+  :bind (:map vertico-map
+              ("RET" . vertico-directory-enter)
+              ("DEL" . vertico-directory-delete-char)
+              ("M-DEL" . vertico-directory-delete-word))
+  :hook (rfn-eshadow-update-overlay . vertico-directory-tidy))
+
 (use-package savehist
-  :unless fast-init
+  :unless (or fast-init (< emacs-major-version 28))
   :init
   (savehist-mode))
 
 (use-package marginalia
+  :unless (or fast-init (< emacs-major-version 28))
   :bind
-  (:map minibuffer-local-map
-        ("M-A" . marginalia-cycle))
+  (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init
   (marginalia-mode))
 
+(use-package orderless
+  :unless (or fast-init (< emacs-major-version 28))
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
 (use-package consult :disabled)
+(use-package embark :disabled)
+(use-package embark-consult :disabled)
 
 (use-package all-the-icons
   :unless fast-init

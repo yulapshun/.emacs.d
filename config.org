@@ -281,7 +281,6 @@
           '(read-only t cursor-intangible t face minibuffer-prompt))
     (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
     (setq enable-recursive-minibuffers t)
-    (setq completion-styles '(basic substring partial-completion flex))
     (setq read-file-name-completion-ignore-case t
           read-buffer-completion-ignore-case t
           completion-ignore-case t)
@@ -316,7 +315,13 @@
     :init
     (marginalia-mode))
 
-  (use-package orderless :disabled)
+  (use-package orderless
+    :unless (or fast-init (< emacs-major-version 28))
+    :ensure t
+    :custom
+    (completion-styles '(orderless basic))
+    (completion-category-overrides '((file (styles basic partial-completion)))))
+
   (use-package consult :disabled)
   (use-package embark :disabled)
   (use-package embark-consult :disabled)
