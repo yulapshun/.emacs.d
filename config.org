@@ -42,6 +42,11 @@
             (lambda ()
               (setq-default css-indent-offset 2)))
 
+  (when fast-init
+    (recentf-mode -1)
+    (setq-default make-backup-files nil)
+    (setq-default auto-save-default nil ))
+
   (when (not fast-init)
     (global-auto-revert-mode 1)
     (add-hook 'prog-mode-hook 'hs-minor-mode)
