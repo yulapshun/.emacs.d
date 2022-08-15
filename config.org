@@ -393,8 +393,29 @@
      consult--source-project-recent-file
      :preview-key (kbd "M-."))
     (setq consult-narrow-key "<"))
-  (use-package embark :disabled)
-  (use-package embark-consult :disabled)
+
+  (use-package embark
+    :unless (or fast-init (< emacs-major-version 28))
+    :ensure t
+    :bind
+    (("C-M->" . embark-act)         ;; pick some comfortable binding
+     ("C-M-<" . embark-dwim)        ;; good alternative: M-.
+     ("C-h B" . embark-bindings))   ;; alternative for `describe-bindings'
+    :init
+    (setq prefix-help-command #'embark-prefix-help-command)
+    :config
+    (add-to-list 'display-buffer-alist
+                 '("\\`\\*Embark Collect \\(Live\\|Completions\\)\\*"
+                   nil
+                   (window-parameters (mode-line-format . none)))))
+
+  (use-package embark-consult
+    :unless (or fast-init (< emacs-major-version 28))
+    :ensure t
+    :after (embark consult)
+    :hook
+    (embark-collect-mode . consult-preview-at-point-mode)
+    :after (consult embark))
 #+end_src
 
 * all-the-icons
