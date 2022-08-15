@@ -170,7 +170,6 @@
    ("C-c n c" . org-roam-capture)
    ("C-c n j" . org-roam-dailies-capture-today))
   :config
-  (setq org-roam-node-display-template (concat "${title:*} " (propertize "${tags:10}" 'face 'org-tag)))
   (org-roam-db-autosync-mode)
   (setq-default
    org-roam-capture-templates
@@ -185,7 +184,8 @@
       :target (file+head "private/%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
      ("d" "default" entry
       "* %?"
-      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")))))
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+  (setq-default org-roam-node-display-template (concat "${title:*} " (propertize "${tags:80}" 'face 'org-tag))))
 
 (use-package org-roam-timestamps
   :unless fast-init
