@@ -27,7 +27,6 @@
 (setq-default show-paren-delay 0)
 (setq-default uniquify-buffer-name-style 'forward)
 (setq-default whitespace-style '(face trailing tabs))
-(setq-default flycheck-emacs-lisp-load-path 'inherit)
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (add-hook 'js-mode-hook
@@ -36,6 +35,11 @@
 (add-hook 'css-mode-hook
           (lambda ()
             (setq-default css-indent-offset 2)))
+
+(when fast-init
+  (recentf-mode -1)
+  (setq-default make-backup-files nil)
+  (setq-default auto-save-default nil ))
 
 (when (not fast-init)
   (global-auto-revert-mode 1)
@@ -146,6 +150,8 @@
      `(org-level-2 ((t (,@headline :height 1.2))))
      `(org-level-1 ((t (,@headline :height 1.3))))
      `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
+  :bind
+  (:map org-mode-map ("C-c C-?" . org-time-stamp-inactive))
   :custom
   (org-agenda-files "~/Sync/org/agenda"))
 
@@ -356,7 +362,9 @@
   :ensure t
   :defer t
   :init
-  (add-hook 'after-init-hook 'global-flycheck-mode))
+  (add-hook 'after-init-hook 'global-flycheck-mode)
+  :config
+  (setq-default flycheck-emacs-lisp-load-path 'inherit))
 
 (use-package git-commit
   :unless fast-init
