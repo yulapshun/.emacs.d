@@ -9,12 +9,14 @@ C-c C-j	org-goto			Jump to locations
 M-<down>	org-metaup				Move subtree or table row down
 M-<up>	org-metadown				Move subtree or table row up
 M-<left>	org-metaleft				Promote heading, list item at point or move table column left
-M-<right>	org-metaright				Promote heading, list item at point or move table column right
+M-<right>	org-metaright				Deomote heading, list item at point or move table column right
+M-S-<left>	org-shiftmetaleft			Promote subtree, delete table column
+M-S-<right>	org-shiftmetaright			Demote subtree, insert table column
 C-<RET>	org-insert-heading-respect-content	Insert new heading after subtree
 M-<RET>	org-meta-regurn				Insert new heading/item at current level
 
 * Table
-C-|		org-table-create-or-convert-from-region	Create table or conver region to table
+C-C |		org-table-create-or-convert-from-region	Create table or conver region to table
 C-c C-c	org-ctrl-c-ctrl-c			Align table
 <tab>		org-cycle				Move to the next field
 S-<tab>	org-cycle				Move to the previous field
@@ -24,6 +26,16 @@ C-'		org-edit-special		Edit code block
 C-c C-c	org-ctrl-c-ctrl-c		Execute code block
 C-c C-v n	org-babel-next-src-block	Jump to the next source block
 C-c C-v p	org-babel-previous-src-block	Jump to the previous source block
+
+* Tags
+C-c C-q	org-set-tags-command	Set tags for the current header
+C-c / m	org-match-sparse-tree	Search tags and put results in a sparse tree
+C-c \
+
+* ​TODO
+C-c C-t	org-todo	Cycle through TODO states
+S-<left>	org-shiftleft	Switch to the previous TODO state
+S-<right>	org-shiftright	Switch to the next TODO state
 
 * Yasnippet
 <src		Source block
