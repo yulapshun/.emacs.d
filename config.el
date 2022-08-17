@@ -308,9 +308,13 @@
   :unless (not use-vertico)
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
-  (orderless-matching-styles '(orderless-flex))
-  (completion-category-overrides '((file (styles basic partial-completion)))))
+  (completion-styles '(basic flex orderless))
+  (completion-category-overrides
+   '((file (styles basic flex partial-completion))
+     (buffer (styles basic flex))
+     (command (styles basic orderless))
+     (symbol (styles basic))
+     (variable (styles basic)))))
 
 (use-package consult
   :unless (not use-vertico)
@@ -379,13 +383,7 @@
    :preview-key (kbd "M-."))
   (setq consult-narrow-key "<")
   (autoload 'projectile-project-root "projectile")
-  (setq consult-project-function (lambda (_) (projectile-project-root)))
-  (setq completion-in-region-function
-        (lambda (&rest args)
-          (apply (if vertico-mode
-                     #'consult-completion-in-region
-                   #'completion--in-region)
-                 args))))
+  (setq consult-project-function (lambda (_) (projectile-project-root))))
 
 (use-package embark
   :unless (not use-vertico)
