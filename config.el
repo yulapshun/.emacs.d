@@ -150,6 +150,8 @@
   (setq-default org-priority-highest ?A)
   (setq-default org-priority-lowest ?I)
   (setq-default org-priority-default ?E)
+  (setq-default org-log-done 'time)
+  (setq-default org-log-done 'note)
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
