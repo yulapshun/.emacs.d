@@ -492,6 +492,7 @@
   :ensure t
   :config
   (dashboard-setup-startup-hook)
+  (setq dashboard-startup-banner 'logo)
   (setq dashboard-items '((recents  . 5)
                           (projects . 5))))
 
