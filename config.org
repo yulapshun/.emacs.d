@@ -150,7 +150,6 @@
 * org
 #+BEGIN_SRC emacs-lisp
   (use-package org
-    :ensure t
     :defer t
     :init
     (setq-default org-src-fontify-natively t)
