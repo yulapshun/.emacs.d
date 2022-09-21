@@ -440,6 +440,10 @@
   :bind
   ("C-:" . 'avy-goto-char))
 
+(use-package benchmark-init
+  :unless fast-init
+  :ensure t)
+
 (use-package company
   :ensure t
   :defer 5
