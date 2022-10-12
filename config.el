@@ -133,7 +133,6 @@
                             "#ff8000" "#ff0080" "#0080ff"))))
 
 (use-package org
-  :ensure f
   :defer t
   :init
   (setq-default org-src-fontify-natively t)
