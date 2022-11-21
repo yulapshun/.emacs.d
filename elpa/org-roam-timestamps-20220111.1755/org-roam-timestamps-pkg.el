@@ -1,2 +1,0 @@
-;;; Generated package description from org-roam-timestamps.el  -*- no-byte-compile: t -*-
-(define-package "org-roam-timestamps" "20220111.1755" "Keep track of modification times for org-roam" '((emacs "26.1") (org-roam "2.0.0")) :commit "604fdad0feb61419751d3d6b828cc443a99f418f" :authors '(("Thomas F. K. Jorna <https://github.com/thomas>")) :maintainer '("Thomas F. K. Jorna" . "jorna@jtrialerror.com") :keywords '("calendar" "outlines" "files") :url "https://github.com/ThomasFKJorna/org-roam-timestamps/")
