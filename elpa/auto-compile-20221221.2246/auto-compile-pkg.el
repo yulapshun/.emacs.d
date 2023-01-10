@@ -1,2 +1,0 @@
-;;; Generated package description from auto-compile.el  -*- no-byte-compile: t -*-
-(define-package "auto-compile" "20221221.2246" "Automatically compile Emacs Lisp libraries" '((emacs "25.1")) :commit "f0690b770c71d0a25957b48b8952190eb3fe4111" :authors '(("Jonas Bernoulli" . "jonas@bernoul.li")) :maintainer '("Jonas Bernoulli" . "jonas@bernoul.li") :keywords '("compile" "convenience" "lisp") :url "https://github.com/emacscollective/auto-compile")
