@@ -157,6 +157,7 @@
     (setq-default org-pretty-entities t)
     (setq-default org-hide-emphasis-markers t)
     (setq-default org-startup-with-inline-images t)
+    (setq-default org-startup-with-latex-preview t)
     (setq-default org-image-actual-width '(300))
     (setq-default org-use-sub-superscripts "{}")
     (setq-default org-todo-keywords
@@ -168,6 +169,10 @@
     (setq-default org-priority-default ?E)
     (setq-default org-log-done 'time)
     (setq-default org-log-done 'note)
+    (setq-default org-export-with-author nil)
+    (setq-default org-export-with-date nil)
+    (setq-default org-export-with-toc nil)
+    (setq-default org-export-with-section-numbers nil)
     (let ((headline `(:inherit default :weight bold)))
       (custom-theme-set-faces
        'user
@@ -228,6 +233,12 @@
     :ensure t
     :config (org-roam-timestamps-mode)
     :after (org-roam))
+
+  (use-package org-fragtog
+    :unless fast-init
+    :ensure t
+    :hook ((org-mode . org-fragtog-mode))
+    :after (org))
 #+END_SRC
 
 * python
