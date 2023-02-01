@@ -223,6 +223,12 @@
   :hook ((org-mode . org-fragtog-mode))
   :after (org))
 
+(use-package cdlatex
+  :unless fast-init
+  :ensure t
+  :hook ((org-mode . turn-on-org-cdlatex))
+  :after (org))
+
 (use-package pyvenv
   :unless fast-init
   :ensure t
