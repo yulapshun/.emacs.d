@@ -716,8 +716,9 @@
   :ensure t
   :defer t
   :config
+  (indent-tabs-mode t)
   (setq pug-tab-width 2)
-  (setq indent-tabs-mode t))
+  (setq tab-width 2))
 
 (use-package rjsx-mode
   :disabled
