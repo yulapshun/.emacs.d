@@ -326,7 +326,7 @@
   :unless (not use-vertico)
   :ensure t
   :custom
-  (completion-styles '(basic flex orderless))
+  (completion-styles '(basic orderless flex))
   (completion-category-overrides
    '((file (styles basic flex partial-completion))
      (buffer (styles basic flex))
@@ -388,8 +388,8 @@
   (setq register-preview-delay 0.5
         register-preview-function #'consult-register-format)
   (advice-add #'register-preview :override #'consult-register-window)
-  (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+  ;; (setq xref-show-xrefs-function #'consult-xref
+  ;;       xref-show-definitions-function #'consult-xref)
   :config
   (consult-customize
    consult-theme
