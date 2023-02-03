@@ -33,6 +33,9 @@
 (add-hook 'js-mode-hook
           (lambda ()
             (setq-default js-indent-level 2)))
+(if (>= emacs-major-version 27)
+        (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
+        (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
 (add-hook 'css-mode-hook
           (lambda ()
             (setq-default css-indent-offset 2)))
@@ -607,8 +610,8 @@
   :custom
   (lsp-auto-guess-root nil)
   :hook
-  ((js-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) (python-mode . lsp) (web-mode . lsp) (css-mode . lsp)
-   (java-mode . lsp) (sh-mode . lsp) (html-mode . lsp) (json-mode . lsp)))
+  ((js-mode . lsp) (js-ts-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) (python-mode . lsp) (python-ts-mode . lsp)
+   (web-mode . lsp) (css-mode . lsp) (java-mode . lsp) (sh-mode . lsp) (html-mode . lsp) (json-mode . lsp)))
 ;; pip install python-lsp-server
 ;; npm i -g typescript-language-server
 ;; npm i -g vscode-json-languageserver
@@ -752,6 +755,13 @@
 (use-package transient
   :unless fast-init
   :defer t)
+
+(use-package treesit-auto
+  :if (>= emacs-major-version 29)
+  :ensure t
+  :config
+  (global-treesit-auto-mode)
+  (setq treesit-auto-install 'prompt))
 
 (use-package undo-tree
   :ensure t
