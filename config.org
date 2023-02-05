@@ -38,6 +38,9 @@
   (add-hook 'js-mode-hook
             (lambda ()
               (setq-default js-indent-level 2)))
+  (add-hook 'js-ts-mode-hook
+            (lambda ()
+              (setq-default js-indent-level 2)))
   (if (>= emacs-major-version 27)
           (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
           (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
