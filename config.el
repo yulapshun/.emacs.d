@@ -162,6 +162,7 @@
   (setq-default org-export-with-date nil)
   (setq-default org-export-with-toc nil)
   (setq-default org-export-with-section-numbers nil)
+  (setq-default org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
