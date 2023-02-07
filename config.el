@@ -219,7 +219,11 @@
      ("d" "default" entry
       "* %?"
       :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
-  (setq-default org-roam-node-display-template (concat "${title:*} " (propertize "${tags:80}" 'face 'org-tag))))
+  (setq-default org-roam-node-display-template
+                (concat
+                 (propertize "${title}" 'face 'bold)
+                 (propertize " | " 'face 'org-warning)
+                 (propertize "${tags}" 'face 'highlight))))
 
 (use-package org-roam-timestamps
   :unless fast-init
