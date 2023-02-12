@@ -544,6 +544,10 @@
   :ensure t
   :defer t)
 
+(use-package emacsql-sqlite-builtin
+  :if (>= emacs-major-version 29)
+  :ensure t)
+
 (use-package emacsql-sqlite
   :unless fast-init
   :ensure t
