@@ -36,6 +36,7 @@
 (add-hook 'js-ts-mode-hook
           (lambda ()
             (setq-default js-indent-level 2)))
+(add-hook 'org-mode-hook #'visual-line-mode)
 (if (>= emacs-major-version 27)
         (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
         (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
@@ -203,6 +204,8 @@
    ("C-c n t" . org-roam-tag-add)
    ("C-c n a" . org-roam-alias-add)
    ("C-c n d" . org-id-get-create))
+  :init
+  (setq-default org-roam-database-connector 'sqlite) ;; Bug in org-roam-ui with built-in connector
   :config
   (org-roam-db-autosync-mode)
   (setq-default
@@ -545,11 +548,12 @@
   :defer t)
 
 (use-package emacsql-sqlite-builtin
-  :if (>= emacs-major-version 29)
-  :ensure t)
+  :if (and (not fast-init) (>= emacs-major-version 29))
+  :ensure t
+  :defer t)
 
 (use-package emacsql-sqlite
-  :unless fast-init
+  :if (and (not fast-init) (< emacs-major-version 29))
   :ensure t
   :defer t)
 
