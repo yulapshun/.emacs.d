@@ -220,6 +220,8 @@
      ("C-c n t" . org-roam-tag-add)
      ("C-c n a" . org-roam-alias-add)
      ("C-c n d" . org-id-get-create))
+    :init
+    (setq-default org-roam-database-connector 'sqlite) ;; Bug in org-roam-ui with built-in connector
     :config
     (org-roam-db-autosync-mode)
     (setq-default
@@ -615,14 +617,15 @@
 * emacsql-sqlite-builtin
 #+begin_src emacs-lisp
   (use-package emacsql-sqlite-builtin
-    :if (>= emacs-major-version 29)
-    :ensure t)
+    :if (and (not fast-init) (>= emacs-major-version 29))
+    :ensure t
+    :defer t)
 #+end_src
 
 * emacsql-sqlite
 #+begin_src emacs-lisp
   (use-package emacsql-sqlite
-    :unless fast-init
+    :if (and (not fast-init) (< emacs-major-version 29))
     :ensure t
     :defer t)
 #+end_src
