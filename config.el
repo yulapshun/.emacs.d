@@ -634,7 +634,7 @@
 ;; pip install python-lsp-server
 ;; npm i -g typescript-language-server
 ;; npm i -g vscode-json-languageserver
-;; npm install -g vscode-langservers-extracted
+;; npm i -g vscode-langservers-extracted
 ;; npm i -g bash-language-server
 
 (use-package lsp-ui
