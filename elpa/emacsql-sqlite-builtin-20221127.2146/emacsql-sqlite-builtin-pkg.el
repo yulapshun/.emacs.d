@@ -1,2 +1,0 @@
-;;; Generated package description from emacsql-sqlite-builtin.el  -*- no-byte-compile: t -*-
-(define-package "emacsql-sqlite-builtin" "20221127.2146" "EmacSQL back-end for SQLite using builtin support" '((emacs "29") (emacsql "3.1.1")) :commit "6b2e65bdf785364cf7c34c31fea5812e1e58c657" :authors '(("Jonas Bernoulli" . "jonas@bernoul.li")) :maintainer '("Jonas Bernoulli" . "jonas@bernoul.li") :url "https://github.com/magit/emacsql")
