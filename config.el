@@ -410,12 +410,15 @@
   :config
   (consult-customize
    consult-theme
-   :preview-key '(:debounce 0.2 any)
    consult-ripgrep consult-git-grep consult-grep
    consult-bookmark consult-recent-file consult-xref
+
+   consult--source-buffer
    consult--source-bookmark consult--source-recent-file
    consult--source-project-recent-file
-   :preview-key (kbd "M-."))
+   :preview-key "M-."
+   ;; :preview-key '(:debounce 0.2 any)
+   )
   (setq consult-narrow-key "<")
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root))))
