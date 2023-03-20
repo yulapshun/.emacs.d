@@ -221,7 +221,16 @@
       :target (file+head "private/%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
      ("d" "default" entry
       "* %?"
-      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+      :unnarrowed t)
+     ("d" "default" entry
+      "* %?"
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n")
+      :unnarrowed t)
+     ("w" "work" entry
+      "* %?"
+      :target (file+head "work/%<%Y-%m-%d>.org" "#+filetags: :work:\n#+title: %<%Y-%m-%d>\n")
+      :unnarrowed t)))
   (setq-default org-roam-node-display-template
                 (concat
                  (propertize "${title}" 'face 'bold)
