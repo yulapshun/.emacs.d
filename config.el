@@ -549,6 +549,22 @@
   :ensure t
   :defer t)
 
+(use-package eglot
+  :unless fast-init
+  :ensure t
+  :defer t
+  :hook
+  ((js-mode . eglot-ensure) (js-ts-mode . eglot-ensure) (js2-mode . eglot-ensure) (rjsx-mode . eglot-ensure)
+   (python-mode . eglot-ensure) (python-ts-mode . eglot-ensure) (web-mode . eglot-ensure) (css-mode . eglot-ensure)
+   (java-mode . eglot-ensure) (sh-mode . eglot-ensure) (html-mode . eglot-ensure) (json-mode . eglot-ensure)
+   (c-mode . eglot-ensure) (c++-mode . eglot-ensure)))
+;; pip install python-lsp-server
+;; npm i -g typescript-language-server
+;; npm i -g vscode-json-languageserver
+;; npm i -g vscode-langservers-extracted
+;; npm i -g bash-language-server
+;; dnf in clang-tools-extra
+
 (use-package elisp-benchmarks
   :unless fast-init
   :ensure t
@@ -625,6 +641,7 @@
   :defer t)
 
 (use-package lsp-mode
+  :disabled
   :unless fast-init
   :ensure t
   :defer t
@@ -650,6 +667,7 @@
 ;; npm i -g bash-language-server
 
 (use-package lsp-ui
+  :disabled
   :unless fast-init
   :ensure t
   :defer t
