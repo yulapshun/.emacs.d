@@ -646,22 +646,6 @@
     :defer t)
 #+end_src
 
-* emacsql-sqlite-builtin
-#+begin_src emacs-lisp
-  ;; (use-package emacsql-sqlite-builtin
-  ;;   :if (and (not fast-init) (>= emacs-major-version 29))
-  ;;   :ensure t
-  ;;   :defer t)
-#+end_src
-
-* emacsql-sqlite
-#+begin_src emacs-lisp
-  (use-package emacsql-sqlite
-    :if (and (not fast-init) (< emacs-major-version 29))
-    :ensure t
-    :defer t)
-#+end_src
-
 * emojify
 #+BEGIN_SRC emacs-lisp
   (use-package emojify

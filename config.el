@@ -575,16 +575,6 @@
   :ensure t
   :defer t)
 
-;; (use-package emacsql-sqlite-builtin
-;;   :if (and (not fast-init) (>= emacs-major-version 29))
-;;   :ensure t
-;;   :defer t)
-
-(use-package emacsql-sqlite
-  :if (and (not fast-init) (< emacs-major-version 29))
-  :ensure t
-  :defer t)
-
 (use-package emojify
   :disabled
   :ensure t
