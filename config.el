@@ -15,11 +15,6 @@
 (global-hl-line-mode 1)
 (column-number-mode 1)
 (electric-indent-mode 1)
-(add-hook 'prog-mode-hook 'whitespace-mode)
-(add-hook 'prog-mode-hook
-          (if (>= emacs-major-version 26)
-              'display-line-numbers-mode
-            'linum-mode))
 
 (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
 (setq-default create-lockfiles nil)
@@ -28,8 +23,15 @@
 (setq-default show-paren-delay 0)
 (setq-default uniquify-buffer-name-style 'forward)
 (setq-default whitespace-style '(face trailing tabs))
+
 (put 'upcase-region 'disabled nil)
 (put 'downcase-region 'disabled nil)
+
+(add-hook 'prog-mode-hook 'whitespace-mode)
+(add-hook 'prog-mode-hook
+          (if (>= emacs-major-version 26)
+              'display-line-numbers-mode
+            'linum-mode))
 (add-hook 'js-mode-hook
           (lambda ()
             (setq-default js-indent-level 2)))
@@ -47,7 +49,7 @@
 (when fast-init
   (recentf-mode -1)
   (setq-default make-backup-files nil)
-  (setq-default auto-save-default nil ))
+  (setq-default auto-save-default nil))
 
 (when (not fast-init)
   (global-auto-revert-mode 1)
@@ -58,8 +60,11 @@
               (lambda ()
                 (setq display-fill-column-indicator-column 120))))
   (setq-default confirm-kill-emacs 'yes-or-no-p)
-  (setq-default native-comp-deferred-compilation t)
-  (require 'cheatsheet))
+  (setq-default native-comp-deferred-compilation t))
+
+(use-package cheatsheet
+  :unless fast-init
+  :defer 3)
 
 (global-set-key (kbd "C-x _") 'fit-window-to-buffer)
 (global-set-key (kbd "C-x x") 'epa-decrypt-region)
@@ -162,8 +167,7 @@
   (setq-default org-export-with-author nil)
   (setq-default org-export-with-date nil)
   (setq-default org-export-with-toc nil)
-  (setq-default org-export-with-section-numbers nil)
-  (setq-default org-format-latex-options (plist-put org-format-latex-options :scale 1.3))
+  (setq-default org-export-with-section-numbers nil)    
   (let ((headline `(:inherit default :weight bold)))
     (custom-theme-set-faces
      'user
@@ -176,6 +180,8 @@
      `(org-level-2 ((t (,@headline :height 1.2))))
      `(org-level-1 ((t (,@headline :height 1.3))))
      `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
+  :config
+  (plist-put org-format-latex-options :scale 1.3)
   :bind
   (:map org-mode-map ("C-c C-?" . org-time-stamp-inactive))
   :custom
@@ -192,6 +198,7 @@
 (use-package org-roam
   :unless fast-init
   :ensure t
+  :defer 2
   :custom
   (org-roam-directory (file-truename "~/Sync/org/roam"))
   :bind
@@ -247,12 +254,6 @@
   :unless fast-init
   :ensure t
   :hook ((org-mode . org-fragtog-mode))
-  :after (org))
-
-(use-package cdlatex
-  :unless fast-init
-  :ensure t
-  :hook ((org-mode . turn-on-org-cdlatex))
   :after (org))
 
 (use-package pyvenv
@@ -326,8 +327,7 @@
   (setq vertico-count 12)
   (setq vertico-scroll-margin 4))
 
-(use-package
-  vertico-directory
+(use-package vertico-directory
   :unless (not use-vertico)
   :after vertico
   :bind (:map vertico-map
@@ -338,11 +338,13 @@
 
 (use-package savehist
   :unless (not use-vertico)
+  :defer 1
   :init
   (savehist-mode))
 
 (use-package marginalia
   :unless (not use-vertico)
+  :defer 1
   :bind
   (:map minibuffer-local-map ("M-A" . marginalia-cycle))
   :init
@@ -351,6 +353,7 @@
 (use-package orderless
   :unless (not use-vertico)
   :ensure t
+  :defer 1
   :custom
   (completion-styles '(basic orderless flex))
   (completion-category-overrides
@@ -472,7 +475,7 @@
 (use-package auto-compile
   :unless fast-init
   :ensure t
-  :defer 5
+  :defer 3
   :config
   (auto-compile-on-load-mode 1)
   (auto-compile-on-save-mode 1)
@@ -481,17 +484,13 @@
 (use-package avy
   :unless fast-init
   :ensure t
-  :defer 5
+  :defer 3
   :bind
   ("C-:" . 'avy-goto-char))
 
-(use-package benchmark-init
-  :unless fast-init
-  :ensure t)
-
 (use-package company
   :ensure t
-  :defer 5
+  :defer 3
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
@@ -520,21 +519,10 @@
   :hook (company-mode . company-box-mode)
   :after (company))
 
-(use-package company-flx
-  :disabled
-  :ensure t
-  :config
-  (company-flx-mode 1)
-  :after (company))
-
 (use-package company-web
   :unless fast-init
   :ensure t
   :after (company))
-
-(use-package compat
-  :unless fast-init
-  :defer t)
 
 (use-package dashboard
   :unless fast-init
@@ -565,31 +553,13 @@
 ;; npm i -g bash-language-server
 ;; dnf in clang-tools-extra
 
-(use-package elisp-benchmarks
-  :unless fast-init
-  :ensure t
-  :defer t)
-
-(use-package emacsql
-  :unless fast-init
-  :ensure t
-  :defer t)
-
-(use-package emojify
-  :disabled
-  :ensure t
-  :defer t
-  :init
-  (add-hook 'after-init-hook 'global-emojify-mode)
-  :config
-  (setq-default emojify-emoji-styles '(unicode)))
-
 (use-package exec-path-from-shell
   :ensure t)
 
 (use-package eyebrowse
   :unless fast-init
   :ensure t
+  :defer t
   :config
   (eyebrowse-mode 1))
 
@@ -608,6 +578,7 @@
 
 (use-package git-gutter
   :ensure t
+  :defer 3
   :config
   (global-git-gutter-mode 1))
 
@@ -619,56 +590,9 @@
   :ensure t
   :defer t)
 
-(use-package js2-mode
-  :disabled
-  :ensure t
-  :defer t
-  :config
-  (setq js2-basic-offset 2))
-
 (use-package json-mode
   :ensure t
   :defer t)
-
-(use-package lsp-mode
-  :disabled
-  :unless fast-init
-  :ensure t
-  :defer t
-  :config
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-c l M-.") #'lsp-find-definition)
-    (define-key map (kbd "C-c l C-M-.") #'lsp-find-references)
-    (define-key map (kbd "C-c l d") #'lsp-ui-doc-glance)
-    (define-key map (kbd "C-c l i") #'lsp-ui-peek-find-implementation)
-    (define-key map (kbd "C-c l I") #'lsp-find-implementation)
-    (push
-     `(lsp-mode . ,map)
-     minor-mode-map-alist))
-  :custom
-  (lsp-auto-guess-root nil)
-  :hook
-  ((js-mode . lsp) (js-ts-mode . lsp) (js2-mode . lsp) (rjsx-mode . lsp) (python-mode . lsp) (python-ts-mode . lsp)
-   (web-mode . lsp) (css-mode . lsp) (java-mode . lsp) (sh-mode . lsp) (html-mode . lsp) (json-mode . lsp)))
-;; pip install python-lsp-server
-;; npm i -g typescript-language-server
-;; npm i -g vscode-json-languageserver
-;; npm i -g vscode-langservers-extracted
-;; npm i -g bash-language-server
-
-(use-package lsp-ui
-  :disabled
-  :unless fast-init
-  :ensure t
-  :defer t
-  :config
-  (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-  (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-  :custom
-  (lsp-ui-sideline-enable nil)
-  (lsp-ui-imenu-enable t)
-  (lsp-ui-peek-always-show t)
-  (lsp-ui-doc-enable nil))
 
 (use-package magit
   :unless fast-init
@@ -677,7 +601,6 @@
   :config
   (magit-define-popup-switch 'magit-commit-popup ?E
     "Allow empty message" "--allow-empty-message")
-  (setq-default magit-completing-read-function 'magit-ido-completing-read)
   :bind
   ("C-x g" . 'magit-status))
 
@@ -688,27 +611,6 @@
 (use-package markdown-mode
   :ensure t
   :defer t)
-
-(use-package neotree
-  :unless fast-init
-  :ensure t
-  :defer t
-  :config
-  (setq-default neo-smart-open t)
-  :bind
-  ([f8] . 'neotree-toggle))
-
-(use-package paredit
-  :disabled
-  :ensure t
-  :defer t
-  :hook
-  ((emacs-lisp-mode . enable-paredit-mode)
-   (eval-expression-minibuffer-setup . enable-paredit-mode)
-   (ielm-mode . enable-paredit-mode)
-   (lisp-mode . enable-paredit-mode)
-   (lisp-interaction-mode . enable-paredit-mode)
-   (scheme-mode . enable-paredit-mode)))
 
 (use-package php-mode
   :ensure t
@@ -762,22 +664,9 @@
   (setq pug-tab-width 2)
   (setq tab-width 2))
 
-(use-package rjsx-mode
-  :disabled
-  :ensure t
-  :defer t
-  :config
-  (when (< emacs-major-version 27)
-    (add-to-list 'auto-mode-alist '("\\.js\\'" . rjsx-mode))
-    (add-to-list 'auto-mode-alist '("\\.jsx\\'" . rjsx-mode))))
-
 (use-package solarized-theme
   :disabled
   :ensure t
-  :defer t)
-
-(use-package spinner
-  :unless fast-init
   :defer t)
 
 (use-package symbol-overlay
@@ -791,19 +680,17 @@
    ("C-<" . 'symbol-overlay-jump-prev)
    ([(meta f3)] . 'symbol-overlay-query-replace)))
 
-(use-package transient
-  :unless fast-init
-  :defer t)
-
 (use-package treesit-auto
   :if (>= emacs-major-version 29)
   :ensure t
+  :defer 1
   :config
   (global-treesit-auto-mode)
   (setq treesit-auto-install 'prompt))
 
 (use-package undo-tree
   :ensure t
+  :defer t
   :if (< emacs-major-version 28)
   :config (global-undo-tree-mode)
   :bind
@@ -812,15 +699,10 @@
          ("C-x r u" . nil)
          ("C-x r U" . nil))))
 
-(use-package vterm
-  :if (and (string-equal system-type "gnu/linux") (not fast-init))
-  :ensure t
-  :defer t)
-
 (use-package vundo
   :ensure t
   :if (>= emacs-major-version 28)
-  :defer 5
+  :defer t
   :bind
   (("C-x u" . 'vundo)))
 
@@ -840,26 +722,9 @@
   ("\\.phtml\\'" "\\.tpl\\'"  "\\.[agj]sp\\'"  "\\.as[cp]x\\'"  "\\.erb\\'"  "\\.mustache\\'"  "\\.djhtml\\'"
   "\\.html?\\'"  "\\.xml\\'" "\\.jinja2\\'" ))
 
-(use-package which-key
-  :disabled
-  :unless fast-init
-  :ensure t
-  :defer 1
-  :init
-  (setq which-key-show-early-on-C-h t)
-  (setq which-key-idle-delay 100000)
-  (setq which-key-idle-secondary-delay 0.05)
-  :config
-  (which-key-mode 1)
-  (which-key-setup-side-window-right-bottom))
-
-(use-package with-editor
-  :unless fast-init
-  :defer t)
-
 (use-package yaml-mode
   :ensure t
-  :defer 5)
+  :defer t)
 
 (use-package yasnippet
   :unless fast-init
