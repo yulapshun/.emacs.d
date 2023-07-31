@@ -45,14 +45,13 @@
               (setq-default js-indent-level 2)))
   (add-hook 'org-mode-hook #'visual-line-mode)
   (if (>= emacs-major-version 27)
-          (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
-          (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
+      (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
+    (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
   (add-hook 'css-mode-hook
             (lambda ()
               (setq-default css-indent-offset 2)))
 
   (when fast-init
-    (recentf-mode -1)
     (setq-default make-backup-files nil)
     (setq-default auto-save-default nil))
 
@@ -622,7 +621,7 @@
   (use-package eyebrowse
     :unless fast-init
     :ensure t
-    :defer t
+    :defer 3
     :config
     (eyebrowse-mode 1))
 #+END_SRC
