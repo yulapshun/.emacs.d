@@ -546,7 +546,7 @@
    (java-mode . eglot-ensure) (sh-mode . eglot-ensure) (html-mode . eglot-ensure) (json-mode . eglot-ensure)
    (c-mode . eglot-ensure) (c++-mode . eglot-ensure)))
 ;; pip install python-lsp-server
-;; npm i -g typescript-language-server
+;; npm i -g typescript-language-server typescript
 ;; npm i -g vscode-json-languageserver
 ;; npm i -g vscode-langservers-extracted
 ;; npm i -g bash-language-server
@@ -570,10 +570,6 @@
   (add-hook 'after-init-hook 'global-flycheck-mode)
   :config
   (setq-default flycheck-emacs-lisp-load-path 'inherit))
-
-(use-package git-commit
-  :unless fast-init
-  :defer t)
 
 (use-package git-gutter
   :ensure t
@@ -603,10 +599,6 @@
   :bind
   ("C-x g" . 'magit-status))
 
-(use-package magit-section
-  :unless fast-init
-  :defer t)
-
 (use-package markdown-mode
   :ensure t
   :defer t)
@@ -631,6 +623,7 @@
           "\\*scratch\\*"
           "error\\*$"
           "errors\\*$"
+          "\\*xref\\*"
           "^\\*eshell.*" eshell-mode
           "^\\*shell.*" shell-mode
           "^\\*term.*" term-mode
