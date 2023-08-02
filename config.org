@@ -21,6 +21,7 @@
   (column-number-mode 1)
   (electric-indent-mode 1)
 
+  (setq-default package-native-compile t)
   (setq-default custom-file (expand-file-name "custom.el" user-emacs-directory))
   (setq-default create-lockfiles nil)
   (setq-default bidi-display-reordering nil) ;; Improve performance when navigating long lines
