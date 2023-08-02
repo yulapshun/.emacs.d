@@ -12,7 +12,9 @@
       gc-cons-percentage 0.6
       file-name-handler-alist nil
       site-run-file nil
-      load-prefer-newer noninteractive)
+      load-prefer-newer noninteractive
+      package-enable-at-startup nil
+      frame-inhibit-implied-resize t)
 
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -20,9 +22,6 @@
                   gc-cons-percentage 0.1
                   file-name-handler-alist file-name-handler-alist-original)))
 
-(setq package-enable-at-startup nil)
-(setq load-prefer-newer noninteractive)
-(setq frame-inhibit-implied-resize t)
 (push '(menu-bar-lines . 0) default-frame-alist)
 (push '(tool-bar-lines . 0) default-frame-alist)
 (when (featurep 'ns)

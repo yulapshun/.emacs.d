@@ -175,7 +175,7 @@
     (setq-default org-export-with-author nil)
     (setq-default org-export-with-date nil)
     (setq-default org-export-with-toc nil)
-    (setq-default org-export-with-section-numbers nil)    
+    (setq-default org-export-with-section-numbers nil)
     (let ((headline `(:inherit default :weight bold)))
       (custom-theme-set-faces
        'user
@@ -265,7 +265,7 @@
     :after (org))
 #+END_SRC
 
-* python
+* Python
 #+begin_src emacs-lisp
   (use-package pyvenv
     :unless fast-init
@@ -606,10 +606,21 @@
     :ensure t
     :defer t
     :hook
-    ((js-mode . eglot-ensure) (js-ts-mode . eglot-ensure) (js2-mode . eglot-ensure) (rjsx-mode . eglot-ensure)
-     (python-mode . eglot-ensure) (python-ts-mode . eglot-ensure) (web-mode . eglot-ensure) (css-mode . eglot-ensure)
-     (java-mode . eglot-ensure) (sh-mode . eglot-ensure) (html-mode . eglot-ensure) (json-mode . eglot-ensure)
-     (c-mode . eglot-ensure) (c++-mode . eglot-ensure)))
+    (
+     (js-mode . eglot-ensure) (js-ts-mode . eglot-ensure) (js2-mode . eglot-ensure) (rjsx-mode . eglot-ensure)
+
+     (web-mode . eglot-ensure) (html-mode . eglot-ensure) (css-mode . eglot-ensure) (css-ts-mode . eglot-ensure)
+
+     (json-mode . eglot-ensure) (json-ts-mode . eglot-ensure)
+
+     (python-mode . eglot-ensure) (python-ts-mode . eglot-ensure)
+
+     (c-mode . eglot-ensure) (c-ts-mode . eglot-ensure) (c++-mode . eglot-ensure) (c++-ts-mode . eglot-ensure)
+
+     (java-mode . eglot-ensure) (java-ts-mode . eglot-ensure)
+
+     (sh-mode . eglot-ensure) (bash-ts-mode . eglot-ensure)
+     ))
   ;; pip install python-lsp-server
   ;; npm i -g typescript-language-server typescript
   ;; npm i -g vscode-json-languageserver
