@@ -176,7 +176,7 @@
   :bind
   (:map org-mode-map ("C-c C-?" . org-time-stamp-inactive))
   :custom
-  (org-agenda-files "~/Sync/org/agenda"))
+  (org-list-allow-alphabetical t))
 
 (use-package org-superstar
   :ensure t
