@@ -32,16 +32,7 @@
           (if (>= emacs-major-version 26)
               'display-line-numbers-mode
             'linum-mode))
-(add-hook 'js-mode-hook
-          (lambda ()
-            (setq-default js-indent-level 2)))
-(add-hook 'js-ts-mode-hook
-          (lambda ()
-            (setq-default js-indent-level 2)))
 (add-hook 'org-mode-hook #'visual-line-mode)
-(if (>= emacs-major-version 27)
-    (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
-  (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
 (add-hook 'css-mode-hook
           (lambda ()
             (setq-default css-indent-offset 2)))
@@ -266,6 +257,19 @@
   :defer t
   :config
   (pyvenv-auto-mode t))
+
+(if (>= emacs-major-version 27)
+    (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
+  (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
+(add-hook 'js-mode-hook
+          (lambda ()
+            (setq-default js-indent-level 2)))
+(add-hook 'js-ts-mode-hook
+          (lambda ()
+            (setq-default js-indent-level 2)))
+(with-eval-after-load 'js
+  (define-key js-mode-map (kbd "M-.") nil)
+  (define-key js-ts-mode-map (kbd "M-.") nil))
 
 ;; Use ido by default if emacs version is < 28 and completion-system is set to
 ;; vertico which does not support version < 28
