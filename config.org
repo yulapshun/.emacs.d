@@ -29,6 +29,7 @@
   (setq-default show-paren-delay 0)
   (setq-default uniquify-buffer-name-style 'forward)
   (setq-default whitespace-style '(face trailing tabs))
+  (setq-default scroll-conservatively 101)
 
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -672,6 +673,22 @@
     :ensure t
     :defer t)
 #+END_SRC
+
+
+* good-scroll
+#+begin_src emacs-lisp
+  (use-package good-scroll
+    :ensure t
+    :defer 1
+    :config
+    (good-scroll-mode 1)
+    :bind
+    (("M-v" . 'good-scroll-down)
+    ("C-v" . 'good-scroll-up)
+    ("M-V" . 'good-scroll-down-full-screen)
+    ("C-S-v" . 'good-scroll-up-full-screen)))
+#+end_src
+
 
 * gruvbox-theme
 #+begin_src emacs-lisp
