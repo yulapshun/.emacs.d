@@ -92,11 +92,12 @@
 ;; (global-set-key (kbd "C-c m") 'on99-cheatsheet-open-major-mode)
 
 (defvar backup-directory (concat user-emacs-directory "backup/"))
+(defvar auto-save-directory (concat user-emacs-directory "auto-save/"))
 
 (setq backup-directory-alist
       `((".*" . ,backup-directory)))
 (setq auto-save-file-name-transforms
-      `((".*" ,backup-directory t)))
+      `((".*" ,auto-save-directory t)))
 
 (when (not fast-init)
   (let ((month (* 60 60 24 30))
