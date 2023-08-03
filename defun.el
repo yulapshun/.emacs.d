@@ -140,20 +140,20 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
   (interactive "cC-M-")
   (call-interactively (global-key-binding (kbd (concat "C-M-" (byte-to-string key))))))
 
-(require 'column-marker)
-(defun toggle-column-marker (ARG)
-  "Toggle column marker at column ARG
-ARG defaults to 80"
-  (interactive "P")
-  (if (bound-and-true-p column-marker-on)
-      (progn
-        (column-marker-1 "")
-        (setq column-marker-on nil))
-    (progn
-      (or ARG
-          (setq ARG 80))
-      (column-marker-1 ARG)
-      (setq column-marker-on t))))
+;; (require 'column-marker)
+;; (defun toggle-column-marker (ARG)
+;;   "Toggle column marker at column ARG
+;; ARG defaults to 80"
+;;   (interactive "P")
+;;   (if (bound-and-true-p column-marker-on)
+;;       (progn
+;;         (column-marker-1 "")
+;;         (setq column-marker-on nil))
+;;     (progn
+;;       (or ARG
+;;           (setq ARG 80))
+;;       (column-marker-1 ARG)
+;;       (setq column-marker-on t))))
 
 (defun eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
