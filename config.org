@@ -422,7 +422,6 @@
            ;; M-g bindings (goto-map)
            ("M-g f" . consult-flycheck)
            ("M-g g" . consult-goto-line)
-           ("M-g M-g" . consult-goto-line)
            ("M-g h" . consult-org-heading)
            ("M-g o" . consult-outline)
            ("M-g i" . consult-imenu)
