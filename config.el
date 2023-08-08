@@ -356,18 +356,22 @@
   :init
   (marginalia-mode))
 
-(use-package orderless
+(use-package prescient
+  :unless (not use-vertico)
+  :ensure t
+  :defer t
+  :custom
+  (prescient-filter-method '(literal regexp initialism))
+  (prescient-sort-length-enabled nil)
+  (prescient-sort-full-matches-first t)
+  (prescient-persist-mode t))
+
+(use-package vertico-prescient
   :unless (not use-vertico)
   :ensure t
   :defer 1
-  :custom
-  (completion-styles '(basic orderless flex))
-  (completion-category-overrides
-   '((file (styles basic flex partial-completion))
-     (buffer (styles basic flex))
-     (command (styles basic orderless))
-     (symbol (styles basic))
-     (variable (styles basic)))))
+  :config
+  (vertico-prescient-mode 1))
 
 (use-package consult
   :unless (not use-vertico)
