@@ -588,6 +588,15 @@
   :config
   (setq-default flycheck-emacs-lisp-load-path 'inherit))
 
+(use-package gcmh
+  :ensure t
+  :defer 1
+  :config
+  (gcmh-mode 1)
+  :custom
+  (gcmh-idle-delat 'auto)
+  (gcmh-high-cons-threshold 67108864)) ;; 64MB
+
 (use-package git-gutter
   :ensure t
   :defer 3

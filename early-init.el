@@ -18,7 +18,7 @@
 
 (add-hook 'emacs-startup-hook
           (lambda ()
-            (setq gc-cons-threshold 100000000
+            (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1
                   file-name-handler-alist file-name-handler-alist-original)))
 
