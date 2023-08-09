@@ -258,8 +258,8 @@
   :unless fast-init
   :ensure t
   :defer t
-  :config
-  (pyvenv-auto-mode t))
+  :hook
+  ((python-mode . pyvent-auto-run) (python-ts-mode . pyvent-auto-run)))
 
 (if (>= emacs-major-version 27)
     (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
@@ -643,9 +643,6 @@
   :unless fast-init
   :ensure t
   :defer t
-  :config
-  (magit-define-popup-switch 'magit-commit-popup ?E
-    "Allow empty message" "--allow-empty-message")
   :bind
   ("C-x g" . 'magit-status))
 

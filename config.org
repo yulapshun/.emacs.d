@@ -278,8 +278,8 @@
     :unless fast-init
     :ensure t
     :defer t
-    :config
-    (pyvenv-auto-mode t))
+    :hook
+    ((python-mode . pyvent-auto-run) (python-ts-mode . pyvent-auto-run)))
 #+end_src
 
 * JavaScript
