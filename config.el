@@ -240,7 +240,7 @@
 (use-package org-roam-timestamps
   :unless fast-init
   :ensure t
-  :config (org-roam-timestamps-mode)
+  :hook ((org-mode . org-roam-timestamps-mode))
   :after (org-roam))
 
 (use-package org-fragtog
@@ -572,6 +572,15 @@
 ;; npm i -g vscode-langservers-extracted
 ;; npm i -g bash-language-server
 ;; dnf in clang-tools-extra
+
+(use-package evil
+  :unless fast-init
+  :ensure t
+  :defer t
+  :custom
+  (evil-default-state 'emacs)
+  :bind
+  ("C-z" . (lambda () (interactive) (evil-mode) (evil-normal-state))))
 
 (use-package exec-path-from-shell
   :ensure t)
