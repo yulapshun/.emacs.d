@@ -60,32 +60,32 @@
 
 (global-set-key (kbd "C-x _") 'fit-window-to-buffer)
 (global-set-key (kbd "C-x x") 'epa-decrypt-region)
-(global-set-key (kbd "C-S-b")  'windmove-left)
+(global-set-key (kbd "C-S-b") 'windmove-left)
 (global-set-key (kbd "C-S-f") 'windmove-right)
-(global-set-key (kbd "C-S-p")    'windmove-up)
-(global-set-key (kbd "C-S-n")  'windmove-down)
+(global-set-key (kbd "C-S-p") 'windmove-up)
+(global-set-key (kbd "C-S-n") 'windmove-down)
 (global-set-key (kbd "C-M-.") 'xref-find-references)
 
 ;; defun-indent
-(global-set-key (kbd "<C-tab>")  'force-indent)
-(global-set-key (kbd "<C-S-tab>")  'force-unindent)
-(global-set-key (kbd "<C-iso-lefttab>")  'force-unindent)
+(global-set-key (kbd "<C-tab>") 'my/force-indent)
+(global-set-key (kbd "<C-S-tab>") 'my/force-unindent)
+(global-set-key (kbd "<C-iso-lefttab>") my/'force-unindent)
 
 ;; defun-delete
-(global-set-key (kbd "C-S-k")  'delete-line)
-(global-set-key (kbd "C-S-w")  'delete-region)
-(global-set-key (kbd "M-D")  'delete-word)
-(global-set-key (kbd "<M-S-backspace>")  'backward-delete-word)
+(global-set-key (kbd "C-S-k") 'my/delete-line)
+(global-set-key (kbd "C-S-w") 'my/delete-region)
+(global-set-key (kbd "M-D") 'my/delete-word)
+(global-set-key (kbd "<M-S-backspace>") 'my/backward-delete-word)
 
 ;; defun-modifier
-(global-set-key (kbd "C-c g c") 'hihi-control)
-(global-set-key (kbd "C-c g m") 'hihi-meta)
-(global-set-key (kbd "C-c g d") 'hihi-control-shift)
-(global-set-key (kbd "C-c g S") 'hihi-control-shift)
-(global-set-key (kbd "C-c g j") 'hihi-meta-shift)
-(global-set-key (kbd "C-c g M") 'hihi-meta-shift)
-(global-set-key (kbd "C-c g x") 'hihi-control-meta)
-(global-set-key (kbd "C-'") 'hihi-control-meta)
+(global-set-key (kbd "C-c g c") 'my/control)
+(global-set-key (kbd "C-c g m") 'my/meta)
+(global-set-key (kbd "C-c g d") 'my/control-shift)
+(global-set-key (kbd "C-c g S") 'my/control-shift)
+(global-set-key (kbd "C-c g j") 'my/meta-shift)
+(global-set-key (kbd "C-c g M") 'my/meta-shift)
+(global-set-key (kbd "C-c g x") 'my/control-meta)
+(global-set-key (kbd "C-'") 'my/control-meta)
 
 ;; cheatsheet
 ;; (global-set-key (kbd "C-c c") 'on99-cheatsheet-open-global)

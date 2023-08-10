@@ -1,4 +1,4 @@
-(defun force-indent-line (ARG)
+(defun my/force-indent-line (ARG)
   "Force indent current line.
 If `indent-tabs-mode' is enabled, insert ARG tab at the begining of line,
 else insert a number of spaces specified by `tab-width' times ARG at the
@@ -10,7 +10,7 @@ beginning of line."
         (insert (make-string ARG ?\t))
       (insert (make-string (* ARG tab-width) ?\s)))))
 
-(defun force-indent-region (ARG)
+(defun my/force-indent-region (ARG)
   "Force indent every line in the active region.
 If `indent-tabs-mode' is enabled, insert ARG tab at the begining of every line
 in the active region, else insert a number of spaces specified by `tab-width'
@@ -22,11 +22,11 @@ times ARG at the beginning of every line in the active region."
         (save-excursion
           (goto-char (region-beginning))
           (while (< i line-count)
-            (force-indent-line ARG)
+            (my/force-indent-line ARG)
             (setq i (+ i 1))
             (forward-line))))))
 
-(defun force-indent (ARG)
+(defun my/force-indent (ARG)
   "Force indent current line or active region.
 
 If region is inactive:
@@ -40,9 +40,9 @@ in the active region, else insert a number of spaces specified by `tab-width'
 times ARG at the beginning of every line in the active region."
   (interactive "P")
   (or ARG (setq ARG 1))
-  (if mark-active (force-indent-region ARG) (force-indent-line ARG)))
+  (if mark-active (my/force-indent-region ARG) (my/force-indent-line ARG)))
 
-(defun force-unindent-line (ARG)
+(defun my/force-unindent-line (ARG)
   "Force unindent current line.
 If `indent-tabs-mode' is enabled, delete ARG tab character at the begining of
 line, else delete at most a number of spaces specified by `tab-width'
@@ -63,7 +63,7 @@ times ARG at the beginning of line."
               (delete-horizontal-space)
             (delete-backward-char (* ARG tab-width)))))))
 
-(defun force-unindent-region (ARG)
+(defun my/force-unindent-region (ARG)
   "Force unindent every line in the active region.
 If `indent-tabs-mode' is enabled, delete ARG tab character at the begining of
 every line in the active region, else delete at most a number of spaces
@@ -75,11 +75,11 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
         (save-excursion
           (goto-char (region-beginning))
           (while (< i line-count)
-            (force-unindent-line ARG)
+            (my/force-unindent-line ARG)
             (setq i (+ i 1))
             (forward-line))))))
 
-(defun force-unindent (ARG)
+(defun my/force-unindent (ARG)
   "Force unindent current line or active region.
 
 If region is inactive:
@@ -93,21 +93,21 @@ every line in the active region, else delete at most a number of spaces
 specified by `tab-width' times ARG at the beginning of every line in the active region."
   (interactive "P")
   (or ARG (setq ARG 1))
-  (if mark-active (force-unindent-region ARG) (force-unindent-line ARG)))
+  (if mark-active (my/force-unindent-region ARG) (my/force-unindent-line ARG)))
 
-(defun delete-line (ARG)
+(defun my/delete-line (ARG)
 "Delete line without saving to `kill-ring'."
   (interactive "P")
   (progn (kill-line ARG)
          (pop kill-ring)
          (pop kill-ring-yank-pointer)))
-(defun delete-word (ARG)
+(defun my/delete-word (ARG)
 "Delete word forward without saving to `kill-ring'."
   (interactive "P")
   (progn (kill-word ARG)
          (pop kill-ring)
          (pop kill-ring-yank-pointer)))
-(defun backward-delete-word (ARG)
+(defun my/backward-delete-word (ARG)
 "Delete word backward without saving to `kill-ring'."
   (interactive "P")
   (or ARG (setq ARG 1))
@@ -115,27 +115,27 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
          (pop kill-ring)
          (pop kill-ring-yank-pointer)))
 
-(defun hihi-control (key)
+(defun my/control (key)
   "Simulate the behavior of C-key."
   (interactive "cC-")
   (call-interactively (global-key-binding (kbd (concat "C-" (byte-to-string key))))))
 
-(defun hihi-meta (key)
+(defun my/meta (key)
   "Simulate the behavior of M-key."
   (interactive "cM-")
   (call-interactively (global-key-binding (kbd (concat "M-" (byte-to-string key))))))
 
-(defun hihi-control-shift (key)
+(defun my/control-shift (key)
   "Simulate the behavior of C-S-key."
   (interactive "cC-S-")
   (call-interactively (global-key-binding (kbd (concat "C-S-" (byte-to-string key))))))
 
-(defun hihi-meta-shift (key)
+(defun my/meta-shift (key)
   "Simulate the behavior of M-S-key."
   (interactive "cM-S-")
   (call-interactively (global-key-binding (kbd (concat "M-S-" (byte-to-string key))))))
 
-(defun hihi-control-meta (key)
+(defun my/control-meta (key)
   "Simulate the behavior of C-M-key."
   (interactive "cC-M-")
   (call-interactively (global-key-binding (kbd (concat "C-M-" (byte-to-string key))))))
@@ -155,13 +155,13 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
 ;;       (column-marker-1 ARG)
 ;;       (setq column-marker-on t))))
 
-(defun eval-and-replace (value)
+(defun my/eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
   (interactive (list (eval-last-sexp nil)))
   (kill-sexp -1)
   (insert (format "%S" value)))
 
-(defun sudo-edit (&optional arg)
+(defun my/sudo-edit (&optional arg)
   "Edit currently visited file as root.
 
 With a prefix ARG prompt for a file to visit.
