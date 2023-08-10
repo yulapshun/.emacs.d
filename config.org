@@ -401,7 +401,9 @@
     :ensure t
     :defer 1
     :config
-    (vertico-prescient-mode 1))
+    (vertico-prescient-mode 1)
+    :custom
+    (vertico-prescient-enable-sorting nil))
 
   (use-package consult
     :unless (not use-vertico)
