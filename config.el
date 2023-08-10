@@ -497,7 +497,8 @@
   :ensure t
   :defer 3
   :bind
-  ("C-:" . 'avy-goto-char))
+  (("C-:" . 'avy-goto-char-timer)
+   ("C-\"" . 'avy-goto-line)))
 
 (use-package company
   :ensure t
