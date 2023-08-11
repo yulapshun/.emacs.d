@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: nil-pretty-entities
+# key: <npe
+# --
+* Variables                                                        :noexport:
+# Local Variables:
+# org-pretty-entities: nil
+# End:
