@@ -66,34 +66,47 @@
 
 * Keys
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-x _") 'fit-window-to-buffer)
-  (global-set-key (kbd "C-x x") 'epa-decrypt-region)
-  (global-set-key (kbd "C-S-b") 'windmove-left)
-  (global-set-key (kbd "C-S-f") 'windmove-right)
-  (global-set-key (kbd "C-S-p") 'windmove-up)
-  (global-set-key (kbd "C-S-n") 'windmove-down)
-  (global-set-key (kbd "C-M-.") 'xref-find-references)
+  (global-set-key (kbd "C-C j x") #'epa-decrypt-region)
+
+  ;; windmove
+  (global-set-key (kbd "C-S-b") #'windmove-left)
+  (global-set-key (kbd "C-S-f") #'windmove-right)
+  (global-set-key (kbd "C-S-p") #'windmove-up)
+  (global-set-key (kbd "C-S-n") #'windmove-down)
+  (global-set-key (kbd "C-c j b") #'windmove-left)
+  (global-set-key (kbd "C-c j f") #'windmove-right)
+  (global-set-key (kbd "C-c j p") #'windmove-up)
+  (global-set-key (kbd "C-c j n") #'windmove-down)
+  ;; (global-set-key (kbd "C-M-.") #'xref-find-references)
 
   ;; defun-indent
-  (global-set-key (kbd "<C-tab>") 'my/force-indent)
-  (global-set-key (kbd "<C-S-tab>") 'my/force-unindent)
-  (global-set-key (kbd "<C-iso-lefttab>") my/'force-unindent)
+  (global-set-key (kbd "<C-tab>") #'my/force-indent)
+  (global-set-key (kbd "<C-S-tab>") #'my/force-unindent)
+  (global-set-key (kbd "<C-iso-lefttab>") #'my/force-unindent)
+  (global-set-key (kbd "C-c j <tab>") #'my/force-indent)
+  (global-set-key (kbd "C-c j <backtab>") #'my/force-unindent)
 
   ;; defun-delete
-  (global-set-key (kbd "C-S-k") 'my/delete-line)
-  (global-set-key (kbd "C-S-w") 'my/delete-region)
-  (global-set-key (kbd "M-D") 'my/delete-word)
-  (global-set-key (kbd "<M-S-backspace>") 'my/backward-delete-word)
+  (global-set-key (kbd "C-S-k") #'my/delete-line)
+  (global-set-key (kbd "C-S-w") #'my/delete-region)
+  (global-set-key (kbd "M-D") #'my/delete-word)
+  (global-set-key (kbd "<M-S-backspace>") #'my/backward-delete-word)
+  (global-set-key (kbd "C-c j k") #'my/delete-line)
+  (global-set-key (kbd "C-c j w") #'my/delete-region)
+  (global-set-key (kbd "C-c j d") #'my/delete-word)
+  (global-set-key (kbd "C-c j <del>") #'my/backward-delete-word)
 
   ;; defun-modifier
-  (global-set-key (kbd "C-c g c") 'my/control)
-  (global-set-key (kbd "C-c g m") 'my/meta)
-  (global-set-key (kbd "C-c g d") 'my/control-shift)
-  (global-set-key (kbd "C-c g S") 'my/control-shift)
-  (global-set-key (kbd "C-c g j") 'my/meta-shift)
-  (global-set-key (kbd "C-c g M") 'my/meta-shift)
-  (global-set-key (kbd "C-c g x") 'my/control-meta)
-  (global-set-key (kbd "C-'") 'my/control-meta)
+  (global-set-key (kbd "C-c j c") #'my/control)
+  (global-set-key (kbd "C-c j m") #'my/meta)
+  (global-set-key (kbd "C-c j S") #'my/control-shift)
+  (global-set-key (kbd "C-c j M") #'my/meta-shift)
+  (global-set-key (kbd "C-c j z") #'my/control-meta)
+
+  ;;git-gutter
+  (global-set-key (kbd "C-c k g p") #'git-gutter:previous-hunk)
+  (global-set-key (kbd "C-c k g n") #'git-gutter:next-hunk)
+  (global-set-key (kbd "C-c k g d") #'git-gutter:popup-hunk)
 
   ;; cheatsheet
   ;; (global-set-key (kbd "C-c c") 'on99-cheatsheet-open-global)
@@ -411,9 +424,9 @@
     :defer t
     ;; Replace bindings. Lazily loaded due by `use-package'.
     :bind (;; C-c bindings (mode-specific-map)
-           ("C-c r" . consult-recent-file)
-           ("C-c m" . consult-mode-command)
-           ("C-c k" . consult-kmacro)
+           ("C-c c r" . consult-recent-file)
+           ("C-c c m" . consult-mode-command)
+           ("C-c c k" . consult-kmacro)
            ;; C-x bindings (ctl-x-map)
            ("C-x M-:" . consult-complex-command)
            ("C-x b" . consult-buffer)
@@ -539,8 +552,10 @@
     :ensure t
     :defer 3
     :bind
-    (("C-:" . 'avy-goto-char-timer)
-     ("C-\"" . 'avy-goto-line)))
+    (("C-:" . #'avy-goto-char-timer)
+     ("C-\"" . #'avy-goto-line)
+     ("C-c j :" . #'avy-goto-char-timer)
+     ("C-c j \"" . #'avy-goto-line)))
 #+END_SRC
 
 * company
@@ -835,10 +850,12 @@
     :config
     (setq-default symbol-overlay-map nil)
     :bind
-    (("C-;" . 'symbol-overlay-put)
-     ("C->" . 'symbol-overlay-jump-next)
-     ("C-<" . 'symbol-overlay-jump-prev)
-     ([(meta f3)] . 'symbol-overlay-query-replace)))
+    (("C-;" . #'symbol-overlay-put)
+     ("C->" . #'symbol-overlay-jump-next)
+     ("C-<" . #'symbol-overlay-jump-prev)
+     ("C-c j ;" . #'symbol-overlay-put)
+     ("C-c j >" . #'symbol-overlay-jump-next)
+     ("C-c j <" . #'symbol-overlay-jump-prev)))
 #+END_SRC
 
 * treesit
