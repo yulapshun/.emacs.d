@@ -267,12 +267,13 @@
   :ensure t
   :defer t)
 
-(use-package pyvenv-auto
+(use-package auto-virtualenv
   :unless fast-init
   :ensure t
   :defer t
   :hook
-  ((python-mode . pyvent-auto-run) (python-ts-mode . pyvent-auto-run)))
+  ((python-mode . auto-virtualenv-set-virtualenv) (python-ts-mode . auto-virtualenv-set-virtualenv)
+   (projectile-after-switch-project-hook . auto-virtualenv-set-virtualenv)))
 
 (if (>= emacs-major-version 27)
     (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))

@@ -6,7 +6,7 @@
  '(custom-safe-themes
    '("d445c7b530713eac282ecdeea07a8fa59692c83045bf84dd112dd738c7bcad1d" default))
  '(package-selected-packages
-   '(mood-line yasnippet-snippets yaml-mode web-mode vundo vertico-prescient use-package undo-tree treesit-auto symbol-overlay solarized-theme pyvenv-auto pug-mode projectile popper php-mode org-superstar org-roam-ui org-roam-timestamps org-fragtog nadvice markdown-mode marginalia magit json-mode ido-vertical-mode ido-completing-read+ gruvbox-theme good-scroll go-mode git-gutter gcmh flycheck flx-ido eyebrowse exec-path-from-shell evil embark-consult eglot dockerfile-mode dashboard company-web company-box avy auto-compile all-the-icons-dired))
+   '(auto-virtualenv mood-line yasnippet-snippets yaml-mode web-mode vundo vertico-prescient use-package undo-tree treesit-auto symbol-overlay solarized-theme pug-mode projectile popper php-mode org-superstar org-roam-ui org-roam-timestamps org-fragtog nadvice markdown-mode marginalia magit json-mode ido-vertical-mode ido-completing-read+ gruvbox-theme good-scroll go-mode git-gutter gcmh flycheck flx-ido eyebrowse exec-path-from-shell evil embark-consult eglot dockerfile-mode dashboard company-web company-box avy auto-compile all-the-icons-dired))
  '(safe-local-variable-values '((org-pretty-entities))))
 
 (custom-set-faces

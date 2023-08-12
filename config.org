@@ -287,12 +287,13 @@
     :ensure t
     :defer t)
 
-  (use-package pyvenv-auto
+  (use-package auto-virtualenv
     :unless fast-init
     :ensure t
     :defer t
     :hook
-    ((python-mode . pyvent-auto-run) (python-ts-mode . pyvent-auto-run)))
+    ((python-mode . auto-virtualenv-set-virtualenv) (python-ts-mode . auto-virtualenv-set-virtualenv)
+     (projectile-after-switch-project-hook . auto-virtualenv-set-virtualenv)))
 #+end_src
 
 * JavaScript
