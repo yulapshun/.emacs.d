@@ -668,6 +668,17 @@
   :ensure t
   :defer t)
 
+(use-package mood-line
+  :config
+  (mood-line-mode)
+  :custom
+  (mood-line-glyph-alist  mood-line-glyphs-fira-code)
+  :custom-face
+  (mood-line-buffer-status-read-only ((t (:inherit mode-line-inactive))))
+  (mood-line-encoding ((t (:inherit mode-line-inactive))))
+  (mood-line-status-neutral ((t (:inherit mode-line-inactive))))
+  (mood-line-unimportant ((t (:inherit mood-line-unimportant)))))
+
 (use-package php-mode
   :ensure t
   :defer t)
