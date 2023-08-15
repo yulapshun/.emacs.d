@@ -22,4 +22,5 @@
  '(org-level-5 ((t (:inherit default :weight bold))))
  '(org-level-6 ((t (:inherit default :weight bold))))
  '(org-level-7 ((t (:inherit default :weight bold))))
- '(org-level-8 ((t (:inherit default :weight bold)))))
+ '(org-level-8 ((t (:inherit default :weight bold))))
+ '(xref-match ((t (:inherit match :distant-foreground "IndianRed3" :foreground "IndianRed3")))))
