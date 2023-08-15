@@ -80,7 +80,7 @@
 
 ;; defun-delete
 (global-set-key (kbd "C-S-k") #'my/delete-line)
-(global-set-key (kbd "C-S-w") #'my/delete-region)
+(global-set-key (kbd "C-S-w") #'delete-region)
 (global-set-key (kbd "M-D") #'my/delete-word)
 (global-set-key (kbd "<M-S-backspace>") #'my/backward-delete-word)
 (global-set-key (kbd "C-c j k") #'my/delete-line)
