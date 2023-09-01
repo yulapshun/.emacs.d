@@ -51,8 +51,10 @@
     (add-hook 'prog-mode-hook
               (lambda ()
                 (setq display-fill-column-indicator-column 120))))
-  (setq-default confirm-kill-emacs 'yes-or-no-p)
+  (setq-default confirm-kill-emacs 'y-or-n-p)
   (setq-default native-comp-deferred-compilation t))
+
+(defalias 'yes-or-no-p 'y-or-n-p)
 
 (use-package cheatsheet
   :unless fast-init
@@ -99,6 +101,7 @@
 (global-set-key (kbd "C-c k g p") #'git-gutter:previous-hunk)
 (global-set-key (kbd "C-c k g n") #'git-gutter:next-hunk)
 (global-set-key (kbd "C-c k g d") #'git-gutter:popup-hunk)
+(global-set-key (kbd "C-c k g r") #'git-gutter:revert-hunk)
 
 ;; cheatsheet
 ;; (global-set-key (kbd "C-c c") 'on99-cheatsheet-open-global)
