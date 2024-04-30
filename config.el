@@ -574,6 +574,7 @@
   :defer t
   :custom
   (eglot-ignored-server-capabilities '(:inlayHintProvider))
+  (eglot-ignored-server-capabilities '(:documentOnTypeFormattingProvider))
   :hook
   (
    (js-mode . eglot-ensure) (js-ts-mode . eglot-ensure) (js2-mode . eglot-ensure) (rjsx-mode . eglot-ensure)
