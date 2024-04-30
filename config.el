@@ -660,6 +660,16 @@
   :ensure t
   :defer t)
 
+(use-package hightlight-indent-guides
+  :hook ((prog-mode . highlight-indent-guides-mode))
+  :custom
+  (highlight-indent-guides-method 'character)
+  (highlight-indent-guides-auto-enabled nil)
+  :custom-face
+  (highlight-indent-guides-odd-face ((t (:foreground "darkgray"))))
+  (highlight-indent-guides-even-face ((t (:foreground "dimgray"))))
+  (highlight-indent-guides-character-face ((t (:foreground "dimgray")))))
+
 (use-package json-mode
   :ensure t
   :defer t)
