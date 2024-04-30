@@ -190,7 +190,7 @@
      `(org-level-1 ((t (,@headline :height 1.3))))
      `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
   :config
-  (plist-put org-format-latex-options :scale 1.3)
+  (plist-put org-format-latex-options :scale 1.0)
   :bind
   (:map org-mode-map ("C-c C-?" . org-time-stamp-inactive))
   :custom
