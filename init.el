@@ -62,7 +62,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(which-key lsp-mode nerd-icons nerd-icons-completion nerd-icons-dired company eyebrowse vundo good-scroll yasnippet-snippets yaml-mode web-mode vertico use-package treesit-auto symbol-overlay projectile php-mode org-roam-ui org-roam-timestamps org-fragtog orderless mood-line markdown-mode marginalia magit json-mode gruvbox-theme go-mode git-gutter gcmh flycheck exec-path-from-shell embark-consult dockerfile-mode dashboard compile-angel avy auto-virtualenv))
+   '(lsp-pyright which-key lsp-mode nerd-icons nerd-icons-completion nerd-icons-dired company eyebrowse vundo good-scroll yasnippet-snippets yaml-mode web-mode vertico use-package treesit-auto symbol-overlay projectile php-mode org-roam-ui org-roam-timestamps org-fragtog orderless mood-line markdown-mode marginalia magit json-mode gruvbox-theme go-mode git-gutter gcmh flycheck exec-path-from-shell embark-consult dockerfile-mode dashboard compile-angel avy auto-virtualenv))
  '(safe-local-variable-values '((org-pretty-entities))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

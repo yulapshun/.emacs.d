@@ -432,7 +432,7 @@
      (sh-mode . lsp) (bash-ts-mode . lsp)
      (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
-  ;; pip install python-lsp-server
+  ;; pip install pyright
   ;; npm i -g typescript-language-server typescript
   ;; npm i -g vscode-json-languageserver
   ;; npm i -g vscode-langservers-extracted
@@ -630,10 +630,17 @@
 #+begin_src emacs-lisp
   (use-package auto-virtualenv
     :ensure t
-    :defer t
-    :hook
-    ((python-mode . auto-virtualenv-set-virtualenv) (python-ts-mode . auto-virtualenv-set-virtualenv)
-     (projectile-after-switch-project-hook . auto-virtualenv-set-virtualenv)))
+    :config
+    (setq auto-virtualenv-verbose t)
+    (setq auto-virtualenv-reload-lsp t)
+    (auto-virtualenv-setup))
+
+  (use-package lsp-pyright
+    :ensure t
+    :custom (lsp-pyright-langserver-command "pyright")
+    :hook (python-mode . (lambda ()
+                           (require 'lsp-pyright)
+                           (lsp))))
 
   (add-hook 'python-mode-hook
             (lambda ()
