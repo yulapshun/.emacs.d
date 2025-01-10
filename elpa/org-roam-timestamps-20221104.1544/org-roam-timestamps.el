@@ -6,9 +6,8 @@
 ;; Maintainer: Thomas F. K. Jorna <jorna@jtrialerror.com>
 ;; Created: September 27, 2021
 ;; Modified: September 27, 2021
-;; Version: 1.0.0
 ;; Package-Version: 20221104.1544
-;; Package-Commit: c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3
+;; Package-Revision: c4ff1e2f5b09
 ;; Keywords: calendar outlines files
 ;; Homepage: https://github.com/ThomasFKJorna/org-roam-timestamps/
 ;; Package-Requires: ((emacs "26.1") (org-roam "2.0.0"))

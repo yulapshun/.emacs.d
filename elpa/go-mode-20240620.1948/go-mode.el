@@ -7,7 +7,8 @@
 ;; license that can be found in the LICENSE file.
 
 ;; Author: The go-mode Authors
-;; Version: 1.6.0
+;; Package-Version: 20240620.1948
+;; Package-Revision: 636d36e37a0d
 ;; Keywords: languages go
 ;; Package-Requires: ((emacs "26.1"))
 ;; URL: https://github.com/dominikh/go-mode.el

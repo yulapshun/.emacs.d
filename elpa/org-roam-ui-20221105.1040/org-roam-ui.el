@@ -5,7 +5,8 @@
 ;; author: Kirill Rogovoy, Thomas Jorna
 ;; URL: https://github.com/org-roam/org-roam-ui
 ;; Keywords: files outlines
-;; Version: 0.1
+;; Package-Version: 20221105.1040
+;; Package-Revision: 5ac74960231d
 ;; Package-Requires: ((emacs "27.1") (org-roam "2.0.0") (simple-httpd "20191103.1446") (websocket "1.13"))
 
 ;; This file is NOT part of GNU Emacs.

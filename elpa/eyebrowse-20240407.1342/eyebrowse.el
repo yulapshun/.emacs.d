@@ -4,7 +4,8 @@
 
 ;; Author: Vasilij Schneidermann <mail@vasilij.de>
 ;; URL: https://depp.brause.cc/eyebrowse
-;; Version: 0.7.8
+;; Package-Version: 20240407.1342
+;; Package-Revision: 473381f4f9e8
 ;; Package-Requires: ((dash "2.7.0") (emacs "24.3.1"))
 ;; Keywords: convenience
 

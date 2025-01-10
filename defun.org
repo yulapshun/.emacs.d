@@ -1,5 +1,9 @@
+#+begin_src emacs-lisp
+  ;; -*- no-byte-compile: t; lexical-binding: t -*-
+#+end_src
+
 * Indentation
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defun my/force-indent-line (ARG)
     "Force indent current line.
   If `indent-tabs-mode' is enabled, insert ARG tab at the begining of line,
@@ -96,10 +100,10 @@
     (interactive "P")
     (or ARG (setq ARG 1))
     (if mark-active (my/force-unindent-region ARG) (my/force-unindent-line ARG)))
-#+END_SRC
+#+end_src
 
 * Delete
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defun my/delete-line (ARG)
   "Delete line without saving to `kill-ring'."
     (interactive "P")
@@ -119,10 +123,10 @@
     (progn (backward-kill-word ARG)
            (pop kill-ring)
            (pop kill-ring-yank-pointer)))
-#+END_SRC
+#+end_src
 
 * Modifiers
-#+BEGIN_SRC emacs-lisp
+#+begin_src emacs-lisp
   (defun my/control (key)
     "Simulate the behavior of C-key."
     (interactive "cC-")
@@ -147,25 +151,10 @@
     "Simulate the behavior of C-M-key."
     (interactive "cC-M-")
     (call-interactively (global-key-binding (kbd (concat "C-M-" (byte-to-string key))))))
-#+END_SRC
+#+end_src
 
 * Misc
-#+BEGIN_SRC emacs-lisp
-  ;; (require 'column-marker)
-  ;; (defun toggle-column-marker (ARG)
-  ;;   "Toggle column marker at column ARG
-  ;; ARG defaults to 80"
-  ;;   (interactive "P")
-  ;;   (if (bound-and-true-p column-marker-on)
-  ;;       (progn
-  ;;         (column-marker-1 "")
-  ;;         (setq column-marker-on nil))
-  ;;     (progn
-  ;;       (or ARG
-  ;;           (setq ARG 80))
-  ;;       (column-marker-1 ARG)
-  ;;       (setq column-marker-on t))))
-
+#+begin_src emacs-lisp
   (defun my/eval-and-replace (value)
     "Evaluate the sexp at point and replace it with its value"
     (interactive (list (eval-last-sexp nil)))
@@ -185,4 +174,4 @@
                                (ido-read-file-name "Find file(as root): "))
                            (read-file-name "Find file(as root): ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
-#+END_SRC
+#+end_src

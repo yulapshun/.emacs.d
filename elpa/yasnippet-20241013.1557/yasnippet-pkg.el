@@ -3,7 +3,7 @@
   "Yet another snippet extension for Emacs."
   '((cl-lib "0.5")
     (emacs  "24.4"))
-  :url "https://github.com/joaotavora/yasnippet"
+  :url "http://github.com/joaotavora/yasnippet"
   :commit "fe1f4e0e96ce42d8668920335eb22c3c009dab3e"
   :revdesc "fe1f4e0e96ce"
   :keywords '("convenience" "emulation")

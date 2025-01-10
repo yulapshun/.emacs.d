@@ -1,3 +1,5 @@
+;; -*- no-byte-compile: t; lexical-binding: t -*-
+
 (defun my/force-indent-line (ARG)
   "Force indent current line.
 If `indent-tabs-mode' is enabled, insert ARG tab at the begining of line,
@@ -139,21 +141,6 @@ specified by `tab-width' times ARG at the beginning of every line in the active 
   "Simulate the behavior of C-M-key."
   (interactive "cC-M-")
   (call-interactively (global-key-binding (kbd (concat "C-M-" (byte-to-string key))))))
-
-;; (require 'column-marker)
-;; (defun toggle-column-marker (ARG)
-;;   "Toggle column marker at column ARG
-;; ARG defaults to 80"
-;;   (interactive "P")
-;;   (if (bound-and-true-p column-marker-on)
-;;       (progn
-;;         (column-marker-1 "")
-;;         (setq column-marker-on nil))
-;;     (progn
-;;       (or ARG
-;;           (setq ARG 80))
-;;       (column-marker-1 ARG)
-;;       (setq column-marker-on t))))
 
 (defun my/eval-and-replace (value)
   "Evaluate the sexp at point and replace it with its value"
