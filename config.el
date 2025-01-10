@@ -391,30 +391,16 @@
   (global-treesit-auto-mode)
   (setq treesit-auto-install 'prompt))
 
-(use-package eglot
-  :ensure t
-  :defer t
+(use-package lsp-mode
   :init
-  (fset #'jsonrpc--log-event #'ignore)
-  :custom
-  (eglot-ignored-server-capabilities '(:inlayHintProvider :documentOnTypeFormattingProvider))
-  (eglot-events-buffer-size 0)
+  (setq lsp-keymap-prefix "C-c l")
   :hook
-  (
-   (js-mode . eglot-ensure) (js-ts-mode . eglot-ensure) (js2-mode . eglot-ensure) (rjsx-mode . eglot-ensure)
-
-   (web-mode . eglot-ensure) (html-mode . eglot-ensure) (css-mode . eglot-ensure) (css-ts-mode . eglot-ensure)
-
-   (json-mode . eglot-ensure) (json-ts-mode . eglot-ensure)
-
-   (python-mode . eglot-ensure) (python-ts-mode . eglot-ensure)
-
-   (c-mode . eglot-ensure) (c-ts-mode . eglot-ensure) (c++-mode . eglot-ensure) (c++-ts-mode . eglot-ensure)
-
-   (java-mode . eglot-ensure) (java-ts-mode . eglot-ensure)
-
-   (sh-mode . eglot-ensure) (bash-ts-mode . eglot-ensure)
-   ))
+  ((js-mode . lsp) (js-ts-mode . lsp)
+   (web-mode . lsp) (html-mode . lsp) (css-mode . lsp) (css-ts-mode . lsp) (json-mode . lsp) (json-ts-mode . lsp)
+   (python-mode . lsp) (python-ts-mode . lsp)
+   (sh-mode . lsp) (bash-ts-mode . lsp)
+   (lsp-mode . lsp-enable-which-key-integration))
+  :commands lsp)
 ;; pip install python-lsp-server
 ;; npm i -g typescript-language-server typescript
 ;; npm i -g vscode-json-languageserver
@@ -662,3 +648,8 @@
   :custom
   (gcmh-idle-delat 'auto)
   (gcmh-high-cons-threshold 67108864)) ;; 64MB
+
+(use-package which-key
+  :ensure t
+  :config
+  (which-key-mode))
