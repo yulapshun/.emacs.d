@@ -257,6 +257,8 @@
   :bind
   (("C-c C-/" . embark-act)
    ("C-c M-/" . embark-dwim)
+   ("C-c C-." . embark-epxport)
+   ("C-C M-." . embark-collect)
    ("C-h B" . embark-bindings)))
 
 (use-package consult
