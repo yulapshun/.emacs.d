@@ -402,7 +402,9 @@
    (python-mode . lsp) (python-ts-mode . lsp)
    (sh-mode . lsp) (bash-ts-mode . lsp)
    (lsp-mode . lsp-enable-which-key-integration))
-  :commands lsp)
+  :commands lsp
+  :custom
+  (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
 ;; pip install pyright
 ;; npm i -g typescript-language-server typescript
 ;; npm i -g vscode-json-languageserver
