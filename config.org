@@ -714,7 +714,7 @@
     :defer t)
 #+end_src
 
-* Mist. Packages
+* Misc. Packages
 #+begin_src emacs-lisp
   (use-package exec-path-from-shell
     :ensure t)
@@ -727,6 +727,15 @@
     :custom
     (gcmh-idle-delat 'auto)
     (gcmh-high-cons-threshold 67108864)) ;; 64MB
+
+  (use-package rotate
+    :ensure t
+    :defer 3
+    :bind
+    (("C-c k r h" . 'rotate:even-horizontal)
+     ("C-c k r v" . 'rotate:even-vertical)
+     ("C-c k r l" . 'rotate-layout)
+     ("C-c k r w" . 'rotate-window)))
 
   (use-package which-key
     :ensure t

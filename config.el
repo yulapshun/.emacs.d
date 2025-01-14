@@ -663,6 +663,13 @@
   (gcmh-idle-delat 'auto)
   (gcmh-high-cons-threshold 67108864)) ;; 64MB
 
+(use-package rotate
+  :ensure t
+  :defer 3
+  :bind
+  (("C-c k r h" . 'rotate:even-horizontal)
+   ("C-c k r v" . 'rotate:even-vertical)))
+
 (use-package which-key
   :ensure t
   :config
