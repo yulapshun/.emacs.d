@@ -398,7 +398,7 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook
-  ((js-mode . lsp) (js-ts-mode . lsp)
+  ((js-mode . lsp) (js-ts-mode . lsp) (typescript-mode . lsp) (typescript-ts-mode . lsp)
    (web-mode . lsp) (html-mode . lsp) (css-mode . lsp) (css-ts-mode . lsp) (json-mode . lsp) (json-ts-mode . lsp)
    (python-mode . lsp) (python-ts-mode . lsp)
    (sh-mode . lsp) (bash-ts-mode . lsp)
@@ -615,6 +615,9 @@
 (with-eval-after-load 'js
   (define-key js-mode-map (kbd "M-.") nil)
   (define-key js-ts-mode-map (kbd "M-.") nil))
+
+(use-package typescript-mode
+  :mode "\\.ts$" "\\.tsx$")
 
 (use-package web-mode
   :ensure t
