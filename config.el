@@ -583,7 +583,7 @@
 (use-package auto-virtualenv
   :ensure t
   :config
-  (setq auto-virtualenv-verbose t)
+  (setq auto-virtualenv-verbose nil)
   (setq auto-virtualenv-reload-lsp t)
   (auto-virtualenv-setup))
 
