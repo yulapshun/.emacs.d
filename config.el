@@ -134,8 +134,9 @@
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-startup-banner 'logo)
-  (setq dashboard-items '((recents  . 5)
-                          (projects . 5))))
+  (setq dashboard-projects-backend 'projectile)
+  (setq dashboard-items '((recents  . 10)
+                          (projects . 10))))
 
 (use-package mood-line
   :config
@@ -551,7 +552,6 @@
 
 (use-package projectile
   :ensure t
-  :defer 1
   :config
   (projectile-mode 1)
   (setq-default projectile-indexing-method 'hybrid)
