@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: elisp-no-tangle
+# key: el_
+# --
+#+begin_src emacs-lisp
+$0
+#+end_src
