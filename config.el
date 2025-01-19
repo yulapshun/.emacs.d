@@ -177,17 +177,6 @@
   :config
   (nerd-icons-completion-mode))
 
-(use-package good-scroll
-  :ensure t
-  :defer 1
-  :config
-  (good-scroll-mode 1)
-  :bind
-  (("M-v" . 'good-scroll-down)
-   ("C-v" . 'good-scroll-up)
-   ("M-V" . 'good-scroll-down-full-screen)
-   ("C-S-v" . 'good-scroll-up-full-screen)))
-
 (use-package vundo
   :ensure t
   :if (>= emacs-major-version 28)
