@@ -177,6 +177,17 @@
   :config
   (nerd-icons-completion-mode))
 
+(use-package good-scroll
+  :ensure t
+  :defer 1
+  :config
+  (good-scroll-mode 1)
+  :bind
+  (("M-v" . 'good-scroll-down)
+   ("C-v" . 'good-scroll-up)
+   ("M-V" . 'good-scroll-down-full-screen)
+   ("C-S-v" . 'good-scroll-up-full-screen)))
+
 (use-package vundo
   :ensure t
   :if (>= emacs-major-version 28)
@@ -517,21 +528,18 @@
 
 (use-package yasnippet
   :ensure t
-  :defer t
-  :hook
-  ((emacs-lisp-mode . yas-minor-mode)
-   (js-mode . yas-minor-mode)
-   (python-mode . yas-minor-mode)
-   (org-mode . yas-minor-mode))
+  :defer 3
   :config
-  (setq yas-snippet-dirs (cons (expand-file-name "snippets" init-user-emacs-directory) (cdr yas-snippet-dirs)))
+  (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" init-user-emacs-directory))
+  (yas-global-mode)
   :bind (:map yas-minor-mode-map
               ("C-i" . nil) ;; Only <tab> should expand, C-i should not
               ("C-," . 'yas-expand)))
 
 (use-package yasnippet-snippets
   :ensure t
-  :defer t)
+  :defer t
+  :after (yasnippet))
 
 (use-package eyebrowse
   :ensure t
