@@ -1,49 +1,35 @@
 ;; -*- no-byte-compile: t; lexical-binding: t -*-
 
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/") t)
-(setq package-archive-priorities
-      '(("gnu" . 0)
-        ("melpa" . 1)))
-
-(show-paren-mode 1)
-(global-subword-mode 1)
-(global-hl-line-mode 1)
-(column-number-mode 1)
-(electric-indent-mode 1)
-
-(setq-default indent-tabs-mode nil)
-(setq-default show-paren-delay 0)
-(setq-default uniquify-buffer-name-style 'forward)
-(setq-default whitespace-style '(face trailing tabs))
-(setq-default scroll-conservatively 101)
-
-(put 'upcase-region 'disabled nil)
-(put 'downcase-region 'disabled nil)
-
-(add-hook 'prog-mode-hook 'whitespace-mode)
-(add-hook 'prog-mode-hook
-          (if (>= emacs-major-version 26)
-              'display-line-numbers-mode
-            'linum-mode))
-(add-hook 'org-mode-hook #'visual-line-mode)
-(add-hook 'css-mode-hook
-          (lambda ()
-            (setq-default css-indent-offset 2)))
-
-(global-auto-revert-mode 1)
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(when (>= emacs-major-version 27)
-  (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-  (add-hook 'prog-mode-hook
-            (lambda ()
-              (setq display-fill-column-indicator-column 120))))
-(setq-default confirm-kill-emacs 'y-or-n-p)
-
-(defalias 'yes-or-no-p 'y-or-n-p)
-
-(when (or (memq window-system '(mac ns x)) (daemonp))
-  (exec-path-from-shell-initialize))
+(use-package emacs
+  :config
+  (add-to-list 'package-archives
+               '("melpa" . "https://melpa.org/packages/") t)
+  (setq-default package-archive-priorities
+                '(("gnu" . 0)
+                  ("melpa" . 1)))
+  (show-paren-mode 1)
+  (global-subword-mode 1)
+  (global-hl-line-mode 1)
+  (column-number-mode 1)
+  (electric-indent-mode 1)
+  (global-auto-revert-mode 1)
+  (setq-default indent-tabs-mode nil
+                show-paren-delay 0
+                uniquify-buffer-name-style 'forward
+                whitespace-style '(face trailing tabs)
+                scroll-conservatively 101
+                confirm-kill-emacs 'y-or-n-p)
+  (put 'upcase-region 'disabled nil)
+  (put 'downcase-region 'disabled nil)
+  (defalias 'yes-or-no-p 'y-or-n-p)
+  (when (or (memq window-system '(mac ns x)) (daemonp))
+    (exec-path-from-shell-initialize))
+  :hook
+  ((prog-mode . whitespace-mode)
+   (prog-mode . display-line-numbers-mode)
+   (prog-mode . visual-line-mode)
+   (prog-mode . hs-minor-mode)
+   (prog-mode . display-fill-column-indicator-mode)))
 
 (global-set-key (kbd "C-C j x") #'epa-decrypt-region)
 
@@ -617,6 +603,9 @@
   (setq-default web-mode-css-indent-offset 2)
   (setq-default web-mode-code-indent-offset 2)
   (setq-default web-mode-engines-alist '(("django" . "\\.jinja2\\'"))))
+(use-package css-mode
+  :config
+  (setq-default css-indent-offset 2))
 
 (use-package dockerfile-mode
   :ensure t
