@@ -651,3 +651,21 @@
   :ensure t
   :config
   (which-key-mode))
+
+(use-package gptel
+  :ensure t
+  :bind
+  (("C-c k l g" . #'gptel)
+   ("C-c k l s" . #'gptel-send)
+   ("C-c k l r" . #'gptel-rewrite)
+   ("C-c k l m" . #'gptel-menu)
+   ("C-c k l a" . #'gptel-add)
+   ("C-c k l f" . #'gptel-add-file))
+  :config
+  (setq
+   gptel-model 'gemini-2.0-flash
+   gptel-backend (gptel-make-gemini "Gemini"
+                   :key (with-temp-buffer
+                          (insert-file-contents (expand-file-name "gemini-key" user-emacs-directory))
+                          (buffer-string))
+                   :stream t)))
