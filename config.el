@@ -658,10 +658,17 @@
    ("C-c k l a" . #'gptel-add)
    ("C-c k l f" . #'gptel-add-file))
   :config
-  (setq
-   gptel-model 'gemini-2.0-flash
-   gptel-backend (gptel-make-gemini "Gemini"
-                   :key (with-temp-buffer
-                          (insert-file-contents (expand-file-name "gemini-key" user-emacs-directory))
-                          (buffer-string))
-                   :stream t)))
+  (let ((key-file (expand-file-name "openai-key" user-emacs-directory)))
+    (when (file-exists-p key-file)
+      (setq gptel-api-key (with-temp-buffer
+                            (insert-file-contents key-file)
+                            (buffer-string)))))
+  (let ((key-file (expand-file-name "gemini-key" user-emacs-directory)))
+    (when (file-exists-p key-file)
+      (setq
+       gptel-model 'gemini-2.0-flash
+       gptel-backend (gptel-make-gemini "Gemini"
+                       :key (with-temp-buffer
+                              (insert-file-contents key-file)
+                              (buffer-string))
+                       :stream t)))))
