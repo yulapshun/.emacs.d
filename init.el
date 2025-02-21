@@ -50,8 +50,8 @@
   (compile-angel-on-load-mode)
   (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
 
-(org-babel-load-file (expand-file-name "defun.org" init-user-emacs-directory))
-(org-babel-load-file (expand-file-name "config.org" init-user-emacs-directory))
+(org-babel-load-file (expand-file-name "defun.org" default-user-emacs-directory))
+(org-babel-load-file (expand-file-name "config.org" default-user-emacs-directory))
 
 (provide 'init)
 

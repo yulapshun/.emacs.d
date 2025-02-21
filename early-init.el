@@ -7,9 +7,10 @@
 
 (defvar emacs-debug nil
   "Non-nil to enable debug.")
-(defvar init-user-emacs-directory user-emacs-directory
+(defvar default-user-emacs-directory user-emacs-directory
   "The default value of the `user-emacs-directory' variable.")
-(defvar file-name-handler-alist-original file-name-handler-alist)
+(defvar default-file-name-handler-alist file-name-handler-alist
+  "The default value of the `file-name-handler-alist' variable.")
 
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.6
@@ -23,10 +24,10 @@
           (lambda ()
             (setq gc-cons-threshold 800000
                   gc-cons-percentage 0.1
-                  file-name-handler-alist file-name-handler-alist-original)))
+                  file-name-handler-alist default-file-name-handler-alist)))
 
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
-(setq user-emacs-directory (expand-file-name "var/" init-user-emacs-directory))
+(setq user-emacs-directory (expand-file-name "var/" default-user-emacs-directory))
 
 (setq load-prefer-newer t)
 
