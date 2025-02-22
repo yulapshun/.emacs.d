@@ -495,7 +495,7 @@
   :ensure t
   :defer 3
   :config
-  (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" init-user-emacs-directory))
+  (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" default-user-emacs-directory))
   (yas-global-mode)
   :bind (:map yas-minor-mode-map
               ("C-i" . nil) ;; Only <tab> should expand, C-i should not
