@@ -17,40 +17,32 @@
       (redraw-frame))
     (add-hook 'window-setup-hook #'reset-inhibit-vars)
     (define-advice startup--load-user-init-file (:after (&rest _) reset-inhibit-vars)
-      (and init-file-had-error (reset-inhibit-vars))))
+      (and init-file-had-error (reset-inhibit-vars)))))
 
-  ;; Suppress file handlers operations at startup
-  ;; `file-name-handler-alist' is consulted on each call to `require' and `load'
-  (let ((old-value file-name-handler-alist))
-    (setq file-name-handler-alist nil)
-    (set-default-toplevel-value 'file-name-handler-alist file-name-handler-alist)
-    (add-hook 'emacs-startup-hook
-              (lambda ()
-                "Recover file name handlers."
-                (setq file-name-handler-alist
-                      (delete-dups (append file-name-handler-alist old-value))))
-              101)))
-
+;; Add lib/ directory to load-path
 (add-to-list 'load-path (expand-file-name "lib" user-emacs-directory))
 
-(unless (bound-and-true-p package--initialized)
-  (setq package-enable-at-startup nil)
-  (package-initialize))
+;; Load packages here
+(package-initialize)
 
+;; Ensure use-package exists
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; Byte and native .el files automatically
 (use-package compile-angel
   :ensure t
   :demand t
   :custom
-  (compile-angel-verbose nil)
+  (compile-angel-verbose emacs-debug)
   :config
   (compile-angel-on-load-mode)
   (add-hook 'emacs-lisp-mode-hook #'compile-angel-on-save-local-mode))
 
+;; Load custom defined functions
 (org-babel-load-file (expand-file-name "defun.org" default-user-emacs-directory))
+;; Load main config
 (org-babel-load-file (expand-file-name "config.org" default-user-emacs-directory))
 
 (provide 'init)

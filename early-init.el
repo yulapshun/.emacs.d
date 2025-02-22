@@ -38,11 +38,12 @@
           (lambda ()
             (setq gc-cons-threshold default-gc-cons-threshold
                   gc-cons-percentage default-gc-cons-percentage
-                  file-name-handler-alist default-file-name-handler-alist)))
+                  file-name-handler-alist default-file-name-handler-alist
+                  load-prefer-newer t)))
 
 ;; Reducing clutter in ~/.emacs.d by redirecting files to ~/emacs.d/var/
+;; var/ can contain secrets so it should not be tracked by version control
 (setq user-emacs-directory (expand-file-name "var/" default-user-emacs-directory))
-(setq load-prefer-newer t)
 ;; Native compile .elc files asynchronously
 (setq native-comp-jit-compilation t)
 
