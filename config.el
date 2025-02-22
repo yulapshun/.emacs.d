@@ -381,12 +381,6 @@
   :commands lsp
   :custom
   (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
-;; pip install pyright
-;; npm i -g typescript-language-server typescript
-;; npm i -g vscode-json-languageserver
-;; npm i -g vscode-langservers-extracted
-;; npm i -g bash-language-server
-;; dnf in clang-tools-extra
 
 (use-package flycheck
   :ensure t
