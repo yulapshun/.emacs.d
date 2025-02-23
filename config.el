@@ -195,9 +195,10 @@
   :defer t
   :bind
   (("C-`" . popper-toggle)
-   ("C-c k o g" . popper-toggle)
-   ("C-c k o c" . popper-cycle)
-   ("C-c k o t" . popper-toggle-type))
+   ("C-c k p g" . popper-toggle)
+   ("C-c k p f" . popper-cycle)
+   ("C-c k p b" . popper-cycle-backwards)
+   ("C-c k p t" . popper-toggle-type))
   :init
   (setq popper-reference-buffers
         '("\\*Messages\\*"
