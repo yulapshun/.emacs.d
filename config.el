@@ -2,33 +2,53 @@
 
 (use-package emacs
   :config
+  ;; Add melpa to package-archives make it preferred over gnu archive
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/") t)
   (setq-default package-archive-priorities
-                '(("gnu" . 0)
-                  ("melpa" . 1)))
+                '(("melpa" . 1)))
+  ;; Highlight mathing parenthesis
   (show-paren-mode 1)
+  ;; Make word based navigation easier
   (global-subword-mode 1)
+  ;; Highlight current line
   (global-hl-line-mode 1)
+  ;; Show the current column number in the mode line
   (column-number-mode 1)
+  ;; Auto indent afetr every new line
   (electric-indent-mode 1)
+  ;; Revert a buffer automatically if it is changed on disk
   (global-auto-revert-mode 1)
-  (setq-default indent-tabs-mode nil
-                show-paren-delay 0
-                uniquify-buffer-name-style 'forward
-                whitespace-style '(face trailing tabs)
-                scroll-conservatively 101
-                confirm-kill-emacs 'y-or-n-p)
+  (setq-default
+   ;; Use space for indentation by default
+   indent-tabs-mode nil
+   show-paren-delay 0
+   ;; Make buffer name look like the file path
+   uniquify-buffer-name-style 'forward
+   ;; Visualize trailing whitespaces and tabs
+   whitespace-style '(face trailing tabs)
+   ;; Confirm before exiting emacs
+   confirm-kill-emacs 'y-or-n-p
+   ;; Show fill column indicator at 120
+   fill-column 120)
+  ;; Enable upcase-region and downcase-region
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
+  ;; use 'y' or 'n' instead of 'yes' or 'no' everywhere
   (defalias 'yes-or-no-p 'y-or-n-p)
-  (when (or (memq window-system '(mac ns x)) (daemonp))
-    (exec-path-from-shell-initialize))
+  ;; Ensure path is set up correctly
+  (exec-path-from-shell-initialize)
   :hook
-  ((prog-mode . whitespace-mode)
+  (
+   ;; Visualize whitespaces
+   (prog-mode . whitespace-mode)
+   ;; Show line numbers
    (prog-mode . display-line-numbers-mode)
+   ;; Enable line wrapping
    (prog-mode . visual-line-mode)
+   ;; Enable code folding
    (prog-mode . hs-minor-mode)
+   ;; Show column indicator
    (prog-mode . display-fill-column-indicator-mode)))
 
 (global-set-key (kbd "C-C j x") #'epa-decrypt-region)
