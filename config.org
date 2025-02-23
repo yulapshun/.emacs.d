@@ -564,7 +564,8 @@ Some general configurations
      org-roam-dailies-capture-templates
      '(("e" "encrypted" entry
         "* %?"
-        :target (file+head "private/%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n"))
+        :target (file+head "private/%<%Y-%m-%d>.org.gpg" "#+title: %<%Y-%m-%d>\n")
+        :unnarrowed t)
        ("d" "default" entry
         "* %?"
         :target (file+head "daily/%<%Y-%m-%d>.org" "#+filetags: :Personal:Daily:\n#+title: %<%Y-%m-%d>\n")
