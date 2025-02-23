@@ -190,6 +190,38 @@
   :bind
   (("C-x u" . 'vundo)))
 
+(use-package popper
+  :ensure t
+  :defer t
+  :bind
+  (("C-`" . popper-toggle)
+   ("C-c k o g" . popper-toggle)
+   ("C-c k o c" . popper-cycle)
+   ("C-c k o t" . popper-toggle-type))
+  :init
+  (setq popper-reference-buffers
+        '("\\*Messages\\*"
+          "Output\\*$"
+          "\\*Async Shell Command\\*"
+          "\\*scratch\\*"
+          "error\\*$"
+          "errors\\*$"
+          "\\*xref\\*"
+          "\\*Gemini\\*"
+          "\\*ChatGPT\\*"
+          "^\\*eshell.*" eshell-mode
+          "^\\*shell.*" shell-mode
+          "^\\*term.*" term-mode
+          "^\\*vterm.*" vterm-mode
+          "^\\*Python.*" inferior-python-mode
+          help-mode
+          compilation-mode))
+  (setq popper-window-height 20)
+  (setq popper-group-function #'popper-group-by-projectile)
+  (popper-mode 1)
+  (popper-echo-mode 1)
+  :after (projectile))
+
 (setq minibuffer-prompt-properties
       '(read-only t cursor-intangible t face minibuffer-prompt))
 (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
