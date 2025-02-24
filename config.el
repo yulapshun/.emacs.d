@@ -420,7 +420,8 @@
   :defer 1
   :config
   (global-treesit-auto-mode)
-  (setq treesit-auto-install 'prompt))
+  (setq treesit-auto-install 'prompt)
+  (delete 'c-sharp treesit-auto-langs))
 
 (use-package lsp-mode
   :init
@@ -430,6 +431,7 @@
    (web-mode . lsp) (html-mode . lsp) (css-mode . lsp) (css-ts-mode . lsp) (json-mode . lsp) (json-ts-mode . lsp)
    (python-mode . lsp) (python-ts-mode . lsp)
    (sh-mode . lsp) (bash-ts-mode . lsp)
+   (csharp-mode . lsp) (csharp-ts-mode . lsp)
    (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :custom
