@@ -21,6 +21,8 @@
   (global-auto-revert-mode 1)
   ;; Replace selected text with typed text
   (delete-selection-mode 1)
+  ;; Save mimibuffer history
+  (savehist-mode 1)
   (setq-default
    ;; Use space for indentation by default
    indent-tabs-mode nil
