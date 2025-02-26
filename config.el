@@ -725,3 +725,5 @@
                               (insert-file-contents key-file)
                               (buffer-string))
                        :stream t)))))
+
+(use-package powershell :ensure t)
