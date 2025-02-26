@@ -424,8 +424,7 @@
   :defer 1
   :config
   (global-treesit-auto-mode)
-  (setq treesit-auto-install 'prompt)
-  (delete 'c-sharp treesit-auto-langs))
+  (setq treesit-auto-install 'prompt))
 
 (use-package lsp-mode
   :init
