@@ -661,6 +661,9 @@
   :config
   (setq-default css-indent-offset 2))
 
+(use-package powershell :ensure t)
+(add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
+
 (use-package dockerfile-mode
   :ensure t
   :defer t)
@@ -730,7 +733,3 @@
                               (insert-file-contents key-file)
                               (buffer-string))
                        :stream t)))))
-
-(use-package powershell :ensure t)
-
-(add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))

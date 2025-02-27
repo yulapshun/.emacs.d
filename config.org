@@ -656,8 +656,8 @@ Some general configurations
     ("C-c k g d" . 'git-gutter:popup-hunk)
     ("C-c k g r" . 'git-gutter:revert-hunk))
 #+end_src
-
-* Python
+* Programming
+** Python
 #+begin_src emacs-lisp
   (use-package auto-virtualenv
     :ensure t
@@ -683,7 +683,7 @@ Some general configurations
               (setq tab-width 4)))
 #+end_src
 
-* JavaScript
+** JavaScript
 #+begin_src emacs-lisp
   (if (>= emacs-major-version 27)
       (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
@@ -703,7 +703,7 @@ Some general configurations
 
 #+end_src
 
-* Web
+** Web
 #+begin_src emacs-lisp
   (use-package web-mode
     :ensure t
@@ -720,6 +720,12 @@ Some general configurations
   (use-package css-mode
     :config
     (setq-default css-indent-offset 2))
+#+end_src
+
+** C#
+#+begin_src emacs-lisp
+  (use-package powershell :ensure t)
+  (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
 #+end_src
 
 * Misc. Major Modes
@@ -796,8 +802,4 @@ Some general configurations
                                 (insert-file-contents key-file)
                                 (buffer-string))
                          :stream t)))))
-
-  (use-package powershell :ensure t)
-
-  (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
 #+end_src
