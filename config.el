@@ -23,6 +23,8 @@
   (delete-selection-mode 1)
   ;; Save mimibuffer history
   (savehist-mode 1)
+  ;; Enabel word wrap
+  (global-visual-line-mode 1)
   (setq-default
    ;; Use space for indentation by default
    indent-tabs-mode nil
@@ -48,12 +50,15 @@
    (prog-mode . whitespace-mode)
    ;; Show line numbers
    (prog-mode . display-line-numbers-mode)
-   ;; Enable line wrapping
-   (prog-mode . visual-line-mode)
    ;; Enable code folding
    (prog-mode . hs-minor-mode)
    ;; Show column indicator
-   (prog-mode . display-fill-column-indicator-mode)))
+   (prog-mode . display-fill-column-indicator-mode)
+   ;; Enable line wrapping
+   (prog-mode . (lambda()
+                  (setq truncate-lines nil)
+                  (visual-line-mode -1)))
+   ))
 
 (global-set-key (kbd "C-C j x") #'epa-decrypt-region)
 
@@ -727,3 +732,5 @@
                        :stream t)))))
 
 (use-package powershell :ensure t)
+
+(add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
