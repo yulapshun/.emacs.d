@@ -410,18 +410,22 @@
          ("<tab>" . 'company-complete-common-or-cycle)
          ("C-p" . nil)
          ("C-n" . nil)
+         ("<return>" . nil)
+         ("RET" . nil)
          ("M-p" . 'company-select-previous)
          ("M-n" . 'company-select-next)
-         ("C-h" . 'company-show-doc-buffer))
+         ("C-h" . 'company-show-doc-buffer)
+         ("M-<return>" . company-complete-selection))
    (:map company-search-map
          ("<tab>" . 'company-complete-common-or-cycle)
          ("C-p" . nil)
          ("C-n" . nil)
+         ("<return>" . nil)
+         ("RET" . nil)
          ("M-p" . 'company-select-previous)
          ("M-n" . 'company-select-next)
-         ("C-h" . 'company-show-doc-buffer)))
-  :custom
-  (company-idle-delay 1))
+         ("C-h" . 'company-show-doc-buffer)
+         ("M-<return>" . company-complete-selection))))
 
 (use-package treesit-auto
   :if (>= emacs-major-version 29)
