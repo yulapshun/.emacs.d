@@ -499,6 +499,7 @@
      `(org-level-2 ((t (,@headline :height 1.2))))
      `(org-level-1 ((t (,@headline :height 1.3))))
      `(org-document-title ((t (,@headline :height 1.5 :underline nil))))))
+  (add-to-list 'org-export-backends 'md)
   :config
   (plist-put org-format-latex-options :scale 1.0)
   :bind
