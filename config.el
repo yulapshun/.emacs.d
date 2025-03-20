@@ -447,6 +447,7 @@
    (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :custom
+  (lsp-csharp-omnisharp-enable-decompilation-support t)
   (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
 
 (use-package flycheck
