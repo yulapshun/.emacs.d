@@ -9,8 +9,6 @@
                 '(("melpa" . 1)))
   ;; Highlight mathing parenthesis
   (show-paren-mode 1)
-  ;; Make word based navigation easier
-  (global-subword-mode 1)
   ;; Highlight current line
   (global-hl-line-mode 1)
   ;; Show the current column number in the mode line
