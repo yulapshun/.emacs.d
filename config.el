@@ -96,6 +96,10 @@
 (global-set-key (kbd "C-c j M") #'my/meta-shift)
 (global-set-key (kbd "C-c j z") #'my/control-meta)
 
+;; navigation
+(global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 5)))
+(global-set-key (kbd "M-n") (lambda () (interactive) (next-line 5)))
+
 (setq auto-save-list-file-prefix nil)
 (defvar auto-save-directory (concat user-emacs-directory "autosave/"))
 (defvar backup-directory (concat user-emacs-directory "backup/"))
