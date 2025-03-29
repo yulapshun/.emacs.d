@@ -65,49 +65,58 @@ Some general configurations
 #+end_src
 
 * Keys
+Various key bindings
 #+begin_src emacs-lisp
-  (global-set-key (kbd "C-C j x") #'epa-decrypt-region)
-
-  ;; windmove
-  (global-set-key (kbd "C-S-b") #'windmove-left)
-  (global-set-key (kbd "C-S-f") #'windmove-right)
-  (global-set-key (kbd "C-S-p") #'windmove-up)
-  (global-set-key (kbd "C-S-n") #'windmove-down)
-  (global-set-key (kbd "C-c j b") #'windmove-left)
-  (global-set-key (kbd "C-c j f") #'windmove-right)
-  (global-set-key (kbd "C-c j p") #'windmove-up)
-  (global-set-key (kbd "C-c j n") #'windmove-down)
-
-  ;; defun-indent
-  (global-set-key (kbd "<C-tab>") #'my/force-indent)
-  (global-set-key (kbd "<C-S-tab>") #'my/force-unindent)
-  (global-set-key (kbd "<C-iso-lefttab>") #'my/force-unindent)
-  (global-set-key (kbd "C-c j <tab>") #'my/force-indent)
-  (global-set-key (kbd "C-c j <backtab>") #'my/force-unindent)
-
-  ;; defun-delete
-  (global-set-key (kbd "C-S-k") #'my/delete-line)
-  (global-set-key (kbd "C-S-w") #'delete-region)
-  (global-set-key (kbd "M-D") #'my/delete-word)
-  (global-set-key (kbd "<M-S-backspace>") #'my/backward-delete-word)
-  (global-set-key (kbd "C-c j k") #'my/delete-line)
-  (global-set-key (kbd "C-c j w") #'my/delete-region)
-  (global-set-key (kbd "C-c j d") #'my/delete-word)
-  (global-set-key (kbd "C-c j <del>") #'my/backward-delete-word)
-
-  ;; defun-modifier
-  (global-set-key (kbd "C-c j c") #'my/control)
-  (global-set-key (kbd "C-c j m") #'my/meta)
-  (global-set-key (kbd "C-c j S") #'my/control-shift)
-  (global-set-key (kbd "C-c j M") #'my/meta-shift)
-  (global-set-key (kbd "C-c j z") #'my/control-meta)
-
-  ;; navigation
-  (global-set-key (kbd "M-p") (lambda () (interactive) (previous-line 5)))
-  (global-set-key (kbd "M-n") (lambda () (interactive) (next-line 5)))
+  (use-package emacs
+    :init
+    ;; Define aliases so that keymap names show up in which-key
+    (defvar-keymap my/quick-prefix-map)
+    (defalias 'my/quick-prefix-map my/quick-prefix-map)
+    (defvar-keymap my/prefix-map)
+    (defalias 'my/prefix-map my/prefix-map)
+    (defvar-keymap my/epa-prefix-map)
+    (defalias 'my/epa-prefix-map my/epa-prefix-map)
+    (defvar-keymap my/delete-prefix-map)
+    (defalias 'my/delete-prefix-map my/delete-prefix-map)
+    (global-set-key (kbd "C-c j") 'my/quick-prefix-map)
+    (global-set-key (kbd "C-c k") 'my/prefix-map)
+    (define-key my/prefix-map "e" 'my/epa-prefix-map)
+    (define-key my/prefix-map "d" 'my/delete-prefix-map)
+    :bind
+    ;; windmove
+    ("C-S-b" . #'windmove-left)
+    ("C-S-f" . #'windmove-right)
+    ("C-S-p" . #'windmove-up)
+    ("C-S-n" . #'windmove-down)
+    ;; defun-delete
+    ("C-S-k" . #'my/delete-line)
+    ("C-S-w" . #'delete-region)
+    ("M-D" . #'my/delete-word)
+    ("<M-S-backspace>" . #'my/backward-delete-word)
+    ;; navigation
+    ("M-p" . (lambda () (interactive) (forward-line -5)))
+    ("M-n" . (lambda () (interactive) (forward-line 5)))
+    (:map my/epa-prefix-map
+          ("x" . #'epa-decrypt-region)
+          ("e" . #'epa-encrypt-region))
+    (:map my/quick-prefix-map
+          ("b" . #'windmove-left)
+          ("f" . #'windmove-right)
+          ("p" . #'windmove-up)
+          ("n" . #'windmove-down))
+    (:map my/delete-prefix-map
+          ("k" . #'my/delete-line)
+          ("w" . #'my/delete-region)
+          ("d" . #'my/delete-word)
+          ("<del>" . #'my/backward-delete-word))
+    (:map my/quick-prefix-map
+          ("c" . #'my/control)
+          ("m" . #'my/meta)
+          ("S" . #'my/control-shift)
+          ("M" . #'my/meta-shift)
+          ("z" . #'my/control-meta)))
 #+end_src
 
-* Backup
 #+begin_src emacs-lisp
   (setq auto-save-list-file-prefix nil)
   (defvar auto-save-directory (concat user-emacs-directory "autosave/"))
@@ -221,12 +230,17 @@ Some general configurations
   (use-package popper
     :ensure t
     :defer t
+    :init
+    (defvar-keymap my/popper-prefix-map)
+    (defalias 'my/popper-prefix-map my/popper-prefix-map)
+    (define-key my/prefix-map "p" 'my/popper-prefix-map)
     :bind
-    (("C-`" . popper-toggle)
-     ("C-c k p g" . popper-toggle)
-     ("C-c k p f" . popper-cycle)
-     ("C-c k p b" . popper-cycle-backwards)
-     ("C-c k p t" . popper-toggle-type))
+    ("C-`" . popper-toggle)
+    (:map my/popper-prefix-map
+          ("g" . popper-toggle)
+          ("f" . popper-cycle)
+          ("b" . popper-cycle-backwards)
+          ("t" . popper-toggle-type))
     :init
     (setq popper-reference-buffers
           '("\\*Messages\\*"
@@ -406,8 +420,9 @@ Some general configurations
     :bind
     (("C-:" . #'avy-goto-char-timer)
      ("C-\"" . #'avy-goto-line)
-     ("C-c j :" . #'avy-goto-char-timer)
-     ("C-c j \"" . #'avy-goto-line)))
+     (:map my/quick-prefix-map
+           (":" . #'avy-goto-char-timer)
+           ("\"" . #'avy-goto-line))))
 
   (use-package symbol-overlay
     :ensure t
@@ -418,9 +433,10 @@ Some general configurations
     (("C-;" . #'symbol-overlay-put)
      ("C->" . #'symbol-overlay-jump-next)
      ("C-<" . #'symbol-overlay-jump-prev)
-     ("C-c j ;" . #'symbol-overlay-put)
-     ("C-c j >" . #'symbol-overlay-jump-next)
-     ("C-c j <" . #'symbol-overlay-jump-prev)))
+     (:map my/quick-prefix-map
+           (";" . #'symbol-overlay-put)
+           (">" . #'symbol-overlay-jump-next)
+           ("<" . #'symbol-overlay-jump-prev))))
 #+end_src
 
 * Auto Complete
@@ -656,13 +672,18 @@ Some general configurations
   (use-package git-gutter
     :ensure t
     :defer 3
+    :init
+    (defvar-keymap my/git-gutter-prefix-map)
+    (defalias 'my/git-gutter-prefix-map my/git-gutter-prefix-map)
+    (define-key my/prefix-map "g" 'my/git-gutter-prefix-map)
     :config
     (global-git-gutter-mode 1)
     :bind
-    ("C-c k g p" . 'git-gutter:previous-hunk)
-    ("C-c k g n" . 'git-gutter:next-hunk)
-    ("C-c k g d" . 'git-gutter:popup-hunk)
-    ("C-c k g r" . 'git-gutter:revert-hunk))
+    (:map my/git-gutter-prefix-map
+          ("p" . 'git-gutter:previous-hunk)
+          ("n" . 'git-gutter:next-hunk)
+          ("d" . 'git-gutter:popup-hunk)
+          ("r" . 'git-gutter:revert-hunk)))
 #+end_src
 * Programming
 ** Python
@@ -775,11 +796,16 @@ Some general configurations
   (use-package rotate
     :ensure t
     :defer 3
+    :init
+    (defvar-keymap my/rotate-prefix-map)
+    (defalias 'my/rotate-prefix-map my/rotate-prefix-map)
+    (define-key my/prefix-map "r" 'my/rotate-prefix-map)
     :bind
-    (("C-c k r h" . 'rotate:even-horizontal)
-     ("C-c k r v" . 'rotate:even-vertical)
-     ("C-c k r l" . 'rotate-layout)
-     ("C-c k r w" . 'rotate-window)))
+    (:map my/rotate-prefix-map
+          ("h" . 'rotate:even-horizontal)
+          ("v" . 'rotate:even-vertical)
+          ("l" . 'rotate-layout)
+          ("w" . 'rotate-window)))
 
   (use-package which-key
     :ensure t
@@ -788,13 +814,18 @@ Some general configurations
 
   (use-package gptel
     :ensure t
+    :init
+    (defvar-keymap my/gptel-prefix-map)
+    (defalias 'my/gptel-prefix-map my/gptel-prefix-map)
+    (define-key my/prefix-map "l" 'my/gptel-prefix-map)
     :bind
-    (("C-c k l g" . #'gptel)
-     ("C-c k l s" . #'gptel-send)
-     ("C-c k l r" . #'gptel-rewrite)
-     ("C-c k l m" . #'gptel-menu)
-     ("C-c k l a" . #'gptel-add)
-     ("C-c k l f" . #'gptel-add-file))
+    (:map my/gptel-prefix-map
+          ("g" . #'gptel)
+          ("s" . #'gptel-send)
+          ("r" . #'gptel-rewrite)
+          ("m" . #'gptel-menu)
+          ("a" . #'gptel-add)
+          ("f" . #'gptel-add-file))
     :config
     (let ((key-file (expand-file-name "openai-key" user-emacs-directory)))
       (when (file-exists-p key-file)
