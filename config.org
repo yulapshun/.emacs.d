@@ -117,6 +117,7 @@ Various key bindings
           ("z" . #'my/control-meta)))
 #+end_src
 
+* Backup
 #+begin_src emacs-lisp
   (setq auto-save-list-file-prefix nil)
   (defvar auto-save-directory (concat user-emacs-directory "autosave/"))
