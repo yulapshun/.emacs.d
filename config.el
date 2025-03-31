@@ -583,11 +583,6 @@
               ("C-i" . nil) ;; Only <tab> should expand, C-i should not
               ("C-," . 'yas-expand)))
 
-(use-package yasnippet-snippets
-  :ensure t
-  :defer t
-  :after (yasnippet))
-
 (use-package eyebrowse
   :ensure t
   :defer 3

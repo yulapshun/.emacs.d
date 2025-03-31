@@ -58,8 +58,7 @@
                      eyebrowse flycheck gcmh git-gutter go-mode gptel gruvbox-theme json-mode lsp-mode lsp-pyright magit
                      marginalia markdown-mode mood-line nerd-icons nerd-icons-completion nerd-icons-dired orderless
                      org-fragtog org-roam-timestamps org-roam-ui php-mode popper powershell projectile rotate
-                     symbol-overlay treesit-auto use-package vertico vundo web-mode which-key yaml-mode
-                     yasnippet-snippets))
+                     symbol-overlay treesit-auto use-package vertico vundo web-mode which-key yaml-mode))
  '(safe-local-variable-values '((org-pretty-entities))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
