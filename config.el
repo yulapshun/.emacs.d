@@ -766,3 +766,8 @@
                               (insert-file-contents key-file)
                               (buffer-string))
                        :stream t)))))
+
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
