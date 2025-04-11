@@ -42,6 +42,7 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   ;; Ensure path is set up correctly
   (exec-path-from-shell-initialize)
+  (add-to-list 'Info-directory-list "~/Sync/info/")
   :hook
   (
    ;; Visualize whitespaces
