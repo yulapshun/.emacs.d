@@ -548,7 +548,9 @@
    '(("e" "encrypted" plain "%?"
       :target (file+head "private/%<%Y%m%d%H%M%S>-${slug}.org.gpg" "#+title: ${title} ") :unnarrowed t)
      ("d" "default" plain "%?"
-      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}") :unnarrowed t)))
+      :target (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}") :unnarrowed t)
+     ("b" "blog" plain "%?"
+      :target (file+head "blog/%<%Y%m%d%H%M%S>-${slug}.org" "#+filetags: :Blog:\n#+title: ${title}") :unnarrowed t)))
   (setq-default
    org-roam-dailies-capture-templates
    '(("e" "encrypted" entry
