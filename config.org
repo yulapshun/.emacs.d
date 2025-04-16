@@ -750,6 +750,11 @@ Various key bindings
   (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
 #+end_src
 
+** Racket
+#+begin_src emacs-lisp
+  (use-package racket-mode :ensure t)
+#+end_src
+
 * Misc. Major Modes
 #+begin_src emacs-lisp
   (use-package dockerfile-mode

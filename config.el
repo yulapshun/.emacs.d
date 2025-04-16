@@ -685,6 +685,8 @@
 (use-package powershell :ensure t)
 (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
 
+(use-package racket-mode :ensure t)
+
 (use-package dockerfile-mode
   :ensure t
   :defer t)
