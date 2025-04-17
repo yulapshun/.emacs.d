@@ -686,6 +686,13 @@
 (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
 
 (use-package racket-mode :ensure t)
+(use-package ob-racket
+  :ensure t
+  :after org
+  :config
+  (add-hook 'ob-racket-pre-runtime-library-load-hook
+	    #'ob-racket-raco-make-runtime-library)
+  :vc (:url "https://github.com/hasu/emacs-ob-racket.git" :branch "master"))
 
 (use-package dockerfile-mode
   :ensure t
