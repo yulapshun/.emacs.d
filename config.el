@@ -574,7 +574,9 @@
 (use-package org-roam-timestamps
   :ensure t
   :hook ((org-mode . org-roam-timestamps-mode))
-  :after (org-roam))
+  :after (org-roam)
+  :config
+  (setq org-roam-timestamps-remember-timestamps nil))
 
 (use-package yasnippet
   :ensure t
