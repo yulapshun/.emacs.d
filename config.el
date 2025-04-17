@@ -416,6 +416,18 @@
          (">" . #'symbol-overlay-jump-next)
          ("<" . #'symbol-overlay-jump-prev))))
 
+(use-package smartparens
+  :ensure smartparens
+  :hook (lisp-data-mode)
+  :config
+  (require 'smartparens-config)
+  :bind
+  (:map smartparens-mode-map
+        ("C-)" . 'sp-forward-slurp-sexp)
+        ("C-}" . 'sp-forward-barf-sexp)
+        ("C-(" . 'sp-backward-slurp-sexp)
+        ("C-{" . 'sp-backward-barf-sexp)))
+
 (use-package company
   :ensure t
   :defer 3
