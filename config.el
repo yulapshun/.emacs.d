@@ -124,6 +124,11 @@
       (message "%s" file)
       (delete-file file))))
 
+(use-package emacs
+  :config
+  (add-to-list 'default-frame-alist
+               '(font . "Source Code Pro-10")))
+
 (use-package gruvbox-theme
   :ensure t
   :defer t)

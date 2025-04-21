@@ -139,6 +139,11 @@ Various key bindings
 
 * Appearance
 #+begin_src emacs-lisp
+  (use-package emacs
+    :config
+    (add-to-list 'default-frame-alist
+                 '(font . "Source Code Pro-10")))
+
   (use-package gruvbox-theme
     :ensure t
     :defer t)
