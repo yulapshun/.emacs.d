@@ -42,6 +42,9 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
   ;; Ensure path is set up correctly
   (exec-path-from-shell-initialize)
+  (when (eq system-type 'darwin)
+    (exec-path-from-shell-copy-env "TEMP")
+    (exec-path-from-shell-copy-env "DOTNET_ROOT"))
   (add-to-list 'Info-directory-list "~/Sync/info/")
   :hook
   (
@@ -126,8 +129,12 @@
 
 (use-package emacs
   :config
-  (add-to-list 'default-frame-alist
-               '(font . "Source Code Pro-10")))
+  (cond ((eq system-type 'gnu/linux)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-10")))
+        ((eq system-type 'darwin)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-13")))))
 
 (use-package gruvbox-theme
   :ensure t
