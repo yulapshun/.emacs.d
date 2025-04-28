@@ -632,6 +632,7 @@
   :defer t
   :config
   (setq magit-refresh-status-buffer nil)
+  (setq magit-log-margin '(t "%Y-%m-%d" magit-log-margin-width t 18))
   (remove-hook 'server-switch-hook 'magit-commit-diff)
   (remove-hook 'with-editor-filter-visit-hook 'magit-commit-diff)
   :bind
