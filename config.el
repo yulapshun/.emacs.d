@@ -517,7 +517,7 @@
   (setq-default org-enforce-todo-dependencies t)
   (setq-default org-enforce-todo-checkbox-dependencies t)
   (setq-default org-priority-highest ?A)
-  (setq-default org-priority-lowest ?F)
+  (setq-default org-priority-lowest ?E)
   (setq-default org-priority-default ?C)
   (setq-default org-log-done 'time)
   (setq-default org-log-done 'note)
