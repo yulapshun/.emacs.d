@@ -223,16 +223,6 @@
   :bind
   (("C-x u" . 'vundo)))
 
-(use-package perspective
-  :bind
-  (("C-x C-b" . persp-list-buffers)
-   ("C-x b" . persp-switch-to-buffer*)
-   ("C-x k" . persp-kill-buffer*))
-  :custom
-  (persp-mode-prefix-key (kbd "C-c o"))
-  :init
-  (persp-mode))
-
 (use-package popper
   :ensure t
   :defer t
@@ -624,11 +614,15 @@
               ("C-i" . nil) ;; Only <tab> should expand, C-i should not
               ("C-," . 'yas-expand)))
 
-(use-package eyebrowse
-  :ensure t
-  :defer 3
-  :config
-  (eyebrowse-mode 1))
+(use-package perspective
+  :bind
+  (("C-x C-b" . persp-list-buffers)
+   ("C-x b" . persp-switch-to-buffer*)
+   ("C-x k" . persp-kill-buffer*))
+  :custom
+  (persp-mode-prefix-key (kbd "C-c o"))
+  :init
+  (persp-mode))
 
 (use-package projectile
   :ensure t
