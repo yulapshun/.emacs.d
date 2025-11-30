@@ -54,12 +54,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(auto-virtualenv avy company compile-angel dashboard dockerfile-mode editorconfig embark-consult exec-path-from-shell
-                     flycheck gcmh git-gutter go-mode gptel gruvbox-theme highlight-indent-guides json-mode lsp-pyright
-                     magit marginalia mood-line nerd-icons-completion nerd-icons-dired orderless org-fragtog
-                     org-roam-timestamps org-roam-ui perspective php-mode popper powershell projectile rotate
-                     smartparens symbol-overlay treesit-auto use-package vertico vundo web-mode which-key yaml-mode
-                     yasnippet))
+   '(avy company compile-angel dashboard dockerfile-mode editorconfig embark-consult exec-path-from-shell flycheck gcmh
+         git-gutter go-mode gptel gruvbox-theme highlight-indent-guides json-mode lsp-pyright magit marginalia mood-line
+         nerd-icons-completion nerd-icons-dired orderless org-fragtog org-roam-timestamps org-roam-ui perspective
+         php-mode popper powershell projectile rotate smartparens symbol-overlay treesit-auto use-package vertico vundo
+         web-mode which-key yaml-mode yasnippet))
  '(safe-local-variable-values '((org-pretty-entities))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

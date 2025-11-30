@@ -660,13 +660,6 @@
         ("d" . 'git-gutter:popup-hunk)
         ("r" . 'git-gutter:revert-hunk)))
 
-(use-package auto-virtualenv
-  :ensure t
-  :config
-  (setq auto-virtualenv-verbose nil)
-  (setq auto-virtualenv-reload-lsp t)
-  (auto-virtualenv-setup))
-
 (use-package lsp-pyright
   :ensure t
   :custom (lsp-pyright-langserver-command "pyright")
