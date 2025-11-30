@@ -6,12 +6,12 @@
 ;; Homepage: https://github.com/magit/transient
 ;; Keywords: extensions
 
-;; Package-Version: 20251115.6
-;; Package-Revision: 88ff8d66637a
+;; Package-Version: 20251129.1551
+;; Package-Revision: f960acdf7454
 ;; Package-Requires: (
 ;;     (emacs   "28.1")
 ;;     (compat  "30.1")
-;;     (cond-let "0.1")
+;;     (cond-let "0.2")
 ;;     (seq      "2.24"))
 
 ;; SPDX-License-Identifier: GPL-3.0-or-later
@@ -39,7 +39,7 @@
 
 ;;; Code:
 
-(defconst transient-version "0.10.1")
+(defconst transient-version "0.11.0")
 
 (require 'cl-lib)
 (require 'compat)
@@ -4739,7 +4739,7 @@ and its value is returned to the caller."
 
 (cl-defmethod transient-format-description ((obj transient-value-preset))
   (pcase-let* (((eieio description key set) obj)
-               ((eieio value) transient--prefix)
+               (value (transient--get-extended-value))
                (active (seq-set-equal-p set value)))
     (format
      "%s %s"
@@ -5361,7 +5361,7 @@ that binding back, then call this function in your init file like so:
 Individual transients may already bind \\`q' to something else
 and such a binding would shadow the quit binding.  If that is the
 case then \\`Q' is bound to whatever \\`q' would have been bound
-to by setting `transient-substitute-key-function' to a function
+to, by setting `transient-substitute-key-function' to a function
 that does that.  Of course \\`Q' may already be bound to something
 else, so that function binds \\`M-q' to that command instead.
 Of course \\`M-q' may already be bound to something else, but
