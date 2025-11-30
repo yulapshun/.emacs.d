@@ -223,6 +223,16 @@
   :bind
   (("C-x u" . 'vundo)))
 
+(use-package perspective
+  :bind
+  (("C-x C-b" . persp-list-buffers)
+   ("C-x b" . persp-switch-to-buffer*)
+   ("C-x k" . persp-kill-buffer*))
+  :custom
+  (persp-mode-prefix-key (kbd "C-c o"))
+  :init
+  (persp-mode))
+
 (use-package popper
   :ensure t
   :defer t
@@ -393,10 +403,12 @@
    consult--source-project-recent-file
    :preview-key "M-."
    ;; :preview-key '(:debounce 0.2 any)
-   )
+
+   consult--source-buffer :hidden t :default nil)
   (setq consult-narrow-key "<")
   (autoload 'projectile-project-root "projectile")
-  (setq consult-project-function (lambda (_) (projectile-project-root))))
+  (setq consult-project-function (lambda (_) (projectile-project-root)))
+  (add-to-list 'consult-buffer-sources persp-consult-source))
 
 (use-package embark-consult
   :ensure t
