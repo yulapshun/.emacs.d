@@ -26,8 +26,10 @@ Some general configurations
     (delete-selection-mode 1)
     ;; Save mimibuffer history
     (savehist-mode 1)
-    ;; Enabel word wrap
+    ;; Enable word wrap
     (global-visual-line-mode 1)
+    ;; Enable tab line
+    (global-tab-line-mode 1)
     (setq-default
      ;; Use space for indentation by default
      indent-tabs-mode nil
