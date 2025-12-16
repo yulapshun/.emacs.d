@@ -856,7 +856,7 @@ Various key bindings
     (let ((key-file (expand-file-name "gemini-key" user-emacs-directory)))
       (when (file-exists-p key-file)
         (setq
-         gptel-model 'gemini-2.0-flash
+         gptel-model 'gemini-2.5-flash
          gptel-backend (gptel-make-gemini "Gemini"
                          :key (with-temp-buffer
                                 (insert-file-contents key-file)
