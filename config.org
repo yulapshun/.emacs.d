@@ -410,18 +410,12 @@ Various key bindings
      consult-theme
      consult-ripgrep consult-git-grep consult-grep
      consult-bookmark consult-recent-file consult-xref
-
-     consult--source-buffer
-     consult--source-bookmark consult--source-recent-file
-     consult--source-project-recent-file
      :preview-key "M-."
      ;; :preview-key '(:debounce 0.2 any)
-
-     consult--source-buffer :hidden t :default nil)
+     :hidden t :default nil)
     (setq consult-narrow-key "<")
     (autoload 'projectile-project-root "projectile")
-    (setq consult-project-function (lambda (_) (projectile-project-root)))
-    (add-to-list 'consult-buffer-sources persp-consult-source))
+    (setq consult-project-function (lambda (_) (projectile-project-root))))
 
   (use-package embark-consult
     :ensure t
