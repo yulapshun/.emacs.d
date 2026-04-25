@@ -759,36 +759,6 @@
   :config
   (which-key-mode))
 
-(use-package gptel
-  :ensure t
-  :init
-  (defvar-keymap my/gptel-prefix-map)
-  (defalias 'my/gptel-prefix-map my/gptel-prefix-map)
-  (define-key my/prefix-map "l" 'my/gptel-prefix-map)
-  :bind
-  (:map my/gptel-prefix-map
-        ("g" . #'gptel)
-        ("s" . #'gptel-send)
-        ("r" . #'gptel-rewrite)
-        ("m" . #'gptel-menu)
-        ("a" . #'gptel-add)
-        ("f" . #'gptel-add-file))
-  :config
-  (let ((key-file (expand-file-name "openai-key" user-emacs-directory)))
-    (when (file-exists-p key-file)
-      (setq gptel-api-key (with-temp-buffer
-                            (insert-file-contents key-file)
-                            (buffer-string)))))
-  (let ((key-file (expand-file-name "gemini-key" user-emacs-directory)))
-    (when (file-exists-p key-file)
-      (setq
-       gptel-model 'gemini-2.0-flash
-       gptel-backend (gptel-make-gemini "Gemini"
-                       :key (with-temp-buffer
-                              (insert-file-contents key-file)
-                              (buffer-string))
-                       :stream t)))))
-
 (use-package editorconfig
   :ensure t
   :config
