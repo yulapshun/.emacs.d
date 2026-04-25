@@ -541,7 +541,9 @@
   :bind
   (:map org-mode-map ("C-c C-?" . org-time-stamp-inactive))
   :custom
-  (org-list-allow-alphabetical t))
+  (org-list-allow-alphabetical t)
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((python . t))))
 
 (use-package org-fragtog
   :ensure t
