@@ -412,7 +412,7 @@ Various key bindings
      consult-bookmark consult-recent-file consult-xref
      :preview-key "M-."
      ;; :preview-key '(:debounce 0.2 any)
-     :hidden t :default nil)
+     )
     (setq consult-narrow-key "<")
     (autoload 'projectile-project-root "projectile")
     (setq consult-project-function (lambda (_) (projectile-project-root))))
