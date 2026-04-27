@@ -485,6 +485,7 @@
    (python-mode . lsp) (python-ts-mode . lsp)
    (sh-mode . lsp) (bash-ts-mode . lsp)
    (csharp-mode . lsp) (csharp-ts-mode . lsp)
+   (java-mode . lsp) (java-ts-mode . lsp) (kotlin-mode . lsp) (kotlin-ts-mode . lsp)
    (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp
   :custom
