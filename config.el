@@ -689,7 +689,9 @@
   (define-key js-ts-mode-map (kbd "M-.") nil))
 
 (use-package typescript-mode
-  :mode "\\.ts$" "\\.tsx$")
+  :mode "\\.ts$")
+
+(add-to-list 'auto-mode-alist '("\\.tsx$" . tsx-ts-mode))
 
 (use-package web-mode
   :ensure t
