@@ -691,6 +691,8 @@
 (use-package lsp
   :hook (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode))
 
+(add-to-list 'lsp-disabled-clients 'tailwindcss)
+
 (use-package web-mode
   :ensure t
   :defer t
