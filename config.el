@@ -479,18 +479,9 @@
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook
-  ((js-mode . lsp) (js-ts-mode . lsp) (typescript-mode . lsp) (typescript-ts-mode . lsp) (tsx-mode . lsp) (tsx-ts-mode . lsp)
-   (web-mode . lsp) (html-mode . lsp) (css-mode . lsp) (css-ts-mode . lsp) (json-mode . lsp) (json-ts-mode . lsp)
-   (python-mode . lsp) (python-ts-mode . lsp)
-   (sh-mode . lsp) (bash-ts-mode . lsp)
-   (csharp-mode . lsp) (csharp-ts-mode . lsp)
-   (java-mode . lsp) (java-ts-mode . lsp) (kotlin-mode . lsp) (kotlin-ts-mode . lsp)
-   (lsp-mode . lsp-enable-which-key-integration))
+  :hook (lsp-mode . lsp-enable-which-key-integration)
   :commands lsp
-  :custom
-  (lsp-csharp-omnisharp-enable-decompilation-support t)
-  (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
+  :custom (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
 
 (use-package flycheck
   :ensure t
@@ -675,9 +666,13 @@
             (setq python-indent-offset 4)
             (setq tab-width 4)))
 
+(use-package lsp
+  :hook (python-mode python-ts-mode))
+
 (if (>= emacs-major-version 27)
     (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
   (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
+
 (add-hook 'js-mode-hook
           (lambda ()
             (setq-default js-indent-level 2)))
@@ -692,6 +687,9 @@
   :mode "\\.ts$")
 
 (add-to-list 'auto-mode-alist '("\\.tsx$" . tsx-ts-mode))
+
+(use-package lsp
+  :hook (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode))
 
 (use-package web-mode
   :ensure t
@@ -709,8 +707,21 @@
   :config
   (setq-default css-indent-offset 2))
 
+(use-package lsp
+  :hook (web-mode html-mode css-mode css-ts-mode json-mode json-ts-mode))
+
 (use-package powershell :ensure t)
 (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
+
+(use-package lsp
+  :hook (csharp-mode csharp-ts-mode)
+  :custom (lsp-csharp-omnisharp-enable-decompilation-support t))
+
+(use-package lsp
+:hook (java-mode java-ts-mode kotlin-mode kotlin-ts-mode))
+
+(use-package lsp
+  :hook (sh-mode bash-ts-mode))
 
 (use-package dockerfile-mode
   :ensure t
