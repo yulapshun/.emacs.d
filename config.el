@@ -496,6 +496,7 @@
   :init
   (setq-default org-src-fontify-natively t)
   (setq-default org-startup-indented t)
+  (setq-default org-startup-folded 'nofold)
   (setq-default org-pretty-entities t)
   (setq-default org-descriptive-links nil)
   (setq-default org-startup-with-inline-images t)
