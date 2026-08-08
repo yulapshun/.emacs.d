@@ -651,6 +651,14 @@
         ("d" . 'git-gutter:popup-hunk)
         ("r" . 'git-gutter:revert-hunk)))
 
+(use-package evil
+  :ensure t
+  :defer t
+  :config
+  (setq-default evil-default-state 'emacs)
+  :bind
+  (("C-z" . 'evil-mode)))
+
 (use-package lsp-pyright
   :ensure t
   :custom (lsp-pyright-langserver-command "pyright")

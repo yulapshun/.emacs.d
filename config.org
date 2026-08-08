@@ -702,6 +702,18 @@ Various key bindings
           ("d" . 'git-gutter:popup-hunk)
           ("r" . 'git-gutter:revert-hunk)))
 #+end_src
+
+* Evil
+#+begin_src emacs-lisp
+  (use-package evil
+    :ensure t
+    :defer t
+    :config
+    (setq-default evil-default-state 'emacs)
+    :bind
+    (("C-z" . 'evil-mode)))
+#+end_src
+
 * Programming
 ** Python
 #+begin_src emacs-lisp
