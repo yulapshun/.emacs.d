@@ -248,21 +248,18 @@
         '("\\*Messages\\*"
           "Output\\*$"
           "\\*Async Shell Command\\*"
-          "\\*scratch\\*"
           "error\\*$"
           "errors\\*$"
           "\\*xref\\*"
-          "\\*Gemini\\*"
-          "\\*ChatGPT\\*"
-          "^\\*eshell.*" eshell-mode
-          "^\\*shell.*" shell-mode
-          "^\\*term.*" term-mode
-          "^\\*vterm.*" vterm-mode
-          "^\\*Python.*" inferior-python-mode
-          help-mode
+          "^\\*eshell\\*" eshell-mode
+          "^\\*shell\\*" shell-mode
+          "^\\*term\\*" term-mode
+          "^\\*vterm\\*" vterm-mode
+          "^\\*Python\\*" inferior-python-mode
+          "^\\*Help\\*"
           compilation-mode))
   (setq popper-window-height 20)
-  (setq popper-group-function #'popper-group-by-projectile)
+  (setq popper-group-function #'popper-group-by-perspective)
   (popper-mode 1)
   (popper-echo-mode 1)
   :after (projectile))
