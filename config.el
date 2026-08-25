@@ -468,12 +468,18 @@
          ("M-<return>" . company-complete-selection))))
 
 (use-package treesit-auto
-  :if (>= emacs-major-version 29)
+  :if (and (>= emacs-major-version 29) (<= emacs-major-version 30))
   :ensure t
   :defer 1
   :config
   (global-treesit-auto-mode)
   (setq treesit-auto-install 'prompt))
+
+(use-package emacs
+  :if (>= emacs-major-version 31)
+  :custom
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes t))
 
 (use-package lsp-mode
   :init
