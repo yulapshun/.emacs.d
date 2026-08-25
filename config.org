@@ -48,8 +48,9 @@ Some general configurations
     ;; use 'y' or 'n' instead of 'yes' or 'no' everywhere
     (defalias 'yes-or-no-p 'y-or-n-p)
     ;; Ensure path is set up correctly
-    (exec-path-from-shell-initialize)
     (when (eq system-type 'darwin)
+      (setq-default exec-path-from-shell-arguments '("-l"))
+      (exec-path-from-shell-initialize)
       (exec-path-from-shell-copy-env "TEMP")
       (exec-path-from-shell-copy-env "DOTNET_ROOT"))
     :hook
