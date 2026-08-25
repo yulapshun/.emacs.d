@@ -101,6 +101,9 @@
   ;; navigation
   ("M-p" . (lambda () (interactive) (forward-line -5)))
   ("M-n" . (lambda () (interactive) (forward-line 5)))
+  ;; tab-line-mode
+  ("C-x c" . #'tab-line-close-tab)
+  ("C-x y" . #'tab-line-close-other-tabs)
   (:map my/epa-prefix-map
         ("x" . #'epa-decrypt-region)
         ("e" . #'epa-encrypt-region))
