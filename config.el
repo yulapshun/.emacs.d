@@ -39,7 +39,9 @@
    fill-column 120
    ;; Show human readable file size instead of bytes
    ibuffer-human-readable-size t
-   dired-listing-switches "-alh")
+   dired-listing-switches "-alh"
+   ;; Try to make window split sensibly
+   split-width-threshold 200)
   ;; Enable upcase-region and downcase-region
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
