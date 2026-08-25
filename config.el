@@ -47,7 +47,6 @@
   (when (eq system-type 'darwin)
     (exec-path-from-shell-copy-env "TEMP")
     (exec-path-from-shell-copy-env "DOTNET_ROOT"))
-  (add-to-list 'Info-directory-list "~/Sync/info/")
   :hook
   (
    ;; Visualize whitespaces
@@ -187,8 +186,7 @@
   :custom-face
   (mood-line-buffer-status-read-only ((t (:inherit mode-line-inactive))))
   (mood-line-encoding ((t (:inherit mode-line-inactive))))
-  (mood-line-status-neutral ((t (:inherit mode-line-inactive))))
-  (mood-line-unimportant ((t (:inherit mood-line-unimportant)))))
+  (mood-line-status-neutral ((t (:inherit mode-line-inactive)))))
 
 (use-package highlight-indent-guides
   :hook ((prog-mode . highlight-indent-guides-mode))
