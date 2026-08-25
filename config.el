@@ -36,7 +36,10 @@
    ;; Confirm before exiting emacs
    confirm-kill-emacs 'y-or-n-p
    ;; Show fill column indicator at 120
-   fill-column 120)
+   fill-column 120
+   ;; Show human readable file size instead of bytes
+   ibuffer-human-readable-size t
+   dired-listing-switches "-alh")
   ;; Enable upcase-region and downcase-region
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -85,6 +88,11 @@
   ("C-S-f" . #'windmove-right)
   ("C-S-p" . #'windmove-up)
   ("C-S-n" . #'windmove-down)
+  ;; window layour
+  ("C-x w r l" . #'window-layout-rotate-anticlockwise)
+  ("C-x w r r" . #'window-layout-rotate-clockwise)
+  ("C-x w f h" . #'window-layout-flip-leftright)
+  ("C-x w f v" . #'window-layout-flip-topdown)
   ;; defun-delete
   ("C-S-k" . #'my/delete-line)
   ("C-S-w" . #'delete-region)
@@ -771,6 +779,7 @@
   (gcmh-high-cons-threshold 67108864)) ;; 64MB
 
 (use-package rotate
+  :if (<= emacs-major-version 31) ;; replaced by window-layout commands
   :ensure t
   :defer 3
   :init
@@ -779,8 +788,8 @@
   (define-key my/prefix-map "r" 'my/rotate-prefix-map)
   :bind
   (:map my/rotate-prefix-map
-        ("h" . 'rotate:even-horizontal)
-        ("v" . 'rotate:even-vertical)
+        ("h" . 'rotate-even-horizontal)
+        ("v" . 'rotate-even-vertical)
         ("l" . 'rotate-layout)
         ("w" . 'rotate-window)))
 
