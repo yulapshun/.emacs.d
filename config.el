@@ -622,6 +622,7 @@
    ("C-x k" . persp-kill-buffer*))
   :custom
   (persp-mode-prefix-key (kbd "C-c o"))
+  (persp-modestring-short t)
   :init
   (persp-mode))
 
