@@ -205,15 +205,9 @@ Various key bindings
     (setq dashboard-items '((recents  . 10)
                             (projects . 10))))
 
-  (use-package mood-line
-    :config
-    (mood-line-mode)
-    :custom
-    (mood-line-glyph-alist  mood-line-glyphs-fira-code)
-    :custom-face
-    (mood-line-buffer-status-read-only ((t (:inherit mode-line-inactive))))
-    (mood-line-encoding ((t (:inherit mode-line-inactive))))
-    (mood-line-status-neutral ((t (:inherit mode-line-inactive)))))
+  (use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1))
 
   (use-package highlight-indent-guides
     :hook ((prog-mode . highlight-indent-guides-mode))
