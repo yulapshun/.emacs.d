@@ -76,59 +76,57 @@
 (use-package emacs
   :init
   ;; Define aliases so that keymap names show up in which-key
-  (defvar-keymap my/quick-prefix-map)
-  (defalias 'my/quick-prefix-map my/quick-prefix-map)
-  (defvar-keymap my/prefix-map)
-  (defalias 'my/prefix-map my/prefix-map)
-  (defvar-keymap my/epa-prefix-map)
-  (defalias 'my/epa-prefix-map my/epa-prefix-map)
-  (defvar-keymap my/delete-prefix-map)
-  (defalias 'my/delete-prefix-map my/delete-prefix-map)
-  (global-set-key (kbd "C-c j") 'my/quick-prefix-map)
-  (global-set-key (kbd "C-c k") 'my/prefix-map)
-  (define-key my/prefix-map "e" 'my/epa-prefix-map)
-  (define-key my/prefix-map "d" 'my/delete-prefix-map)
+  (defvar-keymap my/quick-prefix-map :prefix t)
+  (defvar-keymap my/prefix-map :prefix t)
+  (defvar-keymap my/epa-prefix-map :prefix t)
+  (defvar-keymap my/delete-prefix-map :prefix t)
   :bind
-  ;; windmove
-  ("C-S-b" . #'windmove-left)
-  ("C-S-f" . #'windmove-right)
-  ("C-S-p" . #'windmove-up)
-  ("C-S-n" . #'windmove-down)
-  ;; window layour
-  ("C-x w r l" . #'window-layout-rotate-anticlockwise)
-  ("C-x w r r" . #'window-layout-rotate-clockwise)
-  ("C-x w f h" . #'window-layout-flip-leftright)
-  ("C-x w f v" . #'window-layout-flip-topdown)
-  ;; defun-delete
-  ("C-S-k" . #'my/delete-line)
-  ("C-S-w" . #'delete-region)
-  ("M-D" . #'my/delete-word)
-  ("<M-S-backspace>" . #'my/backward-delete-word)
-  ;; navigation
-  ("M-p" . (lambda () (interactive) (forward-line -5)))
-  ("M-n" . (lambda () (interactive) (forward-line 5)))
-  ;; tab-line-mode
-  ("C-x c" . #'tab-line-close-tab)
-  ("C-x y" . #'tab-line-close-other-tabs)
-  (:map my/epa-prefix-map
-        ("x" . #'epa-decrypt-region)
-        ("e" . #'epa-encrypt-region))
-  (:map my/quick-prefix-map
-        ("b" . #'windmove-left)
-        ("f" . #'windmove-right)
-        ("p" . #'windmove-up)
-        ("n" . #'windmove-down))
-  (:map my/delete-prefix-map
-        ("k" . #'my/delete-line)
-        ("w" . #'my/delete-region)
-        ("d" . #'my/delete-word)
-        ("<del>" . #'my/backward-delete-word))
-  (:map my/quick-prefix-map
-        ("c" . #'my/control)
-        ("m" . #'my/meta)
-        ("S" . #'my/control-shift)
-        ("M" . #'my/meta-shift)
-        ("z" . #'my/control-meta)))
+  ;; keymaps
+  (("C-c j" . #'my/quick-prefix-map)
+   ("C-c k" . #'my/prefix-map)
+   ;; windmove
+   ("C-S-b" . #'windmove-left)
+   ("C-S-f" . #'windmove-right)
+   ("C-S-p" . #'windmove-up)
+   ("C-S-n" . #'windmove-down)
+   ;; window layour
+   ("C-x w r l" . #'window-layout-rotate-anticlockwise)
+   ("C-x w r r" . #'window-layout-rotate-clockwise)
+   ("C-x w f h" . #'window-layout-flip-leftright)
+   ("C-x w f v" . #'window-layout-flip-topdown)
+   ;; defun-delete
+   ("C-S-k" . #'my/delete-line)
+   ("C-S-w" . #'delete-region)
+   ("M-D" . #'my/delete-word)
+   ("<M-S-backspace>" . #'my/backward-delete-word)
+   ;; navigation
+   ("M-p" . (lambda () (interactive) (forward-line -5)))
+   ("M-n" . (lambda () (interactive) (forward-line 5)))
+   ;; tab-line-mode
+   ("C-x c" . #'tab-line-close-tab)
+   ("C-x y" . #'tab-line-close-other-tabs)
+   (:map my/prefix-map
+         ("e" . #'my/epa-prefix-map)
+         ("d" . #'my/delete-prefix-map))
+   (:map my/epa-prefix-map
+         ("x" . #'epa-decrypt-region)
+         ("e" . #'epa-encrypt-region))
+   (:map my/quick-prefix-map
+         ("b" . #'windmove-left)
+         ("f" . #'windmove-right)
+         ("p" . #'windmove-up)
+         ("n" . #'windmove-down))
+   (:map my/delete-prefix-map
+         ("k" . #'my/delete-line)
+         ("w" . #'my/delete-region)
+         ("d" . #'my/delete-word)
+         ("<del>" . #'my/backward-delete-word))
+   (:map my/quick-prefix-map
+         ("c" . #'my/control)
+         ("m" . #'my/meta)
+         ("S" . #'my/control-shift)
+         ("M" . #'my/meta-shift)
+         ("z" . #'my/control-meta))))
 
 (setq auto-save-list-file-prefix nil)
 (defvar auto-save-directory (concat user-emacs-directory "autosave/"))
@@ -627,7 +625,7 @@
 
 (use-package yasnippet
   :ensure t
-  :defer t
+  :defer 1
   :config
   (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" default-user-emacs-directory))
   (yas-global-mode)
