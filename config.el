@@ -231,7 +231,6 @@
 
 (use-package vundo
   :ensure t
-  :if (>= emacs-major-version 28)
   :defer t
   :bind
   (("C-x u" . 'vundo)))
@@ -282,9 +281,8 @@
 (setq read-file-name-completion-ignore-case t
       read-buffer-completion-ignore-case t
       completion-ignore-case t)
-(when (>= emacs-major-version 28)
-  (setq read-extended-command-predicate
-        #'command-completion-default-include-p))
+(setq read-extended-command-predicate
+      #'command-completion-default-include-p)
 
 (use-package vertico
   :ensure t
@@ -702,9 +700,8 @@
 (use-package lsp
   :hook (python-mode python-ts-mode))
 
-(if (>= emacs-major-version 27)
-    (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
-  (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode)))
+(add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
+(add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode))
 
 (add-hook 'js-mode-hook
           (lambda ()
