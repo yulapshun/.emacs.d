@@ -261,6 +261,8 @@
           "^\\*Help\\*"
           "^\\*lsp-help\\*"
           "^\\*YASnippet Tables\\*"
+          "^\\*Embark Export:.*"
+          "^\\*Embark Collect:.*"
           compilation-mode))
   (setq popper-window-height 20)
   (setq popper-group-function #'popper-group-by-perspective)
