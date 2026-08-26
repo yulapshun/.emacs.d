@@ -434,16 +434,12 @@
          ("<" . #'symbol-overlay-jump-prev))))
 
 (use-package smartparens
-  :ensure smartparens
+  :ensure t
   :hook (lisp-data-mode)
+  :custom
+  (sp-base-key-bindings 'paredit)
   :config
-  (require 'smartparens-config)
-  :bind
-  (:map smartparens-mode-map
-        ("C-)" . 'sp-forward-slurp-sexp)
-        ("C-}" . 'sp-forward-barf-sexp)
-        ("C-(" . 'sp-backward-slurp-sexp)
-        ("C-{" . 'sp-backward-barf-sexp)))
+  (require 'smartparens-config))
 
 (use-package company
   :ensure t
