@@ -732,12 +732,16 @@
   (setq-default web-mode-css-indent-offset 2)
   (setq-default web-mode-code-indent-offset 2)
   (setq-default web-mode-engines-alist '(("django" . "\\.jinja2\\'"))))
+
 (use-package css-mode
   :config
   (setq-default css-indent-offset 2))
 
+(use-package html-ts-mode
+  :mode "\\.html?")
+
 (use-package lsp
-  :hook (web-mode html-mode css-mode css-ts-mode json-mode json-ts-mode))
+  :hook (web-mode html-mode html-ts-mode css-mode css-ts-mode json-mode json-ts-mode))
 
 (use-package powershell :ensure t)
 (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
