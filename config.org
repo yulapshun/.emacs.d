@@ -32,26 +32,6 @@ Some general configurations
     (global-tab-line-mode 1)
     ;; Word based commands (e.g. M-f, M-b) stop at uppercase letter within a symbol
     (global-subword-mode 1)
-    (setq-default
-     ;; Use space for indentation by default
-     indent-tabs-mode nil
-     show-paren-delay 0
-     ;; Make buffer name look like the file path
-     uniquify-buffer-name-style 'forward
-     ;; Visualize trailing whitespaces and tabs
-     whitespace-style '(face trailing tabs)
-     ;; Confirm before exiting emacs
-     confirm-kill-emacs 'y-or-n-p
-     ;; Show fill column indicator at 120
-     fill-column 120
-     ;; Show human readable file size instead of bytes
-     ibuffer-human-readable-size t
-     dired-listing-switches "-alh"
-     ;; Try to make window split sensibly
-     split-width-threshold 200
-     ;; Use org-mode for *scratch* buffer
-     initial-major-mode #'org-mode
-     initial-scratch-message "#+TITLE: *scratch*")
     ;; Enable upcase-region and downcase-region
     (put 'upcase-region 'disabled nil)
     (put 'downcase-region 'disabled nil)
@@ -63,9 +43,28 @@ Some general configurations
       (exec-path-from-shell-initialize)
       (exec-path-from-shell-copy-env "TEMP")
       (exec-path-from-shell-copy-env "DOTNET_ROOT"))
+    :custom
+    ;; Use space for indentation by default
+    (indent-tabs-mode nil)
+    (show-paren-delay 0)
+    ;; Make buffer name look like the file path
+    (uniquify-buffer-name-style 'forward)
+    ;; Visualize trailing whitespaces and tabs
+    (whitespace-style '(face trailing tabs))
+    ;; Confirm before exiting emacs
+    (confirm-kill-emacs 'y-or-n-p)
+    ;; Show fill column indicator at 120
+    (fill-column 120)
+    ;; Show human readable file size instead of bytes
+    (ibuffer-human-readable-size t)
+    (dired-listing-switches "-alh")
+    ;; Try to make window split sensibly
+    (split-width-threshold 200)
+    ;; Use org-mode for *scratch* buffer
+    (initial-major-mode #'org-mode)
+    (initial-scratch-message "#+TITLE: *scratch*")
     :hook
-    (
-     ;; Visualize whitespaces
+    (;; Visualize whitespaces
      (prog-mode . whitespace-mode)
      ;; Show line numbers
      (prog-mode . display-line-numbers-mode)
