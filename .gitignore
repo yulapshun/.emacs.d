@@ -3,9 +3,9 @@ eln-cache/
 *.elc
 
 var/*
-var/autosave/*
-!var/autosave
-!var/autosave/.gitignore
+var/autos-ave/*
+!var/auto-save
+!var/auto-save/.gitignore
 var/backup/*
 !var/backup
 !var/backup/.gitignore

@@ -138,23 +138,34 @@ Various key bindings
            ("z" . #'my/control-meta))))
 #+end_src
 
-* Backup
+* Backup & Auto Save
 #+begin_src emacs-lisp
-  (setq auto-save-list-file-prefix nil)
-  (defvar auto-save-directory (concat user-emacs-directory "autosave/"))
-  (defvar backup-directory (concat user-emacs-directory "backup/"))
-
-  (setq auto-save-file-name-transforms `((".*" ,auto-save-directory t)))
-  (setq backup-directory-alist `((".*" . ,backup-directory)))
-
-  (let ((month (* 60 60 24 30))
-        (current (float-time (current-time))))
-    (dolist (file (directory-files backup-directory t))
-      (when (and (backup-file-name-p file)
-                 (> (- current (float-time (cl-fifth (file-attributes file))))
-                    month))
-        (message "%s" file)
-        (delete-file file))))
+  (use-package emacs
+    :preface
+    (defvar user-backup-directory (concat user-emacs-directory "backup/"))
+    :custom
+    ;; Set auto save list file name
+    (auto-save-list-file-prefix nil)
+    (auto-save-list-file-name (concat user-emacs-directory ".auto-save-list"))
+    ;; Put auto save files into user defined directory
+    (auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+    ;; Put backup files into user defined directory
+    (backup-directory-alist `((".*" . ,user-backup-directory)))
+    :init
+    ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
+    (run-with-idle-timer
+     30 0
+     (lambda ()
+       (message "Start backup file cleanup.")
+       (let ((month (* 60 60 24 30))
+             (current (float-time (current-time))))
+         (dolist (file (directory-files user-backup-directory t))
+           (when (and (backup-file-name-p file)
+                      (> (- current (float-time (cl-fifth (file-attributes file))))
+                         month))
+             (message "%s" file)
+             (delete-file file))))
+       (message "Backup file cleanup finished."))))
 #+end_src
 
 * Appearance
