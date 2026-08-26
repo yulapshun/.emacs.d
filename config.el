@@ -259,6 +259,8 @@
           "^\\*vterm\\*" vterm-mode
           "^\\*Python\\*" inferior-python-mode
           "^\\*Help\\*"
+          "^\\*lsp-help\\*"
+          "^\\*YASnippet Tables\\*"
           compilation-mode))
   (setq popper-window-height 20)
   (setq popper-group-function #'popper-group-by-perspective)
