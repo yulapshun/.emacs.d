@@ -497,6 +497,8 @@
   :custom (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
 
 (use-package lsp-ui
+  :config
+  (lsp-ui-sideline-mode 0)
   :custom
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-peek-always-show t)
