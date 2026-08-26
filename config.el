@@ -25,6 +25,8 @@
   (global-visual-line-mode 1)
   ;; Enable tab line
   (global-tab-line-mode 1)
+  ;; Word based commands (e.g. M-f, M-b) stop at uppercase letter within a symbol
+  (global-subword-mode 1)
   (setq-default
    ;; Use space for indentation by default
    indent-tabs-mode nil
