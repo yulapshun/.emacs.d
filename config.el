@@ -427,12 +427,16 @@
 (use-package symbol-overlay
   :ensure t
   :defer 5
-  :config
-  (setq-default symbol-overlay-map nil)
+  :bind-keymap ("C-c s" . symbol-overlay-map)
   :bind
   (("C-;" . #'symbol-overlay-put)
    ("C->" . #'symbol-overlay-jump-next)
    ("C-<" . #'symbol-overlay-jump-prev)
+   (:map symbol-overlay-map
+         ("p" . symbol-overlay-jump-first)
+         ("n" . symbol-overlay-jump-last)
+         ("<" . symbol-overlay-jump-prev)
+         (">" . symbol-overlay-jump-next))
    (:map my/quick-prefix-map
          (";" . #'symbol-overlay-put)
          (">" . #'symbol-overlay-jump-next)
