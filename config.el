@@ -660,21 +660,11 @@
   :bind
   ("C-x g" . 'magit-status))
 
-(use-package git-gutter
+(use-package diff-hl
   :ensure t
   :defer 3
-  :init
-  (defvar-keymap my/git-gutter-prefix-map)
-  (defalias 'my/git-gutter-prefix-map my/git-gutter-prefix-map)
-  (define-key my/prefix-map "g" 'my/git-gutter-prefix-map)
   :config
-  (global-git-gutter-mode 1)
-  :bind
-  (:map my/git-gutter-prefix-map
-        ("p" . 'git-gutter:previous-hunk)
-        ("n" . 'git-gutter:next-hunk)
-        ("d" . 'git-gutter:popup-hunk)
-        ("r" . 'git-gutter:revert-hunk)))
+  (global-diff-hl-mode 1))
 
 (use-package evil
   :ensure t
