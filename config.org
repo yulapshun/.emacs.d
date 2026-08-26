@@ -228,21 +228,21 @@ Various key bindings
 
   (use-package nerd-icons
     :ensure t
-    :defer 1
+    :defer t
     :custom
     (nerd-icons-font-family "Symbols Nerd Font Mono"))
 
   (use-package nerd-icons-dired
     :ensure t
-    :after (nerd-icons)
     :hook
     (dired-mode . nerd-icons-dired-mode))
 
   (use-package nerd-icons-completion
     :ensure t
-    :after (nerd-icons)
+    :after (marginalia)
     :config
-    (nerd-icons-completion-mode))
+    (nerd-icons-completion-mode)
+    (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 #+end_src
 
 * Behavior
