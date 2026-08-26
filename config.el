@@ -496,6 +496,15 @@
   :commands lsp
   :custom (lsp-enable-snippet nil)) ;; Stop auto-completing with argument list
 
+(use-package lsp-ui
+  :custom
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-peek-always-show t)
+  :bind
+  (:map lsp-ui-mode-map
+        ([remap xref-find-definitions] . #'lsp-ui-peek-find-definitions)
+        ([remap xref-find-references] . #'lsp-ui-peek-find-references)))
+
 (use-package flycheck
   :ensure t
   :defer t
