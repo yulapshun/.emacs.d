@@ -41,7 +41,10 @@
    ibuffer-human-readable-size t
    dired-listing-switches "-alh"
    ;; Try to make window split sensibly
-   split-width-threshold 200)
+   split-width-threshold 200
+   ;; Use org-mode for *scratch* buffer
+   initial-major-mode #'org-mode
+   initial-scratch-message "#+TITLE: *scratch*")
   ;; Enable upcase-region and downcase-region
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
