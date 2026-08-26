@@ -414,7 +414,7 @@
 
 (use-package avy
   :ensure t
-  :defer 3
+  :defer t
   :bind
   (("C-:" . #'avy-goto-char-timer)
    ("C-\"" . #'avy-goto-line)
@@ -424,7 +424,7 @@
 
 (use-package symbol-overlay
   :ensure t
-  :defer 5
+  :defer t
   :bind-keymap ("C-c s" . symbol-overlay-map)
   :bind
   (("C-;" . #'symbol-overlay-put)
@@ -450,7 +450,7 @@
 
 (use-package company
   :ensure t
-  :defer 3
+  :defer 1
   :init
   (add-hook 'after-init-hook 'global-company-mode)
   :config
@@ -576,7 +576,7 @@
 
 (use-package org-roam
   :ensure t
-  :defer 2
+  :defer 1
   :custom
   (org-roam-directory (file-truename "~/Sync/org/roam"))
   :bind
@@ -628,7 +628,7 @@
 
 (use-package yasnippet
   :ensure t
-  :defer 3
+  :defer t
   :config
   (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" default-user-emacs-directory))
   (yas-global-mode)
@@ -669,7 +669,7 @@
 
 (use-package diff-hl
   :ensure t
-  :defer 3
+  :defer 1
   :config
   (global-diff-hl-mode 1))
 
@@ -793,7 +793,7 @@
 (use-package rotate
   :if (<= emacs-major-version 31) ;; replaced by window-layout commands
   :ensure t
-  :defer 3
+  :defer 1
   :init
   (defvar-keymap my/rotate-prefix-map)
   (defalias 'my/rotate-prefix-map my/rotate-prefix-map)
