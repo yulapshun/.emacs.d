@@ -76,10 +76,10 @@
 (use-package emacs
   :init
   ;; Define aliases so that keymap names show up in which-key
-  (defvar-keymap my/quick-prefix-map :prefix t)
-  (defvar-keymap my/prefix-map :prefix t)
-  (defvar-keymap my/epa-prefix-map :prefix t)
-  (defvar-keymap my/delete-prefix-map :prefix t)
+  (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
+  (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
+  (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
+  (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
   :bind
   ;; keymaps
   (("C-c j" . #'my/quick-prefix-map)
