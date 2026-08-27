@@ -1,7 +1,38 @@
 ;; -*- no-byte-compile: t; lexical-binding: t -*-
 
 (use-package emacs
-  :config
+  :preface
+  (defvar user-backup-directory (concat user-emacs-directory "backup/"))
+  :custom
+  ;; Use space for indentation by default
+  (indent-tabs-mode nil)
+  (show-paren-delay 0)
+  ;; Make buffer name look like the file path
+  (uniquify-buffer-name-style 'forward)
+  ;; Visualize trailing whitespaces and tabs
+  (whitespace-style '(face trailing tabs))
+  ;; Confirm before exiting emacs
+  (confirm-kill-emacs 'y-or-n-p)
+  ;; Show fill column indicator at 120
+  (fill-column 120)
+  ;; Show human readable file size instead of bytes
+  (ibuffer-human-readable-size t)
+  (dired-listing-switches "-alh")
+  ;; Try to make window split sensibly
+  (split-width-threshold 200)
+  ;; Use org-mode for *scratch* buffer
+  (initial-major-mode #'org-mode)
+  (initial-scratch-message "#+TITLE: *scratch*")
+  ;; Set auto save list file name
+  (auto-save-list-file-prefix nil)
+  (auto-save-list-file-name (concat user-emacs-directory ".auto-save-list"))
+  ;; Put auto save files into user defined directory
+  (auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+  ;; Put backup files into user defined directory
+  (backup-directory-alist `((".*" . ,user-backup-directory)))
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes t)
+  :init
   ;; Add melpa to package-archives make it preferred over gnu archive
   (add-to-list 'package-archives
                '("melpa" . "https://melpa.org/packages/") t)
@@ -40,26 +71,31 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-env "TEMP")
     (exec-path-from-shell-copy-env "DOTNET_ROOT"))
-  :custom
-  ;; Use space for indentation by default
-  (indent-tabs-mode nil)
-  (show-paren-delay 0)
-  ;; Make buffer name look like the file path
-  (uniquify-buffer-name-style 'forward)
-  ;; Visualize trailing whitespaces and tabs
-  (whitespace-style '(face trailing tabs))
-  ;; Confirm before exiting emacs
-  (confirm-kill-emacs 'y-or-n-p)
-  ;; Show fill column indicator at 120
-  (fill-column 120)
-  ;; Show human readable file size instead of bytes
-  (ibuffer-human-readable-size t)
-  (dired-listing-switches "-alh")
-  ;; Try to make window split sensibly
-  (split-width-threshold 200)
-  ;; Use org-mode for *scratch* buffer
-  (initial-major-mode #'org-mode)
-  (initial-scratch-message "#+TITLE: *scratch*")
+  ;; Define aliases so that keymap names show up in which-key
+  (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
+  (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
+  (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
+  (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
+  ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
+  (run-with-idle-timer
+   30 0
+   (lambda ()
+     (message "Start backup file cleanup.")
+     (let ((month (* 60 60 24 30))
+           (current (float-time (current-time))))
+       (dolist (file (directory-files user-backup-directory t))
+         (when (and (backup-file-name-p file)
+                    (> (- current (float-time (cl-fifth (file-attributes file))))
+                       month))
+           (message "%s" file)
+           (delete-file file))))
+     (message "Backup file cleanup finished.")))
+  (cond ((eq system-type 'gnu/linux)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-10")))
+        ((eq system-type 'darwin)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-13"))))
   :hook
   (;; Visualize whitespaces
    (prog-mode . whitespace-mode)
@@ -73,15 +109,7 @@
    (prog-mode . (lambda()
                   (setq truncate-lines nil)
                   (visual-line-mode -1)))
-   ))
-
-(use-package emacs
-  :init
-  ;; Define aliases so that keymap names show up in which-key
-  (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
-  (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
-  (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
-  (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
+   )
   :bind
   ;; keymaps
   (("C-c j" . #'my/quick-prefix-map)
@@ -129,42 +157,6 @@
          ("S" . #'my/control-shift)
          ("M" . #'my/meta-shift)
          ("z" . #'my/control-meta))))
-
-(use-package emacs
-  :preface
-  (defvar user-backup-directory (concat user-emacs-directory "backup/"))
-  :custom
-  ;; Set auto save list file name
-  (auto-save-list-file-prefix nil)
-  (auto-save-list-file-name (concat user-emacs-directory ".auto-save-list"))
-  ;; Put auto save files into user defined directory
-  (auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
-  ;; Put backup files into user defined directory
-  (backup-directory-alist `((".*" . ,user-backup-directory)))
-  :init
-  ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
-  (run-with-idle-timer
-   30 0
-   (lambda ()
-     (message "Start backup file cleanup.")
-     (let ((month (* 60 60 24 30))
-           (current (float-time (current-time))))
-       (dolist (file (directory-files user-backup-directory t))
-         (when (and (backup-file-name-p file)
-                    (> (- current (float-time (cl-fifth (file-attributes file))))
-                       month))
-           (message "%s" file)
-           (delete-file file))))
-     (message "Backup file cleanup finished."))))
-
-(use-package emacs
-  :config
-  (cond ((eq system-type 'gnu/linux)
-         (add-to-list 'default-frame-alist
-                      '(font . "Source Code Pro-10")))
-        ((eq system-type 'darwin)
-         (add-to-list 'default-frame-alist
-                      '(font . "Source Code Pro-13")))))
 
 (use-package gruvbox-theme
   :ensure t
@@ -496,18 +488,22 @@
   (global-treesit-auto-mode)
   (setq treesit-auto-install 'prompt))
 
-(use-package emacs
-  :if (>= emacs-major-version 31)
-  :custom
-  (treesit-auto-install-grammar 'always)
-  (treesit-enabled-modes t))
-
 (use-package lsp-mode
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook (lsp-mode . lsp-enable-which-key-integration)
+  :hook
+  (lsp-enable-which-key-integration
+   python-mode python-ts-mode
+   python-mode python-ts-mode
+   js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode
+   web-mode html-mode html-ts-mode css-mode css-ts-mode json-mode json-ts-mode
+   csharp-mode csharp-ts-mode
+   java-mode java-ts-mode kotlin-mode kotlin-ts-mode
+   sh-mode bash-ts-mode)
   :commands lsp
-  :custom (lsp-enable-snippet nil) ;; Stop auto-completing with argument list
+  :custom
+  (lsp-enable-snippet nil) ;; Stop auto-completing with argument list
+  (lsp-csharp-omnisharp-enable-decompilation-support t)
   :bind
   (:map lsp-mode-map
         ("C-c ." . #'xref-find-definitions)
@@ -707,9 +703,6 @@
             (setq python-indent-offset 4)
             (setq tab-width 4)))
 
-(use-package lsp
-  :hook (python-mode python-ts-mode))
-
 (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
 (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode))
 
@@ -727,10 +720,6 @@
   :mode "\\.ts$")
 
 (add-to-list 'auto-mode-alist '("\\.tsx$" . tsx-ts-mode))
-
-(use-package lsp
-  :hook (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode))
-
 (add-to-list 'lsp-disabled-clients 'tailwindcss)
 
 (use-package web-mode
@@ -753,21 +742,8 @@
 (use-package html-ts-mode
   :mode "\\.html?")
 
-(use-package lsp
-  :hook (web-mode html-mode html-ts-mode css-mode css-ts-mode json-mode json-ts-mode))
-
 (use-package powershell :ensure t)
 (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
-
-(use-package lsp
-  :hook (csharp-mode csharp-ts-mode)
-  :custom (lsp-csharp-omnisharp-enable-decompilation-support t))
-
-(use-package lsp
-:hook (java-mode java-ts-mode kotlin-mode kotlin-ts-mode))
-
-(use-package lsp
-  :hook (sh-mode bash-ts-mode))
 
 (use-package dockerfile-mode
   :ensure t
@@ -785,6 +761,18 @@
   :ensure t
   :defer t)
 (use-package yaml-mode
+  :ensure t
+  :defer t)
+(use-package kotlin-mode
+  :ensure t
+  :defer t)
+(use-package kotlin-ts-mode
+  :ensure t
+  :defer t)
+(use-package protobuf-mode
+  :ensure t
+  :defer t)
+(use-package protobuf-ts-mode
   :ensure t
   :defer t)
 

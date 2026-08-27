@@ -1,12 +1,36 @@
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   ;; -*- no-byte-compile: t; lexical-binding: t -*-
 #+end_src
 
 * General
 Some general configurations
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :noweb yes :tangle yes
   (use-package emacs
-    :config
+    :preface
+    <<backup-preface>>
+    :custom
+    ;; Use space for indentation by default
+    (indent-tabs-mode nil)
+    (show-paren-delay 0)
+    ;; Make buffer name look like the file path
+    (uniquify-buffer-name-style 'forward)
+    ;; Visualize trailing whitespaces and tabs
+    (whitespace-style '(face trailing tabs))
+    ;; Confirm before exiting emacs
+    (confirm-kill-emacs 'y-or-n-p)
+    ;; Show fill column indicator at 120
+    (fill-column 120)
+    ;; Show human readable file size instead of bytes
+    (ibuffer-human-readable-size t)
+    (dired-listing-switches "-alh")
+    ;; Try to make window split sensibly
+    (split-width-threshold 200)
+    ;; Use org-mode for *scratch* buffer
+    (initial-major-mode #'org-mode)
+    (initial-scratch-message "#+TITLE: *scratch*")
+    <<backup-custom>>
+    <<treesit-custom>>
+    :init
     ;; Add melpa to package-archives make it preferred over gnu archive
     (add-to-list 'package-archives
                  '("melpa" . "https://melpa.org/packages/") t)
@@ -45,26 +69,9 @@ Some general configurations
       (exec-path-from-shell-initialize)
       (exec-path-from-shell-copy-env "TEMP")
       (exec-path-from-shell-copy-env "DOTNET_ROOT"))
-    :custom
-    ;; Use space for indentation by default
-    (indent-tabs-mode nil)
-    (show-paren-delay 0)
-    ;; Make buffer name look like the file path
-    (uniquify-buffer-name-style 'forward)
-    ;; Visualize trailing whitespaces and tabs
-    (whitespace-style '(face trailing tabs))
-    ;; Confirm before exiting emacs
-    (confirm-kill-emacs 'y-or-n-p)
-    ;; Show fill column indicator at 120
-    (fill-column 120)
-    ;; Show human readable file size instead of bytes
-    (ibuffer-human-readable-size t)
-    (dired-listing-switches "-alh")
-    ;; Try to make window split sensibly
-    (split-width-threshold 200)
-    ;; Use org-mode for *scratch* buffer
-    (initial-major-mode #'org-mode)
-    (initial-scratch-message "#+TITLE: *scratch*")
+    <<my-keymap-init>>
+    <<backup-init>>
+    <<appearance-init>>
     :hook
     (;; Visualize whitespaces
      (prog-mode . whitespace-mode)
@@ -78,109 +85,119 @@ Some general configurations
      (prog-mode . (lambda()
                     (setq truncate-lines nil)
                     (visual-line-mode -1)))
-     ))
+     )
+    :bind
+    <<my-key-binding-bind>>)
 #+end_src
 
 * Key Bindings
 Various key bindings
-#+begin_src emacs-lisp
-  (use-package emacs
-    :init
-    ;; Define aliases so that keymap names show up in which-key
-    (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
-    (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
-    (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
-    (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
-    :bind
-    ;; keymaps
-    (("C-c j" . #'my/quick-prefix-map)
-     ("C-c k" . #'my/prefix-map)
-     ;; windmove
-     ("C-S-b" . #'windmove-left)
-     ("C-S-f" . #'windmove-right)
-     ("C-S-p" . #'windmove-up)
-     ("C-S-n" . #'windmove-down)
-     ;; window layour
-     ("C-x w r l" . #'window-layout-rotate-anticlockwise)
-     ("C-x w r r" . #'window-layout-rotate-clockwise)
-     ("C-x w f h" . #'window-layout-flip-leftright)
-     ("C-x w f v" . #'window-layout-flip-topdown)
-     ;; defun-delete
-     ("C-S-k" . #'my/delete-line)
-     ("C-S-w" . #'delete-region)
-     ("M-D" . #'my/delete-word)
-     ("<M-S-backspace>" . #'my/backward-delete-word)
-     ;; navigation
-     ("M-p" . (lambda () (interactive) (forward-line -5)))
-     ("M-n" . (lambda () (interactive) (forward-line 5)))
-     ;; tab-line-mode
-     ("C-x c" . #'tab-line-close-tab)
-     ("C-x y" . #'tab-line-close-other-tabs)
-     (:map my/prefix-map
-           ("e" . #'my/epa-prefix-map)
-           ("d" . #'my/delete-prefix-map))
-     (:map my/epa-prefix-map
-           ("x" . #'epa-decrypt-region)
-           ("e" . #'epa-encrypt-region))
-     (:map my/quick-prefix-map
-           ("b" . #'windmove-left)
-           ("f" . #'windmove-right)
-           ("p" . #'windmove-up)
-           ("n" . #'windmove-down))
-     (:map my/delete-prefix-map
-           ("k" . #'my/delete-line)
-           ("w" . #'my/delete-region)
-           ("d" . #'my/delete-word)
-           ("<del>" . #'my/backward-delete-word))
-     (:map my/quick-prefix-map
-           ("c" . #'my/control)
-           ("m" . #'my/meta)
-           ("S" . #'my/control-shift)
-           ("M" . #'my/meta-shift)
-           ("z" . #'my/control-meta))))
+#+name: my-keymap-init
+#+begin_src emacs-lisp :results silent :tangle no
+  ;; Define aliases so that keymap names show up in which-key
+  (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
+  (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
+  (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
+  (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
+#+end_src
+
+#+name: my-key-binding-bind
+#+begin_src emacs-lisp :results silent :tangle no
+  ;; keymaps
+  (("C-c j" . #'my/quick-prefix-map)
+   ("C-c k" . #'my/prefix-map)
+   ;; windmove
+   ("C-S-b" . #'windmove-left)
+   ("C-S-f" . #'windmove-right)
+   ("C-S-p" . #'windmove-up)
+   ("C-S-n" . #'windmove-down)
+   ;; window layour
+   ("C-x w r l" . #'window-layout-rotate-anticlockwise)
+   ("C-x w r r" . #'window-layout-rotate-clockwise)
+   ("C-x w f h" . #'window-layout-flip-leftright)
+   ("C-x w f v" . #'window-layout-flip-topdown)
+   ;; defun-delete
+   ("C-S-k" . #'my/delete-line)
+   ("C-S-w" . #'delete-region)
+   ("M-D" . #'my/delete-word)
+   ("<M-S-backspace>" . #'my/backward-delete-word)
+   ;; navigation
+   ("M-p" . (lambda () (interactive) (forward-line -5)))
+   ("M-n" . (lambda () (interactive) (forward-line 5)))
+   ;; tab-line-mode
+   ("C-x c" . #'tab-line-close-tab)
+   ("C-x y" . #'tab-line-close-other-tabs)
+   (:map my/prefix-map
+         ("e" . #'my/epa-prefix-map)
+         ("d" . #'my/delete-prefix-map))
+   (:map my/epa-prefix-map
+         ("x" . #'epa-decrypt-region)
+         ("e" . #'epa-encrypt-region))
+   (:map my/quick-prefix-map
+         ("b" . #'windmove-left)
+         ("f" . #'windmove-right)
+         ("p" . #'windmove-up)
+         ("n" . #'windmove-down))
+   (:map my/delete-prefix-map
+         ("k" . #'my/delete-line)
+         ("w" . #'my/delete-region)
+         ("d" . #'my/delete-word)
+         ("<del>" . #'my/backward-delete-word))
+   (:map my/quick-prefix-map
+         ("c" . #'my/control)
+         ("m" . #'my/meta)
+         ("S" . #'my/control-shift)
+         ("M" . #'my/meta-shift)
+         ("z" . #'my/control-meta)))
 #+end_src
 
 * Backup & Auto Save
-#+begin_src emacs-lisp
-  (use-package emacs
-    :preface
-    (defvar user-backup-directory (concat user-emacs-directory "backup/"))
-    :custom
-    ;; Set auto save list file name
-    (auto-save-list-file-prefix nil)
-    (auto-save-list-file-name (concat user-emacs-directory ".auto-save-list"))
-    ;; Put auto save files into user defined directory
-    (auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
-    ;; Put backup files into user defined directory
-    (backup-directory-alist `((".*" . ,user-backup-directory)))
-    :init
-    ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
-    (run-with-idle-timer
-     30 0
-     (lambda ()
-       (message "Start backup file cleanup.")
-       (let ((month (* 60 60 24 30))
-             (current (float-time (current-time))))
-         (dolist (file (directory-files user-backup-directory t))
-           (when (and (backup-file-name-p file)
-                      (> (- current (float-time (cl-fifth (file-attributes file))))
-                         month))
-             (message "%s" file)
-             (delete-file file))))
-       (message "Backup file cleanup finished."))))
+#+name: backup-preface
+#+begin_src emacs-lisp :results silent :tangle no
+  (defvar user-backup-directory (concat user-emacs-directory "backup/"))
+#+end_src
+
+#+name: backup-custom
+#+begin_src emacs-lisp :results silent :tangle no
+  ;; Set auto save list file name
+  (auto-save-list-file-prefix nil)
+  (auto-save-list-file-name (concat user-emacs-directory ".auto-save-list"))
+  ;; Put auto save files into user defined directory
+  (auto-save-file-name-transforms `((".*" ,(concat user-emacs-directory "auto-save/") t)))
+  ;; Put backup files into user defined directory
+  (backup-directory-alist `((".*" . ,user-backup-directory)))
+#+end_src
+
+#+name: backup-init
+#+begin_src emacs-lisp :results silent :tangle no
+  ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
+  (run-with-idle-timer
+   30 0
+   (lambda ()
+     (message "Start backup file cleanup.")
+     (let ((month (* 60 60 24 30))
+           (current (float-time (current-time))))
+       (dolist (file (directory-files user-backup-directory t))
+         (when (and (backup-file-name-p file)
+                    (> (- current (float-time (cl-fifth (file-attributes file))))
+                       month))
+           (message "%s" file)
+           (delete-file file))))
+     (message "Backup file cleanup finished.")))
 #+end_src
 
 * Appearance
-#+begin_src emacs-lisp
-  (use-package emacs
-    :config
-    (cond ((eq system-type 'gnu/linux)
-           (add-to-list 'default-frame-alist
-                        '(font . "Source Code Pro-10")))
-          ((eq system-type 'darwin)
-           (add-to-list 'default-frame-alist
-                        '(font . "Source Code Pro-13")))))
+#+name: appearance-init
+#+begin_src emacs-lisp :results silent :tangle no
+  (cond ((eq system-type 'gnu/linux)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-10")))
+        ((eq system-type 'darwin)
+         (add-to-list 'default-frame-alist
+                      '(font . "Source Code Pro-13"))))
+#+end_src
 
+#+begin_src emacs-lisp :tangle yes
   (use-package gruvbox-theme
     :ensure t
     :defer t)
@@ -256,7 +273,7 @@ Various key bindings
 #+end_src
 
 * Behavior
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package vundo
     :ensure t
     :defer t
@@ -304,7 +321,7 @@ Various key bindings
 #+end_src
 
 * Completion
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (setq minibuffer-prompt-properties
         '(read-only t cursor-intangible t face minibuffer-prompt))
   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
@@ -445,7 +462,7 @@ Various key bindings
 #+end_src
 
 * Navigation
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package avy
     :ensure t
     :defer t
@@ -484,7 +501,7 @@ Various key bindings
 #+end_src
 
 * Auto Complete
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package company
     :ensure t
     :defer 1
@@ -517,7 +534,7 @@ Various key bindings
 #+end_src
 
 * Treesit
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package treesit-auto
     :if (and (>= emacs-major-version 29) (<= emacs-major-version 30))
     :ensure t
@@ -525,22 +542,32 @@ Various key bindings
     :config
     (global-treesit-auto-mode)
     (setq treesit-auto-install 'prompt))
-
-  (use-package emacs
-    :if (>= emacs-major-version 31)
-    :custom
-    (treesit-auto-install-grammar 'always)
-    (treesit-enabled-modes t))
 #+end_src
 
-* LSP
-#+begin_src emacs-lisp
+#+name: treesit-custom
+#+begin_src emacs-lisp :results silent :tangle no
+  (treesit-auto-install-grammar 'always)
+  (treesit-enabled-modes t)
+#+end_src
+
+* LSP :tangle yes
+#+begin_src emacs-lisp :noweb yes :tangle yes
   (use-package lsp-mode
     :init
     (setq lsp-keymap-prefix "C-c l")
-    :hook (lsp-mode . lsp-enable-which-key-integration)
+    :hook
+    (lsp-enable-which-key-integration
+     <<python-lsp-hook>>
+     <<python-lsp-hook>>
+     <<js-lsp-hook>>
+     <<web-lsp-hook>>
+     <<csharp-lsp-hook>>
+     <<java-lsp-hook>>
+     <<shell-lsp-hook>>)
     :commands lsp
-    :custom (lsp-enable-snippet nil) ;; Stop auto-completing with argument list
+    :custom
+    (lsp-enable-snippet nil) ;; Stop auto-completing with argument list
+    <<csharp-lsp-custom>>
     :bind
     (:map lsp-mode-map
           ("C-c ." . #'xref-find-definitions)
@@ -559,7 +586,7 @@ Various key bindings
 #+end_src
 
 * Debugging
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package flycheck
     :ensure t
     :defer t
@@ -570,7 +597,7 @@ Various key bindings
 #+end_src
 
 * org
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package org
     :defer t
     :init
@@ -625,7 +652,7 @@ Various key bindings
 #+end_src
 
 * org-roam
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package org-roam
     :ensure t
     :defer 1
@@ -680,7 +707,7 @@ Various key bindings
 #+end_src
 
 * Snippets
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package yasnippet
     :ensure t
     :defer 1
@@ -693,7 +720,7 @@ Various key bindings
 #+end_src
 
 * Sessions
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package perspective
     :bind
     (("C-x C-b" . persp-list-buffers)
@@ -707,7 +734,7 @@ Various key bindings
 #+end_src
 
 * Project Management
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package projectile
     :ensure t
     :config
@@ -736,7 +763,7 @@ Various key bindings
 #+end_src
 
 * Evil
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package evil
     :ensure t
     :defer t
@@ -748,7 +775,7 @@ Various key bindings
 
 * Programming
 ** Python
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package lsp-pyright
     :ensure t
     :custom (lsp-pyright-langserver-command "pyright")
@@ -764,13 +791,15 @@ Various key bindings
             (lambda ()
               (setq python-indent-offset 4)
               (setq tab-width 4)))
+#+end_src
 
-  (use-package lsp
-    :hook (python-mode python-ts-mode))
+#+name: python-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  python-mode python-ts-mode
 #+end_src
 
 ** JavaScript
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (add-to-list 'auto-mode-alist '("\\.js[mx]?\\'" . js-mode))
   (add-to-list 'auto-mode-alist '("\\.har\\'" . js-mode))
 
@@ -788,15 +817,16 @@ Various key bindings
     :mode "\\.ts$")
 
   (add-to-list 'auto-mode-alist '("\\.tsx$" . tsx-ts-mode))
-
-  (use-package lsp
-    :hook (js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode))
-
   (add-to-list 'lsp-disabled-clients 'tailwindcss)
 #+end_src
 
+#+name: js-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode
+#+end_src
+
 ** Web
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package web-mode
     :ensure t
     :defer t
@@ -816,35 +846,42 @@ Various key bindings
 
   (use-package html-ts-mode
     :mode "\\.html?")
-
-  (use-package lsp
-    :hook (web-mode html-mode html-ts-mode css-mode css-ts-mode json-mode json-ts-mode))
+#+end_src
+#+name: web-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  web-mode html-mode html-ts-mode css-mode css-ts-mode json-mode json-ts-mode
 #+end_src
 
 ** C#
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package powershell :ensure t)
   (add-to-list 'auto-mode-alist '("\\.[^.]*proj\\'" . nxml-mode))
+#+end_src
 
-  (use-package lsp
-    :hook (csharp-mode csharp-ts-mode)
-    :custom (lsp-csharp-omnisharp-enable-decompilation-support t))
+#+name: csharp-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  csharp-mode csharp-ts-mode
+#+end_src
+
+#+name: csharp-lsp-custom
+#+begin_src emacs-lisp :results silent :tangle no
+  (lsp-csharp-omnisharp-enable-decompilation-support t)
 #+end_src
 
 ** Java
-#+begin_src emacs-lisp
-  (use-package lsp
-  :hook (java-mode java-ts-mode kotlin-mode kotlin-ts-mode))
+#+name: java-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  java-mode java-ts-mode kotlin-mode kotlin-ts-mode
 #+end_src
 
 ** Shell
-#+begin_src emacs-lisp
-  (use-package lsp
-    :hook (sh-mode bash-ts-mode))
+#+name: shell-lsp-hook
+#+begin_src emacs-lisp :results silent :tangle no
+  sh-mode bash-ts-mode
 #+end_src
 
 * Misc. Major Modes
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package dockerfile-mode
     :ensure t
     :defer t)
@@ -863,10 +900,22 @@ Various key bindings
   (use-package yaml-mode
     :ensure t
     :defer t)
+  (use-package kotlin-mode
+    :ensure t
+    :defer t)
+  (use-package kotlin-ts-mode
+    :ensure t
+    :defer t)
+  (use-package protobuf-mode
+    :ensure t
+    :defer t)
+  (use-package protobuf-ts-mode
+    :ensure t
+    :defer t)
 #+end_src
 
 * Misc. Packages
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle yes
   (use-package exec-path-from-shell
     :ensure t)
 
