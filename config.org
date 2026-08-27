@@ -58,9 +58,6 @@ Some general configurations
     (global-subword-mode 1)
     ;; Display key bindings when entered a partial command
     (which-key-mode 1)
-    ;; Enable upcase-region and downcase-region
-    (put 'upcase-region 'disabled nil)
-    (put 'downcase-region 'disabled nil)
     ;; use 'y' or 'n' instead of 'yes' or 'no' everywhere
     (defalias 'yes-or-no-p 'y-or-n-p)
     ;; Ensure path is set up correctly
@@ -87,7 +84,11 @@ Some general configurations
                     (visual-line-mode -1)))
      )
     :bind
-    <<my-key-binding-bind>>)
+    ;; Rebind upcase and downcase commands
+    (("M-u" . #'upcase-dwim)
+     ("M-d" . #'downcase-dwim)
+     ("M-c" . #'capitalize-dwim)
+     <<my-key-binding-bind>>))
 #+end_src
 
 * Key Bindings
@@ -104,51 +105,51 @@ Various key bindings
 #+name: my-key-binding-bind
 #+begin_src emacs-lisp :results silent :tangle no
   ;; keymaps
-  (("C-c j" . #'my/quick-prefix-map)
-   ("C-c k" . #'my/prefix-map)
-   ;; windmove
-   ("C-S-b" . #'windmove-left)
-   ("C-S-f" . #'windmove-right)
-   ("C-S-p" . #'windmove-up)
-   ("C-S-n" . #'windmove-down)
-   ;; window layour
-   ("C-x w r l" . #'window-layout-rotate-anticlockwise)
-   ("C-x w r r" . #'window-layout-rotate-clockwise)
-   ("C-x w f h" . #'window-layout-flip-leftright)
-   ("C-x w f v" . #'window-layout-flip-topdown)
-   ;; defun-delete
-   ("C-S-k" . #'my/delete-line)
-   ("C-S-w" . #'delete-region)
-   ("M-D" . #'my/delete-word)
-   ("<M-S-backspace>" . #'my/backward-delete-word)
-   ;; navigation
-   ("M-p" . (lambda () (interactive) (forward-line -5)))
-   ("M-n" . (lambda () (interactive) (forward-line 5)))
-   ;; tab-line-mode
-   ("C-x c" . #'tab-line-close-tab)
-   ("C-x y" . #'tab-line-close-other-tabs)
-   (:map my/prefix-map
-         ("e" . #'my/epa-prefix-map)
-         ("d" . #'my/delete-prefix-map))
-   (:map my/epa-prefix-map
-         ("x" . #'epa-decrypt-region)
-         ("e" . #'epa-encrypt-region))
-   (:map my/quick-prefix-map
-         ("b" . #'windmove-left)
-         ("f" . #'windmove-right)
-         ("p" . #'windmove-up)
-         ("n" . #'windmove-down))
-   (:map my/delete-prefix-map
-         ("k" . #'my/delete-line)
-         ("w" . #'my/delete-region)
-         ("d" . #'my/delete-word)
-         ("<del>" . #'my/backward-delete-word))
-   (:map my/quick-prefix-map
-         ("c" . #'my/control)
-         ("m" . #'my/meta)
-         ("S" . #'my/control-shift)
-         ("M" . #'my/meta-shift)
-         ("z" . #'my/control-meta)))
+  ("C-c j" . #'my/quick-prefix-map)
+  ("C-c k" . #'my/prefix-map)
+  ;; windmove
+  ("C-S-b" . #'windmove-left)
+  ("C-S-f" . #'windmove-right)
+  ("C-S-p" . #'windmove-up)
+  ("C-S-n" . #'windmove-down)
+  ;; window layour
+  ("C-x w r l" . #'window-layout-rotate-anticlockwise)
+  ("C-x w r r" . #'window-layout-rotate-clockwise)
+  ("C-x w f h" . #'window-layout-flip-leftright)
+  ("C-x w f v" . #'window-layout-flip-topdown)
+  ;; defun-delete
+  ("C-S-k" . #'my/delete-line)
+  ("C-S-w" . #'delete-region)
+  ("M-D" . #'my/delete-word)
+  ("<M-S-backspace>" . #'my/backward-delete-word)
+  ;; navigation
+  ("M-p" . (lambda () (interactive) (forward-line -5)))
+  ("M-n" . (lambda () (interactive) (forward-line 5)))
+  ;; tab-line-mode
+  ("C-x c" . #'tab-line-close-tab)
+  ("C-x y" . #'tab-line-close-other-tabs)
+  (:map my/prefix-map
+        ("e" . #'my/epa-prefix-map)
+        ("d" . #'my/delete-prefix-map))
+  (:map my/epa-prefix-map
+        ("x" . #'epa-decrypt-region)
+        ("e" . #'epa-encrypt-region))
+  (:map my/quick-prefix-map
+        ("b" . #'windmove-left)
+        ("f" . #'windmove-right)
+        ("p" . #'windmove-up)
+        ("n" . #'windmove-down))
+  (:map my/delete-prefix-map
+        ("k" . #'my/delete-line)
+        ("w" . #'my/delete-region)
+        ("d" . #'my/delete-word)
+        ("<del>" . #'my/backward-delete-word))
+  (:map my/quick-prefix-map
+        ("c" . #'my/control)
+        ("m" . #'my/meta)
+        ("S" . #'my/control-shift)
+        ("M" . #'my/meta-shift)
+        ("z" . #'my/control-meta))
 #+end_src
 
 * Backup & Auto Save

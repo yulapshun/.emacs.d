@@ -60,9 +60,6 @@
   (global-subword-mode 1)
   ;; Display key bindings when entered a partial command
   (which-key-mode 1)
-  ;; Enable upcase-region and downcase-region
-  (put 'upcase-region 'disabled nil)
-  (put 'downcase-region 'disabled nil)
   ;; use 'y' or 'n' instead of 'yes' or 'no' everywhere
   (defalias 'yes-or-no-p 'y-or-n-p)
   ;; Ensure path is set up correctly
@@ -111,8 +108,12 @@
                   (visual-line-mode -1)))
    )
   :bind
-  ;; keymaps
-  (("C-c j" . #'my/quick-prefix-map)
+  ;; Rebind upcase and downcase commands
+  (("M-u" . #'upcase-dwim)
+   ("M-d" . #'downcase-dwim)
+   ("M-c" . #'capitalize-dwim)
+   ;; keymaps
+   ("C-c j" . #'my/quick-prefix-map)
    ("C-c k" . #'my/prefix-map)
    ;; windmove
    ("C-S-b" . #'windmove-left)
