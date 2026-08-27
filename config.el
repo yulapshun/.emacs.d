@@ -493,7 +493,7 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook
-  (lsp-enable-which-key-integration
+  ((lsp-mode . lsp-enable-which-key-integration)
    python-mode python-ts-mode
    python-mode python-ts-mode
    js-mode js-ts-mode typescript-mode typescript-ts-mode tsx-mode tsx-ts-mode
@@ -512,8 +512,8 @@
 
 (use-package lsp-ui
   :custom
-  (lsp-ui-sideline-mode -1)
-  (lsp-ui-doc-mode -1)
+  (lsp-ui-sideline-enable nil)
+  (lsp-ui-doc-enable nil)
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-peek-always-show t)
   :bind

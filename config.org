@@ -551,13 +551,13 @@ Various key bindings
   (treesit-enabled-modes t)
 #+end_src
 
-* LSP :tangle yes
+* LSP
 #+begin_src emacs-lisp :noweb yes :tangle yes
   (use-package lsp-mode
     :init
     (setq lsp-keymap-prefix "C-c l")
     :hook
-    (lsp-enable-which-key-integration
+    ((lsp-mode . lsp-enable-which-key-integration)
      <<python-lsp-hook>>
      <<python-lsp-hook>>
      <<js-lsp-hook>>
@@ -576,8 +576,8 @@ Various key bindings
 
   (use-package lsp-ui
     :custom
-    (lsp-ui-sideline-mode -1)
-    (lsp-ui-doc-mode -1)
+    (lsp-ui-sideline-enable nil)
+    (lsp-ui-doc-enable nil)
     (lsp-ui-doc-position 'at-point)
     (lsp-ui-peek-always-show t)
     :bind
