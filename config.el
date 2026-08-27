@@ -27,6 +27,8 @@
   (global-tab-line-mode 1)
   ;; Word based commands (e.g. M-f, M-b) stop at uppercase letter within a symbol
   (global-subword-mode 1)
+  ;; Display key bindings when entered a partial command
+  (which-key-mode 1)
   ;; Enable upcase-region and downcase-region
   (put 'upcase-region 'disabled nil)
   (put 'downcase-region 'disabled nil)
@@ -812,11 +814,6 @@
         ("v" . 'rotate-even-vertical)
         ("l" . 'rotate-layout)
         ("w" . 'rotate-window)))
-
-(use-package which-key
-  :ensure t
-  :config
-  (which-key-mode))
 
 (use-package editorconfig
   :ensure t

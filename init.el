@@ -25,11 +25,6 @@
 ;; Load packages here
 (package-initialize)
 
-;; Ensure use-package exists
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
 ;; Byte and native .el files automatically
 (use-package compile-angel
   :ensure t
@@ -58,7 +53,7 @@
          exec-path-from-shell flycheck gcmh go-mode gruvbox-theme highlight-indent-guides json-mode lsp-java lsp-pyright
          lsp-ui magit marginalia nerd-icons-completion nerd-icons-dired orderless org-fragtog org-roam-timestamps
          org-roam-ui perspective php-mode popper powershell projectile rotate smartparens symbol-overlay treesit-auto
-         use-package vertico vundo web-mode which-key yaml-mode yasnippet))
+         vertico vundo web-mode yaml-mode yasnippet))
  '(safe-local-variable-values '((org-pretty-entities))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
