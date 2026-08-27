@@ -78,7 +78,7 @@
   (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
   ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
   (run-with-idle-timer
-   30 0
+   30 nil
    (lambda ()
      (message "Start backup file cleanup.")
      (let ((month (* 60 60 24 30))
@@ -511,8 +511,8 @@
 
 (use-package lsp-ui
   :custom
-  (lsp-ui-sideline-mode nil)
-  (lsp-ui-doc-enable nil)
+  (lsp-ui-sideline-mode -1)
+  (lsp-ui-doc-mode -1)
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-peek-always-show t)
   :bind
