@@ -49,19 +49,19 @@
 (require 'projectile)
 
 ;; TODO: this may be incompatible helm which let's you find stuff in new frame
-(defmacro projectile-persp-bridge (func-name)
-  "Create advice to create a perspective before invoking function FUNC-NAME.
-The advice provides bridge between perspective and projectile
-functions when switch between projects.  After switching to a new
-project, this advice creates a new perspective for that project."
-  `(defadvice ,func-name (before projectile-create-perspective-after-switching-projects activate)
-     "Create a dedicated perspective for current project's window after switching projects."
-     (let ((project-name (projectile-project-name)))
-       (when (and persp-mode (projectile-project-p))
-         (persp-switch project-name)))))
+;; (defmacro projectile-persp-bridge (func-name)
+;;   "Create advice to create a perspective before invoking function FUNC-NAME.
+;; The advice provides bridge between perspective and projectile
+;; functions when switch between projects.  After switching to a new
+;; project, this advice creates a new perspective for that project."
+;;   `(defadvice ,func-name (before projectile-create-perspective-after-switching-projects activate)
+;;      "Create a dedicated perspective for current project's window after switching projects."
+;;      (let ((project-name (projectile-project-name)))
+;;        (when (and persp-mode (projectile-project-p))
+;;          (persp-switch project-name)))))
 
-(projectile-persp-bridge projectile-dired)
-(projectile-persp-bridge projectile-find-file)
+;; (projectile-persp-bridge projectile-dired)
+;; (projectile-persp-bridge projectile-find-file)
 
 ;;;###autoload
 (defun projectile-persp-switch-project (project-to-switch)
@@ -105,7 +105,7 @@ new frame is created in a known project."
     (when (projectile-project-p)
       (persp-rename (projectile-project-name)))))
 
-(define-key projectile-mode-map [remap projectile-switch-project] 'projectile-persp-switch-project)
+;; (define-key projectile-mode-map [remap projectile-switch-project] 'projectile-persp-switch-project)
 
 (provide 'persp-projectile)
 ;;; persp-projectile.el ends here

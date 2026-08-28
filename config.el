@@ -682,7 +682,8 @@
   :after (projectile)
   :bind
   (:map projectile-command-map
-        ("C-P" . #'projectile-persp-switch-project)))
+        ("p" . #'projectile-persp-switch-project)
+        ("C-p" . #'projectile-switch-project)))
 
 (use-package magit
   :ensure t
