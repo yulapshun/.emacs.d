@@ -85,21 +85,21 @@ Some general configurations
      )
     :bind
     ;; Rebind upcase and downcase commands
-    (("M-u" . #'upcase-dwim)
-     ("M-d" . #'downcase-dwim)
-     ("M-c" . #'capitalize-dwim)
-     <<my-key-binding-bind>>))
+    (
+     <<my-key-binding-bind>>)
+    )
 #+end_src
 
 * Key Bindings
 Various key bindings
 #+name: my-keymap-init
 #+begin_src emacs-lisp :results silent :tangle no
-  ;; Define aliases so that keymap names show up in which-key
+  ;; Define custom keymaps
   (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
   (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
   (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
   (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
+  (defvar-keymap my/up-down-case-prefix-map :prefix 'my/up-down-case-prefix-map)
 #+end_src
 
 #+name: my-key-binding-bind
@@ -128,6 +128,12 @@ Various key bindings
   ;; tab-line-mode
   ("C-x c" . #'tab-line-close-tab)
   ("C-x y" . #'tab-line-close-other-tabs)
+  (:map my/quick-prefix-map
+        ("c" . #'my/control)
+        ("m" . #'my/meta)
+        ("S" . #'my/control-shift)
+        ("M" . #'my/meta-shift)
+        ("z" . #'my/control-meta))
   (:map my/prefix-map
         ("e" . #'my/epa-prefix-map)
         ("d" . #'my/delete-prefix-map))
@@ -144,12 +150,10 @@ Various key bindings
         ("w" . #'my/delete-region)
         ("d" . #'my/delete-word)
         ("<del>" . #'my/backward-delete-word))
-  (:map my/quick-prefix-map
-        ("c" . #'my/control)
-        ("m" . #'my/meta)
-        ("S" . #'my/control-shift)
-        ("M" . #'my/meta-shift)
-        ("z" . #'my/control-meta))
+  (:map my/up-down-case-prefix-map
+        ("u" . #'upcase-dwim)
+        ("d" . #'downcase-dwim)
+        ("c" . #'capitalize-dwim))
 #+end_src
 
 * Backup & Auto Save

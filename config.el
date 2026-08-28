@@ -68,11 +68,12 @@
     (exec-path-from-shell-initialize)
     (exec-path-from-shell-copy-env "TEMP")
     (exec-path-from-shell-copy-env "DOTNET_ROOT"))
-  ;; Define aliases so that keymap names show up in which-key
+  ;; Define custom keymaps
   (defvar-keymap my/quick-prefix-map :prefix 'my/quick-prefix-map)
   (defvar-keymap my/prefix-map :prefix 'my/prefix-map)
   (defvar-keymap my/epa-prefix-map :prefix 'my/epa-prefix-map)
   (defvar-keymap my/delete-prefix-map :prefix 'my/delete-prefix-map)
+  (defvar-keymap my/up-down-case-prefix-map :prefix 'my/up-down-case-prefix-map)
   ;; Delete backup files that are last accessed more than a month ago during startup, after 30s idle
   (run-with-idle-timer
    30 nil
@@ -109,9 +110,7 @@
    )
   :bind
   ;; Rebind upcase and downcase commands
-  (("M-u" . #'upcase-dwim)
-   ("M-d" . #'downcase-dwim)
-   ("M-c" . #'capitalize-dwim)
+  (
    ;; keymaps
    ("C-c j" . #'my/quick-prefix-map)
    ("C-c k" . #'my/prefix-map)
@@ -136,6 +135,12 @@
    ;; tab-line-mode
    ("C-x c" . #'tab-line-close-tab)
    ("C-x y" . #'tab-line-close-other-tabs)
+   (:map my/quick-prefix-map
+         ("c" . #'my/control)
+         ("m" . #'my/meta)
+         ("S" . #'my/control-shift)
+         ("M" . #'my/meta-shift)
+         ("z" . #'my/control-meta))
    (:map my/prefix-map
          ("e" . #'my/epa-prefix-map)
          ("d" . #'my/delete-prefix-map))
@@ -152,12 +157,11 @@
          ("w" . #'my/delete-region)
          ("d" . #'my/delete-word)
          ("<del>" . #'my/backward-delete-word))
-   (:map my/quick-prefix-map
-         ("c" . #'my/control)
-         ("m" . #'my/meta)
-         ("S" . #'my/control-shift)
-         ("M" . #'my/meta-shift)
-         ("z" . #'my/control-meta))))
+   (:map my/up-down-case-prefix-map
+         ("u" . #'upcase-dwim)
+         ("d" . #'downcase-dwim)
+         ("c" . #'capitalize-dwim)))
+  )
 
 (use-package gruvbox-theme
   :ensure t
