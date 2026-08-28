@@ -110,7 +110,6 @@
    )
   :bind
   ;; Rebind upcase and downcase commands
-  (
    ;; keymaps
    ("C-c j" . #'my/quick-prefix-map)
    ("C-c k" . #'my/prefix-map)
@@ -136,22 +135,33 @@
    ("C-x c" . #'tab-line-close-tab)
    ("C-x y" . #'tab-line-close-other-tabs)
    (:map my/quick-prefix-map
+         ;; modifier keys
          ("c" . #'my/control)
          ("m" . #'my/meta)
          ("S" . #'my/control-shift)
          ("M" . #'my/meta-shift)
-         ("z" . #'my/control-meta))
+         ("z" . #'my/control-meta)
+         ;; windmove
+         ("B" . #'windmove-left)
+         ("F" . #'windmove-right)
+         ("P" . #'windmove-up)
+         ("N" . #'windmove-down)
+         ("C-b" . #'windmove-swap-states-left)
+         ("C-f" . #'windmove-swap-states-right)
+         ("C-p" . #'windmove-swap-states-up)
+         ("C-n" . #'windmove-swap-states-down)
+         ("c" . #'windmove-display-same-window)
+         ("b" . #'windmove-display-left)
+         ("f" . #'windmove-display-right)
+         ("p" . #'windmove-display-up)
+         ("n" . #'windmove-display-down))
    (:map my/prefix-map
-         ("e" . #'my/epa-prefix-map)
-         ("d" . #'my/delete-prefix-map))
+         ("e" . 'my/epa-prefix-map)
+         ("d" . 'my/delete-prefix-map)
+         ("c" . 'my/up-down-case-prefix-map))
    (:map my/epa-prefix-map
          ("x" . #'epa-decrypt-region)
          ("e" . #'epa-encrypt-region))
-   (:map my/quick-prefix-map
-         ("b" . #'windmove-left)
-         ("f" . #'windmove-right)
-         ("p" . #'windmove-up)
-         ("n" . #'windmove-down))
    (:map my/delete-prefix-map
          ("k" . #'my/delete-line)
          ("w" . #'my/delete-region)
@@ -160,7 +170,7 @@
    (:map my/up-down-case-prefix-map
          ("u" . #'upcase-dwim)
          ("d" . #'downcase-dwim)
-         ("c" . #'capitalize-dwim)))
+         ("c" . #'capitalize-dwim))
   )
 
 (use-package gruvbox-theme
