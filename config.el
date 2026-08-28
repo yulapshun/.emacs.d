@@ -677,6 +677,13 @@
   :bind
   ("C-c p" . 'projectile-command-map))
 
+(use-package persp-projectile
+  :ensure t
+  :after (projectile)
+  :bind
+  (:map projectile-command-map
+        ("C-P" . #'projectile-persp-switch-project)))
+
 (use-package magit
   :ensure t
   :defer t
